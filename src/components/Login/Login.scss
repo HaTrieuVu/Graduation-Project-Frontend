@@ -1,0 +1,17 @@
+@import "../../App.scss";
+
+.account-pages {
+    height: 78vh;
+
+    .title {
+        color: $clr-orange;
+        font-size: 35px;
+        font-weight: 600;
+    }
+
+    .btn-login {
+        background-color: $clr-orange;
+        color: white;
+        font-size: 20px;
+    }
+}

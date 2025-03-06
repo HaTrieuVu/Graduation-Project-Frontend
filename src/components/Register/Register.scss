@@ -1,0 +1,18 @@
+@import "../../App.scss";
+
+.account-pages {
+    height: 800px;
+    margin-bottom: 20px;
+
+    .title {
+        color: $clr-orange;
+        font-size: 35px;
+        font-weight: 600;
+    }
+
+    .btn-register {
+        background-color: $clr-orange;
+        color: white;
+        font-size: 20px;
+    }
+}
