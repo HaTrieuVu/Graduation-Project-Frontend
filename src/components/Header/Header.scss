@@ -1,40 +1,46 @@
-@import "../../App.scss";
+@import '../../App.scss';
 
 .header {
-  background: rgb(249, 78, 48);
-  background: linear-gradient(
-    180deg,
-    rgba(249, 78, 48, 1) 0%,
-    rgba(255, 100, 51, 1) 100%
-  );
+    background: rgb(249, 78, 48);
+    background: linear-gradient(180deg, rgba(249, 78, 48, 1) 0%, rgba(255, 100, 51, 1) 100%);
 
-  .header-cnt-top {
-    border-bottom: 1px solid lighten($clr-orange, 10%);
-    
-    .header-cnt-top-r {
-      
-      .box-support {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        .top-link-itm-ico {
-          font-size: 20px;
-        }
-         a {
-          display: flex;
-         }
-      }
-    }
-
-  }
-
-  @media screen and (max-width: 992px) {
     .header-cnt-top {
-      flex-direction: column;
-      .header-cnt-top-l {
-        margin-bottom: 4px;
-      }
+        border-bottom: 1px solid lighten($clr-orange, 10%);
+
+        .header-cnt-top-r {
+            .box-user {
+                display: flex;
+                align-items: center;
+                .icon {
+                    width: 35px;
+                    height: 35px;
+                    margin-right: 6px;
+                    img {
+                        object-fit: cover;
+                    }
+                }
+            }
+            .box-support {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .top-link-itm-ico {
+                    font-size: 20px;
+                }
+                a {
+                    display: flex;
+                }
+            }
+        }
     }
-  }
+
+    @media screen and (max-width: 992px) {
+        .header-cnt-top {
+            flex-direction: column;
+            .header-cnt-top-l {
+                margin-bottom: 4px;
+            }
+        }
+    }
 }

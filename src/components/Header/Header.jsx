@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import './Header.scss';
 import { MdOutlineSupportAgent } from "react-icons/md";
+import _ from "lodash"
+
+import userIcon from "../../assets/user.png"
 // import Navbar from '../Navbar/Navbar';
 
 const Header = () => {
+    const [userInfo, setUserInfo] = useState({})
+    const user = useSelector(state => state.userInfo.user);
+
+
+    useEffect(() => {
+        setUserInfo(user)
+    }, [user])
+
+    console.log(userInfo)
+
     return (
         <div className="header text-white">
             <div className="container">
@@ -50,19 +64,28 @@ const Header = () => {
                                         </span>
                                         <span className="top-link-itm-txt">Hỗ trợ</span>
                                     </Link>
+
                                 </li>
                                 <li className="vert-line"></li>
-                                <li>
-                                    <Link to="/register" className="top-link-itm">
-                                        <span className="top-link-itm-txt text-3xl font-bold underline">Đăng ký</span>
-                                    </Link>
-                                </li>
-                                <li className="vert-line"></li>
-                                <li>
-                                    <Link to="/login" className="top-link-itm">
-                                        <span className="top-link-itm-txt">Đăng nhập</span>
-                                    </Link>
-                                </li>
+                                {userInfo && !_.isEmpty(userInfo) ? <div className='box-user'>
+                                    <div className='icon'>
+                                        <img alt='avatar' src={userIcon} />
+                                    </div>
+                                    <span>{userInfo?.sHoTen}</span>
+                                </div> : <>
+                                    <li>
+                                        <Link to="/register" className="top-link-itm">
+                                            <span className="top-link-itm-txt text-3xl font-bold underline">Đăng ký</span>
+                                        </Link>
+                                    </li>
+                                    <li className="vert-line"></li>
+                                    <li>
+                                        <Link to="/login" className="top-link-itm">
+                                            <span className="top-link-itm-txt">Đăng nhập</span>
+                                        </Link>
+                                    </li>
+                                </>}
+
                             </ul>
                         </div>
                     </div>

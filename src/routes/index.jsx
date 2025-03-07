@@ -8,6 +8,10 @@ import SearchPage from "../pages/SearchPage/SearchPage";
 import Login from "../components/Login/Login";
 import Register from "../components/Register/Register";
 import App from "../App";
+import NotFound from "../components/NotFound/NotFound";
+import AdminPage from "../pages/AdminPage/AdminPage";
+import HomeAdmin from "../Systems/HomeAdmin/HomeAdmin";
+import ManageUser from "../Systems/ManageUser/ManageUser";
 
 
 const router = createBrowserRouter([
@@ -38,9 +42,26 @@ const router = createBrowserRouter([
             {
                 path: "/search/:searchTerm",
                 element: <SearchPage />
+            },
+            {
+                path: "*",
+                element: <NotFound />
             }
         ]
-
+    },
+    {
+        path: "/admin",
+        element: <AdminPage />,
+        children: [
+            {
+                path: "",
+                element: <HomeAdmin />
+            },
+            {
+                path: "/admin/manage-user",
+                element: <ManageUser />
+            },
+        ]
     }
 ]);
 

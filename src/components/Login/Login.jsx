@@ -6,12 +6,22 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setInfoUser } from '../../store/userSlice';
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [valueLogin, setValueLogin] = useState("")
   const [password, setPassword] = useState("")
 
   const navigate = useNavigate()
+
+  const handlePressEnter = (e) => {
+    if (e.key === "Enter") {
+      handleLogin()
+    }
+  }
 
   const handleLogin = async () => {
     if (!valueLogin) {
@@ -25,8 +35,12 @@ const Login = () => {
     let respone = await axios.post("/login", {
       valueLogin, password
     })
+
+    console.log(respone)
+
     if (respone?.data?.errorCode === 0) {
       toast.success(respone?.data?.errorMessage)
+      dispatch(setInfoUser(respone?.data?.data))
       navigate("/")
     } else {
       toast.error(respone?.data?.errorMessage)
@@ -70,6 +84,7 @@ const Login = () => {
                           type="password"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
+                          onKeyDown={(e) => handlePressEnter(e)}
                           className="form-control fs-22"
                           placeholder="Mật khẩu của bạn"
                         />
