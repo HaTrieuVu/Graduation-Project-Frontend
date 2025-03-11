@@ -16,6 +16,9 @@ const AdminPage = () => {
             <div className='grid-container'>
                 <HeaderAdmin OpenSidebar={OpenSidebar} />
                 <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} />
+                {/* <main className='container-admin'>
+                    
+                </main> */}
                 <Outlet />
 
             </div>
