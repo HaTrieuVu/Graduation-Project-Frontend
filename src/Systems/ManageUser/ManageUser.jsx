@@ -6,12 +6,20 @@ import _ from "lodash"
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
+import { FaPlusCircle } from "react-icons/fa";
+import { IoReloadSharp } from "react-icons/io5";
+import { toast } from 'react-toastify';
+import ModalDelete from '../../components/ModalDelete/ModalDelete';
+
 
 const ManageUser = () => {
     const [listUser, setListUser] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
-    const [currentLimit, setCurrentLimit] = useState(4);
+    // const [currentLimit, setCurrentLimit] = useState(4);
     const [totalPage, setTotalPage] = useState(0)
+    const currentLimit = 3
+    const [isShowModelDelete, setIsShowModelDelete] = useState(false)
+    const [dataModal, setDataModal] = useState({})
 
     useEffect(() => {
         fetchAllUser()
@@ -29,6 +37,34 @@ const ManageUser = () => {
         setCurrentPage(+event.selected + 1)
     };
 
+    const handleDeleteUser = async (user) => {
+        setDataModal(user)
+        setIsShowModelDelete(true)
+        console.log(dataModal)
+    };
+
+    const confirmDeleteUser = async () => {
+        try {
+            let response = await axios.delete("/user/delete", { data: { id: dataModal?.PK_iKhachHangID } });
+            if (response?.data?.errorCode === 0) {
+                toast.success("Xóa người dùng thành công!")
+                console.log("ok")
+                await fetchAllUser()
+                setIsShowModelDelete(false)
+            } else {
+                toast.error("Xóa thất bại! Vui lòng thử lại.")
+            }
+        } catch (error) {
+            console.error("Lỗi khi xóa người dùng:", error);
+            toast.error("Xóa thất bại! Vui lòng thử lại.")
+        }
+    }
+
+    const handleCloseModelDelete = () => {
+        setIsShowModelDelete(false);
+        setDataModal({})
+    }
+
     return (
         <main className='manage-user-container'>
             <h2 className='title'>Quản lý Khách hàng</h2>
@@ -37,8 +73,18 @@ const ManageUser = () => {
                     <h3>Danh sách khách hàng</h3>
                 </div>
                 <div className='actions'>
-                    <button className='btn btn-primary'>Tạo mới</button>
-                    <button className='btn btn-success'>Refesh</button>
+                    <button className='btn btn-primary'>
+                        <span>Tạo mới</span>
+                        <span>
+                            <FaPlusCircle />
+                        </span>
+                    </button>
+                    <button className='btn btn-success'>
+                        <span>Refesh</span>
+                        <span>
+                            <IoReloadSharp />
+                        </span>
+                    </button>
                 </div>
             </div>
             <div className='user-body'>
@@ -69,7 +115,7 @@ const ManageUser = () => {
                                         <td>{item?.role?.sMoTa}</td>
                                         <td className='btn-action'>
                                             <button title='Sửa'><FaRegEdit /></button>
-                                            <button title='Xóa'><FaRegTrashCan /></button>
+                                            <button onClick={() => handleDeleteUser(item)} title='Xóa'><FaRegTrashCan /></button>
                                         </td>
                                     </tr>
                                 )
@@ -100,7 +146,7 @@ const ManageUser = () => {
                     renderOnZeroPageCount={null}
                 />
             </div>}
-
+            <ModalDelete show={isShowModelDelete} dataModal={dataModal} handleCloseModelDelete={handleCloseModelDelete} confirmDeleteUser={confirmDeleteUser} />
         </main>
     )
 }

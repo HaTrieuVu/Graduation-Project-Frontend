@@ -1,0 +1,22 @@
+.custom-modal {
+    .modal-dialog {
+        max-width: 500px; /* Định kích thước modal */
+        height: 250px;
+        .modal-content {
+            height: 30%;
+            .custom-modal-header {
+                .modal-title {
+                    font-size: 25px;
+                }
+            }
+            .custom-modal-body {
+                font-size: 20px;
+            }
+            .custom-modal-footer {
+                button {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}

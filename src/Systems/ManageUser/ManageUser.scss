@@ -26,7 +26,10 @@
             }
         }
         .actions {
+            display: flex;
             button {
+                display: flex;
+                align-items: center;
                 font-size: 25px;
                 margin-right: 20px;
                 padding: 5px 15px;
@@ -35,6 +38,9 @@
                 &:hover {
                     transform: scale(1.05);
                     transition: all;
+                }
+                span {
+                    margin-left: 6px;
                 }
             }
         }
