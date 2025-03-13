@@ -10,14 +10,18 @@ import { FaPlusCircle } from "react-icons/fa";
 import { IoReloadSharp } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import ModalDelete from '../../components/ModalDelete/ModalDelete';
+import ModalUser from './ModalUser';
 
 
 const ManageUser = () => {
     const [listUser, setListUser] = useState([])
+
     const [currentPage, setCurrentPage] = useState(1);
     // const [currentLimit, setCurrentLimit] = useState(4);
-    const [totalPage, setTotalPage] = useState(0)
     const currentLimit = 3
+    const [totalPage, setTotalPage] = useState(0)
+
+    const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa user
     const [isShowModelDelete, setIsShowModelDelete] = useState(false)
     const [dataModal, setDataModal] = useState({})
 
@@ -37,12 +41,14 @@ const ManageUser = () => {
         setCurrentPage(+event.selected + 1)
     };
 
+    // hàm xóa user (mở modal xóa user)
     const handleDeleteUser = async (user) => {
         setDataModal(user)
         setIsShowModelDelete(true)
         console.log(dataModal)
     };
 
+    // hàm xác nhận xóa user
     const confirmDeleteUser = async () => {
         try {
             let response = await axios.delete("/user/delete", { data: { id: dataModal?.PK_iKhachHangID } });
@@ -60,9 +66,14 @@ const ManageUser = () => {
         }
     }
 
-    const handleCloseModelDelete = () => {
+    // hàm đóng modal xóa user
+    const handleCloseModalDelete = () => {
         setIsShowModelDelete(false);
         setDataModal({})
+    }
+
+    const handleCloseModal = () => {
+        setIsShowModel(false)
     }
 
     return (
@@ -73,7 +84,7 @@ const ManageUser = () => {
                     <h3>Danh sách khách hàng</h3>
                 </div>
                 <div className='actions'>
-                    <button className='btn btn-primary'>
+                    <button className='btn btn-primary' onClick={() => setIsShowModel(true)} >
                         <span>Tạo mới</span>
                         <span>
                             <FaPlusCircle />
@@ -146,7 +157,8 @@ const ManageUser = () => {
                     renderOnZeroPageCount={null}
                 />
             </div>}
-            <ModalDelete show={isShowModelDelete} dataModal={dataModal} handleCloseModelDelete={handleCloseModelDelete} confirmDeleteUser={confirmDeleteUser} />
+            <ModalDelete show={isShowModelDelete} dataModal={dataModal} handleCloseModalDelete={handleCloseModalDelete} confirmDeleteUser={confirmDeleteUser} />
+            <ModalUser title={"create"} show={isShowModel} handleCloseModal={handleCloseModal} />
         </main>
     )
 }
