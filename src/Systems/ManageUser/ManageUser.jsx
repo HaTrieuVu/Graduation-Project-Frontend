@@ -23,7 +23,10 @@ const ManageUser = () => {
 
     const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa user
     const [isShowModelDelete, setIsShowModelDelete] = useState(false)
-    const [dataModal, setDataModal] = useState({})
+    const [dataModal, setDataModal] = useState({})  // data của modal delete
+    const [actionModalUser, setActionModalUser] = useState("") //state action create or update
+    const [dataModalUser, setDataModalUser] = useState({})
+
 
     useEffect(() => {
         fetchAllUser()
@@ -45,7 +48,6 @@ const ManageUser = () => {
     const handleDeleteUser = async (user) => {
         setDataModal(user)
         setIsShowModelDelete(true)
-        console.log(dataModal)
     };
 
     // hàm xác nhận xóa user
@@ -72,8 +74,24 @@ const ManageUser = () => {
         setDataModal({})
     }
 
+    // hàm đóng modal thêm or sửa user
     const handleCloseModal = () => {
         setIsShowModel(false)
+    }
+
+    const handleCreateOrUpdateUser = (action, data) => {
+        if (action === "UPDATE") {
+            setIsShowModel(true)
+            setActionModalUser(action)
+            if (data) {
+                setDataModalUser(data)
+            }
+        } else {
+            setIsShowModel(true)
+            setActionModalUser(action)
+            setDataModalUser({})
+        }
+
     }
 
     return (
@@ -84,7 +102,7 @@ const ManageUser = () => {
                     <h3>Danh sách khách hàng</h3>
                 </div>
                 <div className='actions'>
-                    <button className='btn btn-primary' onClick={() => setIsShowModel(true)} >
+                    <button className='btn btn-primary' onClick={() => handleCreateOrUpdateUser("CREATE")} >
                         <span>Tạo mới</span>
                         <span>
                             <FaPlusCircle />
@@ -117,7 +135,7 @@ const ManageUser = () => {
                             listUser.map((item, i) => {
                                 return (
                                     <tr key={item?.PK_iKhachHangID}>
-                                        <td scope="row">{i + 1}</td>
+                                        <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
                                         <td>{item?.PK_iKhachHangID}</td>
                                         <td>{item?.sHoTen}</td>
                                         <td>{item?.sDiaChi}</td>
@@ -125,7 +143,7 @@ const ManageUser = () => {
                                         <td>{item?.sSoDienThoai}</td>
                                         <td>{item?.role?.sMoTa}</td>
                                         <td className='btn-action'>
-                                            <button title='Sửa'><FaRegEdit /></button>
+                                            <button onClick={() => handleCreateOrUpdateUser("UPDATE", item)} title='Sửa'><FaRegEdit /></button>
                                             <button onClick={() => handleDeleteUser(item)} title='Xóa'><FaRegTrashCan /></button>
                                         </td>
                                     </tr>
@@ -158,7 +176,7 @@ const ManageUser = () => {
                 />
             </div>}
             <ModalDelete show={isShowModelDelete} dataModal={dataModal} handleCloseModalDelete={handleCloseModalDelete} confirmDeleteUser={confirmDeleteUser} />
-            <ModalUser title={"create"} show={isShowModel} handleCloseModal={handleCloseModal} />
+            <ModalUser show={isShowModel} handleCloseModal={handleCloseModal} action={actionModalUser} dataModalUser={dataModalUser} fetchAllUser={fetchAllUser} />
         </main>
     )
 }
