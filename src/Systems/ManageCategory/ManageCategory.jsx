@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
 
+import axios from 'axios';
+import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
 import { IoReloadSharp } from "react-icons/io5";
 import { toast } from 'react-toastify';
-import axios from 'axios';
-import ModalDelete from '../../components/ModalDelete/ModalDelete';
-import ModalBrand from './ModalBrand';
+import ModalSupplier from './ModalCategory';
 
-import "./ManageBrand.scss"
+import "./ManageCategory.scss"
 
-const ManageBrand = () => {
-    const [listBrand, setListBrand] = useState([])
+const ManageCategory = () => {
+    const [listCategory, setListCategory] = useState([])
 
     const [currentPage, setCurrentPage] = useState(1);
     const currentLimit = 5
@@ -21,18 +21,18 @@ const ManageBrand = () => {
     const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa ncc
     const [isShowModelDelete, setIsShowModelDelete] = useState(false)
     const [dataModal, setDataModal] = useState({})  // data của modal delete
-    const [actionModaBrand, setActionModalBrand] = useState("") //state action create or update
-    const [dataModalBrand, setDataModalBrand] = useState({})
+    const [actionModalCategory, setActionModalCategory] = useState("") //state action create or update
+    const [dataModalCategory, setDataModalCategory] = useState({})
 
     useEffect(() => {
-        fetchAllBrand()
+        fetchAllCategory()
     }, [currentPage])
 
-    const fetchAllBrand = async () => {
-        let respone = await axios.get(`/manage-brand/get-all?page=${currentPage}&limit=${currentLimit}`)
+    const fetchAllCategory = async () => {
+        let respone = await axios.get(`/manage-category/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
-            setListBrand(respone?.data?.data?.brands)
+            setListCategory(respone?.data?.data?.categories)
         }
     }
 
@@ -40,19 +40,19 @@ const ManageBrand = () => {
         setCurrentPage(+event.selected + 1)
     };
 
-    // hàm xóa brand (mở modal xóa brand)
-    const handleDeleteBrand = async (brand) => {
-        setDataModal(brand)
+    // hàm xóa category (mở modal xóa category)
+    const handleDeleteCategory = async (category) => {
+        setDataModal(category)
         setIsShowModelDelete(true)
     };
 
-    // hàm xác nhận xóa brand
+    // hàm xác nhận xóa category
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/manage-brand/delete", { data: { id: dataModal?.PK_iNhanHangID } });
+            let response = await axios.delete("/manage-category/delete", { data: { id: dataModal?.PK_iDanhMucID } });
             if (response?.data?.errorCode === 0) {
-                toast.success("Xóa Nhãn hàng thành công!")
-                await fetchAllBrand()
+                toast.success("Xóa Danh mục sản phẩm thành công!")
+                await fetchAllCategory()
                 setIsShowModelDelete(false)
             } else {
                 toast.error("Xóa thất bại! Vui lòng thử lại.")
@@ -63,13 +63,13 @@ const ManageBrand = () => {
         }
     }
 
-    // hàm đóng modal xóa brand
+    // hàm đóng modal xóa category
     const handleCloseModalDelete = () => {
         setIsShowModelDelete(false);
         setDataModal({})
     }
 
-    // hàm đóng modal thêm or sửa brand
+    // hàm đóng modal thêm or sửa category
     const handleCloseModal = () => {
         setIsShowModel(false)
     }
@@ -77,24 +77,24 @@ const ManageBrand = () => {
     const handleCreateOrUpdateUser = (action, data) => {
         if (action === "UPDATE") {
             setIsShowModel(true)
-            setActionModalBrand(action)
+            setActionModalCategory(action)
             if (data) {
-                setDataModalBrand(data)
+                setDataModalCategory(data)
             }
         } else {
             setIsShowModel(true)
-            setActionModalBrand(action)
-            setDataModalBrand({})
+            setActionModalCategory(action)
+            setDataModalCategory({})
         }
 
     }
 
     return (
-        <main className='manage-brand-container'>
-            <h2 className='title'>Quản lý Nhãn hàng</h2>
-            <div className='brand-header'>
-                <div className='brand-title'>
-                    <h3>Danh sách Nhãn hàng</h3>
+        <main className='manage-category-container'>
+            <h2 className='title'>Quản lý Danh mục sản phẩm</h2>
+            <div className='category-header'>
+                <div className='category-title'>
+                    <h3>Danh sách Danh mục sản phẩm</h3>
                 </div>
                 <div className='actions'>
                     <button className='btn btn-primary' onClick={() => handleCreateOrUpdateUser("CREATE")} >
@@ -111,45 +111,38 @@ const ManageBrand = () => {
                     </button>
                 </div>
             </div>
-            <div className='brand-body'>
+            <div className='category-body'>
                 <table className="table table-hover table-bordered fs-20">
                     <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">Mã Nhãn hàng</th>
-                            <th scope="col">Tên Nhãn hàng</th>
-                            <th scope="col">Logo</th>
+                            <th scope="col">Mã Danh mục sản phẩm</th>
+                            <th scope="col">Tên danh mục</th>
                             <th scope="col">Mô tả</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {listBrand?.length > 0 ?
-                            listBrand.map((item, i) => {
+                        {listCategory?.length > 0 ?
+                            listCategory.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iNhanHangID}>
+                                    <tr key={item?.PK_iDanhMucID}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
-                                        <td>{item?.PK_iNhanHangID}</td>
-                                        <td>{item?.sTenNhanHang}</td>
-                                        <td className='box-logo'>
-                                            <img
-                                                src={item?.sLogo}
-                                                alt="img"
-                                            />
-                                        </td>
+                                        <td>{item?.PK_iDanhMucID}</td>
+                                        <td>{item?.sTenDanhMuc}</td>
                                         <td>{item?.sMoTa}</td>
                                         <td className='btn-action'>
                                             <button onClick={() => handleCreateOrUpdateUser("UPDATE", item)} title='Sửa'><FaRegEdit /></button>
-                                            <button onClick={() => handleDeleteBrand(item)} title='Xóa'><FaRegTrashCan /></button>
+                                            <button onClick={() => handleDeleteCategory(item)} title='Xóa'><FaRegTrashCan /></button>
                                         </td>
                                     </tr>
                                 )
                             })
-                            : <tr><td>Danh sách Nhãn hàng trống</td></tr>}
+                            : <tr><td>Danh sách Danh mục sản phẩm trống</td></tr>}
                     </tbody>
                 </table>
             </div>
-            {totalPage > 0 && <div className='brand-footer'>
+            {totalPage > 0 && <div className='category-footer'>
                 <ReactPaginate
                     nextLabel="next >"
                     onPageChange={handlePageClick}
@@ -172,20 +165,20 @@ const ManageBrand = () => {
                 />
             </div>}
             <ModalDelete show={isShowModelDelete}
-                title={"nhãn hàng"}
-                name={dataModal.sTenNhanHang}
+                title={"danh mục sản phẩm"}
+                name={dataModal.sTenDanhMuc}
                 handleCloseModalDelete={handleCloseModalDelete}
                 confirmDeleteUser={confirmDeleteUser}
             />
-            <ModalBrand
+            <ModalSupplier
                 show={isShowModel}
                 handleCloseModal={handleCloseModal}
-                action={actionModaBrand}
-                dataModalBrand={dataModalBrand}
-                fetchAllBrand={fetchAllBrand}
+                action={actionModalCategory}
+                dataModalCategory={dataModalCategory}
+                fetchAllCategory={fetchAllCategory}
             />
         </main>
     )
 }
 
-export default ManageBrand
+export default ManageCategory

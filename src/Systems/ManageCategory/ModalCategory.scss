@@ -1,0 +1,36 @@
+.custom-modal {
+    .modal-dialog {
+        max-width: 700px;
+        height: 100%;
+        .modal-content {
+            height: 66%;
+            .custom-modal-header {
+                .modal-title {
+                    font-size: 25px;
+                }
+            }
+            .custom-modal-body {
+                font-size: 20px;
+                .content-body {
+                    .red {
+                        color: red;
+                    }
+                    .form-group {
+                        input,
+                        select {
+                            font-size: 18px;
+                        }
+                    }
+                }
+            }
+            .custom-modal-footer {
+                button {
+                    font-size: 20px;
+                    margin-right: 15px;
+                    width: 120px;
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+}

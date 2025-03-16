@@ -14,6 +14,7 @@ import HomeAdmin from "../Systems/HomeAdmin/HomeAdmin";
 import ManageUser from "../Systems/ManageUser/ManageUser";
 import ManageSupplier from "../Systems/ManageSupplier/ManageSupplier";
 import ManageBrand from "../Systems/ManageBrand/ManageBrand";
+import ManageCategory from "../Systems/ManageCategory/ManageCategory";
 
 
 const router = createBrowserRouter([
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
             {
                 path: "/admin/manage-brand",
                 element: <ManageBrand />
+            },
+            {
+                path: "/admin/manage-category",
+                element: <ManageCategory />
             },
         ]
     }
