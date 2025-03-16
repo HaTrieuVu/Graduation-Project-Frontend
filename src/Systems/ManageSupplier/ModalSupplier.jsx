@@ -118,6 +118,7 @@ const ModalSupplier = ({ action, show, handleCloseModal, dataModalSupplier, fetc
             }
         }
     }
+
     return (
         <Modal
             size="xl"

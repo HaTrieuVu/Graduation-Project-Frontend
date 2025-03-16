@@ -35,7 +35,7 @@ const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
                     </Link>
                 </li>
                 <li className='sidebar-list-item'>
-                    <Link to={"/admin/manage-user"}>
+                    <Link to={"/admin/manage-brand"}>
                         <BsPeopleFill className='icon' /> QL Nhãn hàng
                     </Link>
                 </li>

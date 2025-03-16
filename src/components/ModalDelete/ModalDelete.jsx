@@ -10,7 +10,7 @@ const ModalDelete = ({ show, title, name, handleCloseModalDelete, confirmDeleteU
         <Modal.Header closeButton className="custom-modal-header">
           <Modal.Title>Xác nhân xóa {title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="custom-modal-body">Bạn có chắc muốn xóa {title}: {name}</Modal.Body>
+        <Modal.Body className="custom-modal-body">Bạn có chắc muốn xóa {title}: <span className="red">{name}</span> </Modal.Body>
         <Modal.Footer className="custom-modal-footer">
           <Button variant="secondary" onClick={handleCloseModalDelete}>
             Hủy!

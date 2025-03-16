@@ -13,6 +13,7 @@ import AdminPage from "../pages/AdminPage/AdminPage";
 import HomeAdmin from "../Systems/HomeAdmin/HomeAdmin";
 import ManageUser from "../Systems/ManageUser/ManageUser";
 import ManageSupplier from "../Systems/ManageSupplier/ManageSupplier";
+import ManageBrand from "../Systems/ManageBrand/ManageBrand";
 
 
 const router = createBrowserRouter([
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
             {
                 path: "/admin/manage-supplier",
                 element: <ManageSupplier />
+            },
+            {
+                path: "/admin/manage-brand",
+                element: <ManageBrand />
             },
         ]
     }

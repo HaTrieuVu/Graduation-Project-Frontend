@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
 
-import axios from 'axios';
-import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
 import { IoReloadSharp } from "react-icons/io5";
 import { toast } from 'react-toastify';
-import ModalSupplier from './ModalSupplier';
+import axios from 'axios';
+import ModalDelete from '../../components/ModalDelete/ModalDelete';
+import ModalBrand from './ModalBrand';
 
-import "./ManageSupplier.scss"
+import "./ManageBrand.scss"
 
-const ManageSupplier = () => {
-    const [listSupplier, setListSupplier] = useState([])
+const ManageBrand = () => {
+    const [listBrand, setListBrand] = useState([])
 
     const [currentPage, setCurrentPage] = useState(1);
     const currentLimit = 5
@@ -21,18 +21,18 @@ const ManageSupplier = () => {
     const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa ncc
     const [isShowModelDelete, setIsShowModelDelete] = useState(false)
     const [dataModal, setDataModal] = useState({})  // data của modal delete
-    const [actionModalSupplier, setActionModalSupplier] = useState("") //state action create or update
-    const [dataModalSupplier, setDataModalSupplier] = useState({})
+    const [actionModaBrand, setActionModalBrand] = useState("") //state action create or update
+    const [dataModalBrand, setDataModalBrand] = useState({})
 
     useEffect(() => {
-        fetchAllSupplier()
+        fetchAllBrand()
     }, [currentPage])
 
-    const fetchAllSupplier = async () => {
-        let respone = await axios.get(`/manage-supplier/get-all?page=${currentPage}&limit=${currentLimit}`)
+    const fetchAllBrand = async () => {
+        let respone = await axios.get(`/manage-brand/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
-            setListSupplier(respone?.data?.data?.suppliers)
+            setListBrand(respone?.data?.data?.brands)
         }
     }
 
@@ -40,19 +40,19 @@ const ManageSupplier = () => {
         setCurrentPage(+event.selected + 1)
     };
 
-    // hàm xóa supplier (mở modal xóa supplier)
-    const handleDeleteSupplier = async (supplier) => {
-        setDataModal(supplier)
+    // hàm xóa brand (mở modal xóa brand)
+    const handleDeleteSupplier = async (brand) => {
+        setDataModal(brand)
         setIsShowModelDelete(true)
     };
 
-    // hàm xác nhận xóa supplier
+    // hàm xác nhận xóa brand
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/manage-supplier/delete", { data: { id: dataModal?.PK_iNhaCungCapID } });
+            let response = await axios.delete("/manage-brand/delete", { data: { id: dataModal?.PK_iNhanHangID } });
             if (response?.data?.errorCode === 0) {
-                toast.success("Xóa Nhà cung cấp thành công!")
-                await fetchAllSupplier()
+                toast.success("Xóa Nhãn hàng thành công!")
+                await fetchAllBrand()
                 setIsShowModelDelete(false)
             } else {
                 toast.error("Xóa thất bại! Vui lòng thử lại.")
@@ -63,13 +63,13 @@ const ManageSupplier = () => {
         }
     }
 
-    // hàm đóng modal xóa supplier
+    // hàm đóng modal xóa brand
     const handleCloseModalDelete = () => {
         setIsShowModelDelete(false);
         setDataModal({})
     }
 
-    // hàm đóng modal thêm or sửa supplier
+    // hàm đóng modal thêm or sửa brand
     const handleCloseModal = () => {
         setIsShowModel(false)
     }
@@ -77,24 +77,24 @@ const ManageSupplier = () => {
     const handleCreateOrUpdateUser = (action, data) => {
         if (action === "UPDATE") {
             setIsShowModel(true)
-            setActionModalSupplier(action)
+            setActionModalBrand(action)
             if (data) {
-                setDataModalSupplier(data)
+                setDataModalBrand(data)
             }
         } else {
             setIsShowModel(true)
-            setActionModalSupplier(action)
-            setDataModalSupplier({})
+            setActionModalBrand(action)
+            setDataModalBrand({})
         }
 
     }
 
     return (
-        <main className='manage-supplier-container'>
-            <h2 className='title'>Quản lý Nhà cung cấp</h2>
-            <div className='supplier-header'>
-                <div className='supplier-title'>
-                    <h3>Danh sách Nhà cung cấp</h3>
+        <main className='manage-brand-container'>
+            <h2 className='title'>Quản lý Nhãn hàng</h2>
+            <div className='brand-header'>
+                <div className='brand-title'>
+                    <h3>Danh sách Nhãn hàng</h3>
                 </div>
                 <div className='actions'>
                     <button className='btn btn-primary' onClick={() => handleCreateOrUpdateUser("CREATE")} >
@@ -111,30 +111,33 @@ const ManageSupplier = () => {
                     </button>
                 </div>
             </div>
-            <div className='supplier-body'>
+            <div className='brand-body'>
                 <table className="table table-hover table-bordered fs-20">
                     <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">Mã Nhà cung cấp</th>
-                            <th scope="col">Tên nhà cung cấp</th>
-                            <th scope="col">Địa chỉ NCC</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Mã Nhãn hàng</th>
+                            <th scope="col">Tên Nhãn hàng</th>
+                            <th scope="col">Logo</th>
+                            <th scope="col">Mô tả</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {listSupplier?.length > 0 ?
-                            listSupplier.map((item, i) => {
+                        {listBrand?.length > 0 ?
+                            listBrand.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iNhaCungCapID}>
+                                    <tr key={item?.PK_iNhanHangID}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
-                                        <td>{item?.PK_iNhaCungCapID}</td>
-                                        <td>{item?.sTenNhaCungCap}</td>
-                                        <td>{item?.sDiaChi}</td>
-                                        <td>{item?.sEmail}</td>
-                                        <td>{item?.sSoDienThoai}</td>
+                                        <td>{item?.PK_iNhanHangID}</td>
+                                        <td>{item?.sTenNhanHang}</td>
+                                        <td className='box-logo'>
+                                            <img
+                                                src={item?.sLogo}
+                                                alt="img"
+                                            />
+                                        </td>
+                                        <td>{item?.sMoTa}</td>
                                         <td className='btn-action'>
                                             <button onClick={() => handleCreateOrUpdateUser("UPDATE", item)} title='Sửa'><FaRegEdit /></button>
                                             <button onClick={() => handleDeleteSupplier(item)} title='Xóa'><FaRegTrashCan /></button>
@@ -142,11 +145,11 @@ const ManageSupplier = () => {
                                     </tr>
                                 )
                             })
-                            : <tr><td>Danh sách Nhà cung cấp trống</td></tr>}
+                            : <tr><td>Danh sách Nhãn hàng trống</td></tr>}
                     </tbody>
                 </table>
             </div>
-            {totalPage > 0 && <div className='supplier-footer'>
+            {totalPage > 0 && <div className='brand-footer'>
                 <ReactPaginate
                     nextLabel="next >"
                     onPageChange={handlePageClick}
@@ -169,20 +172,20 @@ const ManageSupplier = () => {
                 />
             </div>}
             <ModalDelete show={isShowModelDelete}
-                title={"nguời dùng"}
-                name={dataModal.sTenNhaCungCap}
+                title={"nhãn hàng"}
+                name={dataModal.sTenNhanHang}
                 handleCloseModalDelete={handleCloseModalDelete}
                 confirmDeleteUser={confirmDeleteUser}
             />
-            <ModalSupplier
+            <ModalBrand
                 show={isShowModel}
                 handleCloseModal={handleCloseModal}
-                action={actionModalSupplier}
-                dataModalSupplier={dataModalSupplier}
-                fetchAllSupplier={fetchAllSupplier}
+                action={actionModaBrand}
+                dataModalBrand={dataModalBrand}
+                fetchAllBrand={fetchAllBrand}
             />
         </main>
     )
 }
 
-export default ManageSupplier
+export default ManageBrand
