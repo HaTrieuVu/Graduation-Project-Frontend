@@ -1,40 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import axios from "axios"
 
-import "./ManageUser.scss"
+import axios from 'axios';
+import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
 import { IoReloadSharp } from "react-icons/io5";
 import { toast } from 'react-toastify';
-import ModalDelete from '../../components/ModalDelete/ModalDelete';
-import ModalUser from './ModalUser';
+import ModalSupplier from './ModalSupplier';
 
+import "./ManageSupplier.scss"
 
-const ManageUser = () => {
-    const [listUser, setListUser] = useState([])
+const ManageSupplier = () => {
+    const [listSupplier, setListSupplier] = useState([])
 
     const [currentPage, setCurrentPage] = useState(1);
-    // const [currentLimit, setCurrentLimit] = useState(4);
-    const currentLimit = 3
+    const currentLimit = 5
     const [totalPage, setTotalPage] = useState(0)
 
-    const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa user
+    const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa ncc
     const [isShowModelDelete, setIsShowModelDelete] = useState(false)
     const [dataModal, setDataModal] = useState({})  // data của modal delete
     const [actionModalUser, setActionModalUser] = useState("") //state action create or update
-    const [dataModalUser, setDataModalUser] = useState({})
-
+    const [dataModalSupplier, setDataModalSupplier] = useState({})
 
     useEffect(() => {
-        fetchAllUser()
+        fetchAllSupplier()
     }, [currentPage])
 
-    const fetchAllUser = async () => {
-        let respone = await axios.get(`/user/get-all?page=${currentPage}&limit=${currentLimit}`)
+    const fetchAllSupplier = async () => {
+        let respone = await axios.get(`/manage-supplier/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
-            setListUser(respone?.data?.data?.users)
+            setListSupplier(respone?.data?.data?.suppliers)
         }
     }
 
@@ -42,37 +40,36 @@ const ManageUser = () => {
         setCurrentPage(+event.selected + 1)
     };
 
-    // hàm xóa user (mở modal xóa user)
-    const handleDeleteUser = async (user) => {
-        setDataModal(user)
+    // hàm xóa supplier (mở modal xóa supplier)
+    const handleDeleteSupplier = async (supplier) => {
+        setDataModal(supplier)
         setIsShowModelDelete(true)
     };
 
-    // hàm xác nhận xóa user
+    // hàm xác nhận xóa supplier
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/user/delete", { data: { id: dataModal?.PK_iKhachHangID } });
+            let response = await axios.delete("/manage-supplier/delete", { data: { id: dataModal?.PK_iNhaCungCapID } });
             if (response?.data?.errorCode === 0) {
-                toast.success("Xóa người dùng thành công!")
-                console.log("ok")
-                await fetchAllUser()
+                toast.success("Xóa Nhà cung cấp thành công!")
+                await fetchAllSupplier()
                 setIsShowModelDelete(false)
             } else {
                 toast.error("Xóa thất bại! Vui lòng thử lại.")
             }
         } catch (error) {
-            console.error("Lỗi khi xóa người dùng:", error);
+            console.error("Lỗi khi xóa ncc", error);
             toast.error("Xóa thất bại! Vui lòng thử lại.")
         }
     }
 
-    // hàm đóng modal xóa user
+    // hàm đóng modal xóa supplier
     const handleCloseModalDelete = () => {
         setIsShowModelDelete(false);
         setDataModal({})
     }
 
-    // hàm đóng modal thêm or sửa user
+    // hàm đóng modal thêm or sửa supplier
     const handleCloseModal = () => {
         setIsShowModel(false)
     }
@@ -82,22 +79,22 @@ const ManageUser = () => {
             setIsShowModel(true)
             setActionModalUser(action)
             if (data) {
-                setDataModalUser(data)
+                setDataModalSupplier(data)
             }
         } else {
             setIsShowModel(true)
             setActionModalUser(action)
-            setDataModalUser({})
+            setDataModalSupplier({})
         }
 
     }
 
     return (
-        <main className='manage-user-container'>
-            <h2 className='title'>Quản lý Khách hàng</h2>
-            <div className='user-header'>
-                <div className='user-title'>
-                    <h3>Danh sách khách hàng</h3>
+        <main className='manage-supplier-container'>
+            <h2 className='title'>Quản lý Nhà cung cấp</h2>
+            <div className='supplier-header'>
+                <div className='supplier-title'>
+                    <h3>Danh sách Nhà cung cấp</h3>
                 </div>
                 <div className='actions'>
                     <button className='btn btn-primary' onClick={() => handleCreateOrUpdateUser("CREATE")} >
@@ -114,44 +111,42 @@ const ManageUser = () => {
                     </button>
                 </div>
             </div>
-            <div className='user-body'>
+            <div className='supplier-body'>
                 <table className="table table-hover table-bordered fs-20">
                     <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">Mã khách hàng</th>
-                            <th scope="col">Họ tên</th>
-                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Mã Nhà cung cấp</th>
+                            <th scope="col">Tên nhà cung cấp</th>
+                            <th scope="col">Địa chỉ NCC</th>
                             <th scope="col">Email</th>
                             <th scope="col">Số điện thoại</th>
-                            <th scope="col">Role</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {listUser?.length > 0 ?
-                            listUser.map((item, i) => {
+                        {listSupplier?.length > 0 ?
+                            listSupplier.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iKhachHangID}>
+                                    <tr key={item?.PK_iNhaCungCapID}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
-                                        <td>{item?.PK_iKhachHangID}</td>
-                                        <td>{item?.sHoTen}</td>
+                                        <td>{item?.PK_iNhaCungCapID}</td>
+                                        <td>{item?.sTenNhaCungCap}</td>
                                         <td>{item?.sDiaChi}</td>
                                         <td>{item?.sEmail}</td>
                                         <td>{item?.sSoDienThoai}</td>
-                                        <td>{item?.role?.sMoTa}</td>
                                         <td className='btn-action'>
                                             <button onClick={() => handleCreateOrUpdateUser("UPDATE", item)} title='Sửa'><FaRegEdit /></button>
-                                            <button onClick={() => handleDeleteUser(item)} title='Xóa'><FaRegTrashCan /></button>
+                                            <button onClick={() => handleDeleteSupplier(item)} title='Xóa'><FaRegTrashCan /></button>
                                         </td>
                                     </tr>
                                 )
                             })
-                            : <tr><td>Danh sách khách hàng trống</td></tr>}
+                            : <tr><td>Danh sách Nhà cung cấp trống</td></tr>}
                     </tbody>
                 </table>
             </div>
-            {totalPage > 0 && <div className='user-footer'>
+            {totalPage > 0 && <div className='supplier-footer'>
                 <ReactPaginate
                     nextLabel="next >"
                     onPageChange={handlePageClick}
@@ -175,19 +170,19 @@ const ManageUser = () => {
             </div>}
             <ModalDelete show={isShowModelDelete}
                 title={"nguời dùng"}
-                name={dataModal.sHoTen}
+                name={dataModal.sTenNhaCungCap}
                 handleCloseModalDelete={handleCloseModalDelete}
                 confirmDeleteUser={confirmDeleteUser}
             />
-            <ModalUser
+            <ModalSupplier
                 show={isShowModel}
                 handleCloseModal={handleCloseModal}
                 action={actionModalUser}
-                dataModalUser={dataModalUser}
-                fetchAllUser={fetchAllUser}
+                dataModalSupplier={dataModalSupplier}
+                fetchAllSupplier={fetchAllSupplier}
             />
         </main>
     )
 }
 
-export default ManageUser
+export default ManageSupplier

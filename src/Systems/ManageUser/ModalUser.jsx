@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import "./ModalUser.scss"
 
 const ModalUser = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser }) => {
-    console.log(fetchAllUser)
+
     const [listRole, setListRole] = useState([])
     const [userData, setUserData] = useState({
         id: "",

@@ -31,7 +31,17 @@ const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
                 </li>
                 <li className='sidebar-list-item'>
                     <Link to={"/admin/manage-user"}>
-                        <BsPeopleFill className='icon' /> Quản lý người dùng
+                        <BsPeopleFill className='icon' /> QL Người dùng
+                    </Link>
+                </li>
+                <li className='sidebar-list-item'>
+                    <Link to={"/admin/manage-user"}>
+                        <BsPeopleFill className='icon' /> QL Nhãn hàng
+                    </Link>
+                </li>
+                <li className='sidebar-list-item'>
+                    <Link to={"/admin/manage-supplier"}>
+                        <BsPeopleFill className='icon' /> QL Nhà cung cấp
                     </Link>
                 </li>
                 <li className='sidebar-list-item'>
