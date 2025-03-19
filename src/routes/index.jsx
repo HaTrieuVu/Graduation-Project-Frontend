@@ -15,6 +15,7 @@ import ManageUser from "../Systems/ManageUser/ManageUser";
 import ManageSupplier from "../Systems/ManageSupplier/ManageSupplier";
 import ManageBrand from "../Systems/ManageBrand/ManageBrand";
 import ManageCategory from "../Systems/ManageCategory/ManageCategory";
+import ManageProduct from "../Systems/ManageProduct/ManageProduct";
 
 
 const router = createBrowserRouter([
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
             {
                 path: "/admin/manage-user",
                 element: <ManageUser />
+            },
+            {
+                path: "/admin/manage-product",
+                element: <ManageProduct />
             },
             {
                 path: "/admin/manage-supplier",

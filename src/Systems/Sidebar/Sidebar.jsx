@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import "./Sidebar.scss"
 import {
     BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill,
-    BsListCheck, BsMenuButtonWideFill, BsFillGearFill
+    BsChevronDown
 }
     from 'react-icons/bs'
+import { AiOutlineProduct } from "react-icons/ai";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { TbBrand4Chan } from "react-icons/tb";
+import { RiImageAiFill } from "react-icons/ri";
 import { Link } from 'react-router-dom'
 
 const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
             <div className='sidebar-title'>
@@ -34,9 +38,38 @@ const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
                         <BsPeopleFill className='icon' /> QL Người dùng
                     </Link>
                 </li>
+                {/* Dropdown QL Sản phẩm */}
+                <li className='sidebar-list-item-dropdown'>
+                    <button
+                        className="dropdown-btn"
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        <BsFillArchiveFill className='icon' /> QL Sản phẩm
+                        <BsChevronDown className={`dropdown-icon icon ${isOpen ? "rotate" : ""}`} />
+                    </button>
+                    {isOpen && (
+                        <ul className="dropdown-content">
+                            <li>
+                                <Link to="/admin/manage-product">
+                                    <AiOutlineProduct className='icon' /> QL Sản phẩm
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/add-product">
+                                    <TbBrand4Chan className='icon' />QL Phiên bản
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/product-category">
+                                    <RiImageAiFill className='icon' />QL Hình ảnh
+                                </Link>
+                            </li>
+                        </ul>
+                    )}
+                </li>
                 <li className='sidebar-list-item'>
                     <Link to={"/admin/manage-brand"}>
-                        <BsPeopleFill className='icon' /> QL Nhãn hàng
+                        <TbBrand4Chan className='icon' /> QL Nhãn hàng
                     </Link>
                 </li>
                 <li className='sidebar-list-item'>
@@ -44,30 +77,10 @@ const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
                         <BsPeopleFill className='icon' /> QL Nhà cung cấp
                     </Link>
                 </li>
-                <li className='sidebar-list-item'>
-                    <Link to={""}>
-                        <BsFillArchiveFill className='icon' /> Products
-                    </Link>
-                </li>
+
                 <li className='sidebar-list-item'>
                     <Link to={"/admin/manage-category"}>
                         <BsFillGrid3X3GapFill className='icon' /> QL Danh mục sản phẩm
-                    </Link>
-                </li>
-
-                <li className='sidebar-list-item'>
-                    <Link to={""}>
-                        <BsListCheck className='icon' /> Inventory
-                    </Link>
-                </li>
-                <li className='sidebar-list-item'>
-                    <Link to={""}>
-                        <BsMenuButtonWideFill className='icon' /> Reports
-                    </Link>
-                </li>
-                <li className='sidebar-list-item'>
-                    <Link to={""}>
-                        <BsFillGearFill className='icon' /> Setting
                     </Link>
                 </li>
             </ul>

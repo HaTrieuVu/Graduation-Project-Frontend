@@ -1,21 +1,21 @@
-.custom-modal {
+.custom-modal-delete {
     .modal-dialog {
         max-width: 500px; /* Định kích thước modal */
         height: 250px;
         .modal-content {
-            height: 30%;
-            .custom-modal-header {
+            height: 40%;
+            .custom-modal-delete-header {
                 .modal-title {
                     font-size: 25px;
                 }
             }
-            .custom-modal-body {
+            .custom-modal-delete-body {
                 font-size: 20px;
                 .red {
                     color: red;
                 }
             }
-            .custom-modal-footer {
+            .custom-modal-delete-footer {
                 button {
                     font-size: 20px;
                 }

@@ -45,11 +45,42 @@
                 text-decoration: none;
                 color: white;
             }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                cursor: pointer;
+            }
         }
 
-        .sidebar-list-item:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
+        .sidebar-list-item-dropdown {
+            padding: 10px 20px 10px 20px;
+            font-size: 18px;
+
+            .dropdown-btn {
+                color: white;
+                height: 50px;
+                .dropdown-icon {
+                    margin-left: 6px;
+                }
+            }
+
+            .dropdown-content {
+                margin-top: 12px;
+
+                a {
+                    padding: 0 10px;
+                    display: flex;
+                    align-items: center;
+                    height: 50px;
+                    text-decoration: none;
+                    color: white;
+
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.2);
+                        cursor: pointer;
+                    }
+                }
+            }
         }
     }
 }
