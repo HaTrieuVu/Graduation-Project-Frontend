@@ -55,7 +55,7 @@ const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/admin/add-product">
+                                <Link to="/admin/manage-product-version">
                                     <TbBrand4Chan className='icon' />QL Phiên bản
                                 </Link>
                             </li>
