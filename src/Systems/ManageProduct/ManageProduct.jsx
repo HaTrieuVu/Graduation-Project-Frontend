@@ -6,6 +6,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
 import { IoReloadSharp } from "react-icons/io5";
+import { BsSearch } from 'react-icons/bs'
 import { toast } from 'react-toastify';
 
 import "./ManageProduct.scss"
@@ -13,6 +14,7 @@ import ModalProduct from './ModalProduct';
 
 const ManageProduct = () => {
     const [listProduct, setListProduct] = useState([])
+    const [keywordSearch, setKeywordSearch] = useState("")
 
     const [currentPage, setCurrentPage] = useState(1);
     const currentLimit = 5
@@ -89,9 +91,21 @@ const ManageProduct = () => {
 
     }
 
+    const handleSearch = (e) => {
+        setKeywordSearch(e.target.value)
+    }
+
+    console.log(keywordSearch)
+
     return (
         <main className='manage-product-container'>
             <h2 className='title'>Quản lý Sản phẩm</h2>
+            <div className='product-search'>
+                <div className='product-search-body'>
+                    <BsSearch className='icon' />
+                    <input type="text" placeholder='Tên sản phẩm...' onChange={(e) => handleSearch(e)} />
+                </div>
+            </div>
             <div className='product-header'>
                 <div className='product-title'>
                     <h3>Danh sách Sản phẩm</h3>
@@ -129,7 +143,7 @@ const ManageProduct = () => {
                         {listProduct?.length > 0 ?
                             listProduct.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iSanPhamID}>
+                                    <tr key={item?.PK_iSanPhamID - "product-key" - i}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
                                         <td>{item?.PK_iSanPhamID}</td>
                                         <td>{item?.sTenSanPham}</td>

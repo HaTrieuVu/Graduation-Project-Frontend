@@ -1,40 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import axios from "axios"
 
-import "./ManageUser.scss"
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
 import { IoReloadSharp } from "react-icons/io5";
 import { toast } from 'react-toastify';
+import axios from 'axios';
 import ModalDelete from '../../components/ModalDelete/ModalDelete';
-import ModalUser from './ModalUser';
+import ModalProductImage from './ModalProductImage';
 
+import "./ManageProductImage.scss"
 
-const ManageUser = () => {
-    const [listUser, setListUser] = useState([])
+const ManageProductImage = () => {
+    const [listProductImage, setListProductImage] = useState([])
 
     const [currentPage, setCurrentPage] = useState(1);
-    // const [currentLimit, setCurrentLimit] = useState(4);
-    const currentLimit = 3
+    const currentLimit = 5
     const [totalPage, setTotalPage] = useState(0)
 
-    const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa user
+    const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa ncc
     const [isShowModelDelete, setIsShowModelDelete] = useState(false)
     const [dataModal, setDataModal] = useState({})  // data của modal delete
-    const [actionModalUser, setActionModalUser] = useState("") //state action create or update
-    const [dataModalUser, setDataModalUser] = useState({})
-
+    const [actionModaProductImage, setActionModalProductImage] = useState("") //state action create or update
+    const [dataModalProductImage, setDataModalProductImage] = useState({})
 
     useEffect(() => {
-        fetchAllUser()
+        fetchAllProductImage()
     }, [currentPage])
 
-    const fetchAllUser = async () => {
-        let respone = await axios.get(`/user/get-all?page=${currentPage}&limit=${currentLimit}`)
+    const fetchAllProductImage = async () => {
+        let respone = await axios.get(`/manage-product-image/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
-            setListUser(respone?.data?.data?.users)
+            setListProductImage(respone?.data?.data?.productImages)
         }
     }
 
@@ -42,37 +40,36 @@ const ManageUser = () => {
         setCurrentPage(+event.selected + 1)
     };
 
-    // hàm xóa user (mở modal xóa user)
-    const handleDeleteUser = async (user) => {
-        setDataModal(user)
+    // hàm xóa sản phẩm - hình ảnh (mở modal xóa sản phẩm - hình ảnh)
+    const handleDeleteBrand = async (productImage) => {
+        setDataModal(productImage)
         setIsShowModelDelete(true)
     };
 
-    // hàm xác nhận xóa user
+    // hàm xác nhận xóa sản phẩm - hình ảnh
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/user/delete", { data: { id: dataModal?.PK_iKhachHangID } });
+            let response = await axios.delete("/manage-product-image/delete", { data: { id: dataModal?.PK_iHinhAnhID } });
             if (response?.data?.errorCode === 0) {
-                toast.success("Xóa người dùng thành công!")
-                console.log("ok")
-                await fetchAllUser()
+                toast.success("Xóa Nhãn hàng thành công!")
+                await fetchAllProductImage()
                 setIsShowModelDelete(false)
             } else {
                 toast.error("Xóa thất bại! Vui lòng thử lại.")
             }
         } catch (error) {
-            console.error("Lỗi khi xóa người dùng:", error);
+            console.error("Lỗi khi xóa ncc", error);
             toast.error("Xóa thất bại! Vui lòng thử lại.")
         }
     }
 
-    // hàm đóng modal xóa user
+    // hàm đóng modal xóa sản phẩm - hình ảnh
     const handleCloseModalDelete = () => {
         setIsShowModelDelete(false);
         setDataModal({})
     }
 
-    // hàm đóng modal thêm or sửa user
+    // hàm đóng modal thêm or sửa sản phẩm - hình ảnh
     const handleCloseModal = () => {
         setIsShowModel(false)
     }
@@ -80,24 +77,24 @@ const ManageUser = () => {
     const handleCreateOrUpdateUser = (action, data) => {
         if (action === "UPDATE") {
             setIsShowModel(true)
-            setActionModalUser(action)
+            setActionModalProductImage(action)
             if (data) {
-                setDataModalUser(data)
+                setDataModalProductImage(data)
             }
         } else {
             setIsShowModel(true)
-            setActionModalUser(action)
-            setDataModalUser({})
+            setActionModalProductImage(action)
+            setDataModalProductImage({})
         }
 
     }
 
     return (
-        <main className='manage-user-container'>
-            <h2 className='title'>Quản lý Khách hàng</h2>
-            <div className='user-header'>
-                <div className='user-title'>
-                    <h3>Danh sách khách hàng</h3>
+        <main className='manage-product-image-container'>
+            <h2 className='title'>Quản lý Sản phẩm</h2>
+            <div className='product-image-header'>
+                <div className='product-image-title'>
+                    <h3>Danh sách Sản phẩm - Hình ảnh</h3>
                 </div>
                 <div className='actions'>
                     <button className='btn btn-primary' onClick={() => handleCreateOrUpdateUser("CREATE")} >
@@ -114,44 +111,45 @@ const ManageUser = () => {
                     </button>
                 </div>
             </div>
-            <div className='user-body'>
+            <div className='product-image-body'>
                 <table className="table table-hover table-bordered fs-20">
                     <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">Mã khách hàng</th>
-                            <th scope="col">Họ tên</th>
-                            <th scope="col">Địa chỉ</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Số điện thoại</th>
-                            <th scope="col">Role</th>
+                            <th scope="col">Mã Hình ảnh</th>
+                            <th scope="col">Tên Sản phẩm</th>
+                            <th scope="col">Hình ảnh</th>
+                            <th scope="col">Mô tả</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {listUser?.length > 0 ?
-                            listUser.map((item, i) => {
+                        {listProductImage?.length > 0 ?
+                            listProductImage.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iKhachHangID - "customer"}>
+                                    <tr key={item?.PK_iHinhAnhID - "productImageKey"}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
-                                        <td>{item?.PK_iKhachHangID}</td>
-                                        <td>{item?.sHoTen}</td>
-                                        <td>{item?.sDiaChi}</td>
-                                        <td>{item?.sEmail}</td>
-                                        <td>{item?.sSoDienThoai}</td>
-                                        <td>{item?.role?.sMoTa}</td>
+                                        <td>{item?.PK_iHinhAnhID}</td>
+                                        <td>{item?.product?.sTenSanPham}</td>
+                                        <td className='box-image'>
+                                            <img
+                                                src={item?.sUrl}
+                                                alt="img"
+                                            />
+                                        </td>
+                                        <td>{item?.sMoTa}</td>
                                         <td className='btn-action'>
                                             <button onClick={() => handleCreateOrUpdateUser("UPDATE", item)} title='Sửa'><FaRegEdit /></button>
-                                            <button onClick={() => handleDeleteUser(item)} title='Xóa'><FaRegTrashCan /></button>
+                                            <button onClick={() => handleDeleteBrand(item)} title='Xóa'><FaRegTrashCan /></button>
                                         </td>
                                     </tr>
                                 )
                             })
-                            : <tr><td>Danh sách khách hàng trống</td></tr>}
+                            : <tr><td>Danh sách Nhãn hàng trống</td></tr>}
                     </tbody>
                 </table>
             </div>
-            {totalPage > 0 && <div className='user-footer'>
+            {totalPage > 0 && <div className='product-image-footer'>
                 <ReactPaginate
                     nextLabel="next >"
                     onPageChange={handlePageClick}
@@ -174,20 +172,20 @@ const ManageUser = () => {
                 />
             </div>}
             <ModalDelete show={isShowModelDelete}
-                title={"nguời dùng"}
-                name={dataModal.sHoTen}
+                title={"sản phẩm - hình ảnh"}
+                name={dataModal?.product?.sTenSanPham}
                 handleCloseModalDelete={handleCloseModalDelete}
                 confirmDeleteUser={confirmDeleteUser}
             />
-            <ModalUser
+            <ModalProductImage
                 show={isShowModel}
                 handleCloseModal={handleCloseModal}
-                action={actionModalUser}
-                dataModalUser={dataModalUser}
-                fetchAllUser={fetchAllUser}
+                action={actionModaProductImage}
+                dataModalProductImage={dataModalProductImage}
+                fetchAllProductImage={fetchAllProductImage}
             />
         </main>
     )
 }
 
-export default ManageUser
+export default ManageProductImage

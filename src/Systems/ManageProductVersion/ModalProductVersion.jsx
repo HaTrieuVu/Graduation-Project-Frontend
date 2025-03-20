@@ -162,7 +162,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                                 <option value="">Chọn sản phẩm</option>
                                 {
                                     listProduct?.length > 0 && listProduct.map((item) => (
-                                        <option key={`product-${item?.PK_iSanPhamID}`} value={item?.PK_iSanPhamID}>{item?.sTenSanPham}</option>
+                                        <option key={`product-version-${item?.PK_iSanPhamID}`} value={item?.PK_iSanPhamID}>{item?.sTenSanPham}</option>
                                     ))
                                 }
                             </select>

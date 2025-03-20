@@ -180,7 +180,7 @@ const ModalProduct = ({ action, show, handleCloseModal, dataModalProduct, fetchA
                                 <option value="">Chọn</option>
                                 {
                                     listCategory?.length > 0 && listCategory.map((item) => (
-                                        <option key={`category-${item?.PK_iDanhMucID}`} value={item?.PK_iDanhMucID}>{item?.sTenDanhMuc}</option>
+                                        <option key={`category-product-${item?.PK_iDanhMucID}`} value={item?.PK_iDanhMucID}>{item?.sTenDanhMuc}</option>
                                     ))
                                 }
                             </select>
@@ -192,7 +192,7 @@ const ModalProduct = ({ action, show, handleCloseModal, dataModalProduct, fetchA
                                 <option value="">Chọn</option>
                                 {
                                     listBrand?.length > 0 && listBrand.map((item) => (
-                                        <option key={`brand-${item?.PK_iNhanHangID}`} value={item?.PK_iNhanHangID}>{item?.sTenNhanHang}</option>
+                                        <option key={`brand-product-${item?.PK_iNhanHangID}`} value={item?.PK_iNhanHangID}>{item?.sTenNhanHang}</option>
                                     ))
                                 }
                             </select>

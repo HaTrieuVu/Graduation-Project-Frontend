@@ -128,7 +128,7 @@ const ManageSupplier = () => {
                         {listSupplier?.length > 0 ?
                             listSupplier.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iNhaCungCapID}>
+                                    <tr key={item?.PK_iNhaCungCapID - "supplier"}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
                                         <td>{item?.PK_iNhaCungCapID}</td>
                                         <td>{item?.sTenNhaCungCap}</td>

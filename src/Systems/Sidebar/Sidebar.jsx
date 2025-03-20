@@ -60,7 +60,7 @@ const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/admin/product-category">
+                                <Link to="/admin/manage-product-image">
                                     <RiImageAiFill className='icon' />QL Hình ảnh
                                 </Link>
                             </li>

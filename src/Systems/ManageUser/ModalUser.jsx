@@ -242,7 +242,7 @@ const ModalUser = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser
                             <select value={userData.role} onChange={(e) => handleChangeSelect(e)} className='form-select'>
                                 {
                                     listRole?.length > 0 && listRole.map((item) => (
-                                        <option key={`role-${item?.PK_iQuyenHanID}`} value={item?.PK_iQuyenHanID}>{item?.sMoTa}</option>
+                                        <option key={`role-user-${item?.PK_iQuyenHanID}`} value={item?.PK_iQuyenHanID}>{item?.sMoTa}</option>
                                     ))
                                 }
                             </select>

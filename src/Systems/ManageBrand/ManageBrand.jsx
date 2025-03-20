@@ -127,7 +127,7 @@ const ManageBrand = () => {
                         {listBrand?.length > 0 ?
                             listBrand.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iNhanHangID}>
+                                    <tr key={item?.PK_iNhanHangID - "brand"}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
                                         <td>{item?.PK_iNhanHangID}</td>
                                         <td>{item?.sTenNhanHang}</td>

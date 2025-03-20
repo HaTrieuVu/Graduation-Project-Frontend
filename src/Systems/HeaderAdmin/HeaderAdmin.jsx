@@ -4,6 +4,8 @@ import "./HeaderAdmin.scss"
 import { BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify }
     from 'react-icons/bs'
 
+import img from "../../assets/admin.png"
+
 const HeaderAdmin = ({ OpenSidebar }) => {
     return (
         <header className='header-admin'>
@@ -11,7 +13,7 @@ const HeaderAdmin = ({ OpenSidebar }) => {
                 <BsJustify className='icon' onClick={OpenSidebar} />
             </div>
             <div className='header-left'>
-                <BsSearch className='icon' />
+                <img src={img} alt="imgAdmin" />
             </div>
             <div className='header-right'>
                 <BsFillBellFill className='icon' />
