@@ -15,7 +15,7 @@ const ManageProductImage = () => {
     const [listProductImage, setListProductImage] = useState([])
 
     const [currentPage, setCurrentPage] = useState(1);
-    const currentLimit = 5
+    const currentLimit = 4
     const [totalPage, setTotalPage] = useState(0)
 
     const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa ncc

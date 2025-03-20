@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import "./Sidebar.scss"
+import "./SidebarAdmin.scss"
 import {
     BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill,
     BsChevronDown
@@ -12,7 +12,7 @@ import { TbBrand4Chan } from "react-icons/tb";
 import { RiImageAiFill } from "react-icons/ri";
 import { Link } from 'react-router-dom'
 
-const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
+const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
@@ -88,4 +88,4 @@ const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
     )
 }
 
-export default Sidebar
+export default SidebarAdmin

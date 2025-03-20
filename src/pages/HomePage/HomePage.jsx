@@ -1,10 +1,18 @@
 import React from 'react'
 
+import HeaderSlider from '../../components/HeaderSlider/HeaderSlider'
+import "./HomePage.scss"
 
 const HomePage = () => {
 
   return (
-    <div>HomePage</div>
+    <main>
+      <div className="slider-wrapper">
+        <HeaderSlider />
+      </div>
+      <div>HomePage</div>
+    </main>
+
   )
 }
 

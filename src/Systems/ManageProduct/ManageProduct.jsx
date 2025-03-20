@@ -91,11 +91,15 @@ const ManageProduct = () => {
 
     }
 
-    const handleSearch = (e) => {
-        setKeywordSearch(e.target.value)
+    const handleSearch = async (e) => {
+        if (e.key === "Enter" && keywordSearch.trim() !== "") {
+            let respone = await axios.get(`/search-product?page=${currentPage}&limit=${currentLimit}&keywordSearch=${keywordSearch}`)
+            if (respone?.data?.data && respone?.data?.errorCode === 0) {
+                setTotalPage(respone?.data?.data?.totalPage)
+                setListProduct(respone?.data?.data?.products)
+            }
+        }
     }
-
-    console.log(keywordSearch)
 
     return (
         <main className='manage-product-container'>
@@ -103,7 +107,12 @@ const ManageProduct = () => {
             <div className='product-search'>
                 <div className='product-search-body'>
                     <BsSearch className='icon' />
-                    <input type="text" placeholder='Tên sản phẩm...' onChange={(e) => handleSearch(e)} />
+                    <input
+                        type="text"
+                        placeholder='Tên sản phẩm...'
+                        onChange={(e) => setKeywordSearch(e.target.value)}
+                        onKeyDown={(e) => handleSearch(e)}
+                    />
                 </div>
             </div>
             <div className='product-header'>
@@ -118,7 +127,7 @@ const ManageProduct = () => {
                         </span>
                     </button>
                     <button className='btn btn-success'>
-                        <span>Refesh</span>
+                        <span onClick={() => fetchAllProduct()}>Refesh</span>
                         <span>
                             <IoReloadSharp />
                         </span>

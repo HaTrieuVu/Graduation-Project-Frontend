@@ -5,12 +5,14 @@ import Footer from './components/Footer/Footer'
 import Header from './components/Header/Header'
 
 import { ToastContainer } from 'react-toastify';
+import Sidebar from './components/Sidebar/Sidebar';
 
 function App() {
 
   return (
     <main>
       <Header />
+      <Sidebar />
       <div className=''>
         <Outlet />
       </div>

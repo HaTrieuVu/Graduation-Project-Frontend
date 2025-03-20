@@ -7,6 +7,7 @@ import { MdOutlineSupportAgent } from "react-icons/md";
 import _ from "lodash"
 
 import userIcon from "../../assets/user.png"
+import Navbar from '../Navbar/Navbar';
 // import Navbar from '../Navbar/Navbar';
 
 const Header = () => {
@@ -17,8 +18,6 @@ const Header = () => {
     useEffect(() => {
         setUserInfo(user)
     }, [user])
-
-    console.log(userInfo)
 
     return (
         <div className="header text-white">
@@ -91,9 +90,9 @@ const Header = () => {
                     </div>
                 </div>
                 {/* header bottom */}
-                {/* <div className="header-cnt-bottom">
+                <div className="header-cnt-bottom">
                     <Navbar />
-                </div> */}
+                </div>
             </div>
         </div>
     );

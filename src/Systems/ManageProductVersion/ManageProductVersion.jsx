@@ -130,7 +130,7 @@ const ManageProductVersion = () => {
                         {listProductVersion?.length > 0 ?
                             listProductVersion.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iPhienBanID + "productVersion"}>
+                                    <tr key={item?.PK_iPhienBanID - "productVersion"}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
                                         <td>{item?.PK_iPhienBanID}</td>
                                         <td>{item?.productData?.sTenSanPham}</td>

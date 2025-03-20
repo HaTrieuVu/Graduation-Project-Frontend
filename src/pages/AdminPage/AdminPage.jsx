@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import HeaderAdmin from '../../Systems/HeaderAdmin/HeaderAdmin'
 import { Outlet } from 'react-router-dom'
-import Sidebar from '../../Systems/Sidebar/Sidebar'
+import SidebarAdmin from '../../Systems/SidebarAdmin/SidebarAdmin'
 
 import "./AdminPage.scss"
 import { ToastContainer } from 'react-toastify';
@@ -18,7 +18,7 @@ const AdminPage = () => {
         <div className='body-admin'>
             <div className='grid-container'>
                 <HeaderAdmin OpenSidebar={OpenSidebar} />
-                <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} />
+                <SidebarAdmin openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} />
                 <Outlet />
                 <ToastContainer
                     position="top-right"
