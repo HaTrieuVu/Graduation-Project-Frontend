@@ -3,6 +3,24 @@
 }
 .main-content {
     min-height: 100vh;
+
+    .product-footer {
+        margin: auto;
+        width: 22%;
+        .pagination {
+            .page-item {
+                &.active {
+                    .page-link {
+                        color: white;
+                    }
+                }
+                .page-link {
+                    color: black;
+                    padding: 10px 20px;
+                }
+            }
+        }
+    }
 }
 .categories {
     .categories-item {

@@ -13,7 +13,6 @@ const Sidebar = () => {
     const dispatch = useDispatch();
     const isSidebarOn = useSelector(getSidebarStatus);
     const categories = useSelector(getAllCategories);
-    console.log(categories)
 
     useEffect(() => {
         dispatch(fetchAsyncCategories());
