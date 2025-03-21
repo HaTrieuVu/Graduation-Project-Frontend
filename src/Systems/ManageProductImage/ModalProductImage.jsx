@@ -64,6 +64,7 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
     };
 
     const handleOnChangeImage = async (e) => {
+        console.log(e.target.files[0])
         let data = e.target.files;
         let file = data[0];
         if (file) {

@@ -45,7 +45,7 @@ const productSlice = createSlice({
 export const fetchAsyncProducts = createAsyncThunk(
     "products/fetch",
     async ({ page, limitProduct }) => {  // Nhận đối số dưới dạng object
-        const response = await axios.get(`/manage-product/get-all?page=${page}&limit=${limitProduct}`);
+        const response = await axios.get(`/products/get-all?page=${page}&limit=${limitProduct}`);
         if (response?.data?.errorCode === 0 && response?.data?.data?.products?.length > 0) {
             return response?.data?.data;
         }
