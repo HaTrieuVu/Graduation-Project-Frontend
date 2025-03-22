@@ -35,8 +35,6 @@ const HomePage = () => {
     }
   }, [productsResponse]);  // Chạy lại khi productsResponse thay đổi
 
-  console.log(productList)
-
   const handlePageClick = async (event) => {
     setCurrentPage(+event.selected + 1)
   };

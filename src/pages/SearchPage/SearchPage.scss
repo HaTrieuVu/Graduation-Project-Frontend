@@ -1,0 +1,27 @@
+@import '../../App.scss';
+
+.error {
+    min-height: 70vh;
+
+    .content-error {
+        margin: auto;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        h3 {
+            font-size: 35px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        .img {
+            height: 550px;
+            width: 550px;
+        }
+    }
+}
+
+.search-content {
+    .keyword {
+        color: $clr-orange;
+    }
+}
