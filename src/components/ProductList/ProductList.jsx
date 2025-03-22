@@ -6,7 +6,6 @@ const ProductList = ({ products }) => {
     return (
         <div className="product-lists grid bg-whitesmoke my-3">
             {products.map((product) => {
-                console.log(product)
                 // let discountedPrice = product.price - product.price * (product.discountPercentage / 100);
 
                 return <Product key={product.id - "productKEY"} product={product} />;

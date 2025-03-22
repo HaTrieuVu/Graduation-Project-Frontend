@@ -42,21 +42,20 @@ const productSlice = createSlice({
 });
 
 // Lấy ds sản phẩm theo phân trang (giới hạn)
-export const fetchAsyncProducts = createAsyncThunk(
-    "products/fetch",
-    async ({ page, limitProduct }) => {  // Nhận đối số dưới dạng object
-        const response = await axios.get(`/products/get-all?page=${page}&limit=${limitProduct}`);
-        if (response?.data?.errorCode === 0 && response?.data?.data?.products?.length > 0) {
-            return response?.data?.data;
-        }
+export const fetchAsyncProducts = createAsyncThunk("products/fetch", async ({ page, limitProduct }) => {
+    const response = await axios.get(`/products/get-all?page=${page}&limit=${limitProduct}`);
+    if (response?.data?.errorCode === 0 && response?.data?.data?.products?.length > 0) {
+        return response?.data?.data;
     }
+}
 );
 
-// getting the single product data with id product
+// lấy thông tin chi tiết của 1 sản phẩm theo id
 export const fetchAsyncProductSingle = createAsyncThunk('product-single/fetch', async (id) => {
-    // const response = await fetch(`${BASE_URL}products/${id}`);
-    // const data = await response.json();
-    // return data;
+    const response = await axios.get(`/product-single?id=${id}`);
+    if (response?.data?.errorCode === 0 && response?.data?.data) {
+        return response?.data?.data;
+    }
 });
 
 export const getAllProducts = (state) => state.product.products;

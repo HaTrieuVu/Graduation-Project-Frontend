@@ -8,17 +8,32 @@ import { STATUS } from '../../utils/status';
 import ReactPaginate from 'react-paginate';
 import ProductList from '../../components/ProductList/ProductList';
 import Loader from '../../components/Loader/Loader';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const currentLimit = 10;
   const [totalPage, setTotalPage] = useState(0);
   const [productList, setProductList] = useState([]);
+  const [brandList, setBrandList] = useState([])
 
   const dispatch = useDispatch();
 
   const productsResponse = useSelector(getAllProducts);
   const productStatus = useSelector(getAllProductsStatus);
+
+  const fetchGetBrand = async () => {
+    let respone = await axios.get("/manage-brand/get-all")
+    if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
+      setBrandList(respone?.data?.data)
+    }
+  }
+
+  useEffect(() => {
+    fetchGetBrand()
+  }, [])
+
 
   useEffect(() => {
     dispatch(fetchAsyncProducts({ page: currentPage, limitProduct: currentLimit }));
@@ -35,6 +50,8 @@ const HomePage = () => {
     setCurrentPage(+event.selected + 1)
   };
 
+  console.log(brandList)
+
   return (
     <main>
       <div className="slider-wrapper">
@@ -42,6 +59,14 @@ const HomePage = () => {
       </div>
       <div className="main-content bg-whitesmoke">
         <div className="container">
+          <div className='list-brand'>
+            {brandList?.map((item, i) => (
+              <Link className='list-brand_item' key={`keyBrand-${item?.PK_iNhanHangID}-${i}`} to={`${item?.PK_iNhanHangID}`}>
+                <img src={item?.sLogo} alt={item?.sTenNhanHang} />
+              </Link>
+            ))}
+          </div>
+
           <div className="categories py-5">
             <div className="categories-item">
               <div className="title-md">
