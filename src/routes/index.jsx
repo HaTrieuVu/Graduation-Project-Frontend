@@ -18,6 +18,7 @@ import ManageCategory from "../Systems/ManageCategory/ManageCategory";
 import ManageProduct from "../Systems/ManageProduct/ManageProduct";
 import ManageProductVersion from "../Systems/ManageProductVersion/ManageProductVersion";
 import ManageProductImage from "../Systems/ManageProductImage/ManageProductImage";
+import BrandProductPage from "../pages/BrandProductPage/BrandProductPage";
 
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: "/product/:id",
                 element: <ProductSinglePage />
+            },
+            {
+                path: "/brand/:id/:brandName",
+                element: <BrandProductPage />
             },
             {
                 path: "/cart",

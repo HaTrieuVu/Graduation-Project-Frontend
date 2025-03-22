@@ -42,9 +42,9 @@ const categorySlice = createSlice({
 });
 
 export const fetchAsyncCategories = createAsyncThunk('categories/fetch', async () => {
-    let respone = await axios.get("/manage-category/get-all")
-    if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
-        return respone?.data?.data;
+    let response = await axios.get("/manage-category/get-all")
+    if (response?.data?.errorCode === 0 && response?.data?.data?.length > 0) {
+        return response?.data?.data;
     }
 });
 

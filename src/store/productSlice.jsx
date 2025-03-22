@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import axios from 'axios';
 import { STATUS } from '../utils/status';
+import _ from "lodash";
 
 const initialState = {
     products: {},
@@ -53,7 +54,7 @@ export const fetchAsyncProducts = createAsyncThunk("products/fetch", async ({ pa
 // lấy thông tin chi tiết của 1 sản phẩm theo id
 export const fetchAsyncProductSingle = createAsyncThunk('product-single/fetch', async (id) => {
     const response = await axios.get(`/product-single?id=${id}`);
-    if (response?.data?.errorCode === 0 && response?.data?.data) {
+    if (response?.data?.errorCode === 0 && !_.isEmpty(response?.data?.data)) {
         return response?.data?.data;
     }
 });
