@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axios from '../../config/axios';
 import { useDispatch } from 'react-redux';
 import { setInfoUser } from '../../store/userSlice';
 
@@ -32,7 +32,7 @@ const Login = () => {
       toast.error("Hãy nhập Mật khẩu!")
       return
     }
-    let respone = await axios.post("/login", {
+    let respone = await axios.post("/api/v1/login", {
       valueLogin, password
     })
 

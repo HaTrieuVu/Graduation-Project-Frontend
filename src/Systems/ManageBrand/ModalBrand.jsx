@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Button, Modal } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../../config/axios';
 import { toast } from 'react-toastify';
 
 import './ModalBrand.scss';
@@ -96,8 +96,8 @@ const ModalBrand = ({ action, show, handleCloseModal, dataModalBrand, fetchAllBr
         if (checkValid) {
             let respone =
                 action === 'CREATE'
-                    ? await axios.post('/manage-brand/create', brandData)
-                    : await axios.put('/manage-brand/update', brandData);
+                    ? await axios.post('/api/v1/manage-brand/create', brandData)
+                    : await axios.put('/api/v1/manage-brand/update', brandData);
             if (respone?.data?.errorCode === 0) {
                 action === 'CREATE'
                     ? toast.success('Thêm mới Nhãn hàng thành công!')

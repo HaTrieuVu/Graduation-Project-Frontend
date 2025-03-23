@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { Button, Modal } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../../config/axios';
 import { toast } from 'react-toastify';
 
 import "./ModalUser.scss"
@@ -53,7 +53,7 @@ const ModalUser = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser
     }, [dataModalUser])
 
     const fetchGetRole = async () => {
-        let respone = await axios.get("/manage-role/get-all")
+        let respone = await axios.get("/api/v1/manage-role/get-all")
 
         if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
             setListRole(respone?.data?.data)
@@ -156,9 +156,9 @@ const ModalUser = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser
 
         if (checkValid) {
             let respone = action === "CREATE" ?
-                await axios.post("/user/create", userData)
+                await axios.post("/api/v1/user/create", userData)
                 :
-                await axios.put("/user/update", userData)
+                await axios.put("/api/v1/user/update", userData)
             if (respone?.data?.errorCode === 0) {
                 action === "CREATE" ? toast.success("Thêm mới người dùng thành công!") : toast.success("Câp nhật thông tin người dùng thành công!")
                 await fetchAllUser();

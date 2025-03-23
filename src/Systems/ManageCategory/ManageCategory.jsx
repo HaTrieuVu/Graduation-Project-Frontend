@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import axios from 'axios';
+import axios from '../../config/axios';
 import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
@@ -29,7 +29,7 @@ const ManageCategory = () => {
     }, [currentPage])
 
     const fetchAllCategory = async () => {
-        let respone = await axios.get(`/manage-category/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let respone = await axios.get(`/api/v1/manage-category/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
             setListCategory(respone?.data?.data?.categories)
@@ -49,7 +49,7 @@ const ManageCategory = () => {
     // hàm xác nhận xóa category
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/manage-category/delete", { data: { id: dataModal?.PK_iDanhMucID } });
+            let response = await axios.delete("/api/v1/manage-category/delete", { data: { id: dataModal?.PK_iDanhMucID } });
             if (response?.data?.errorCode === 0) {
                 toast.success("Xóa Danh mục sản phẩm thành công!")
                 await fetchAllCategory()

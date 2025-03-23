@@ -66,7 +66,7 @@ const Navbar = () => {
                                 className="form-control fs-14 input-search"
                                 onChange={(e) => handleSearchTerm(e)}
                                 onKeyDown={(e) => handleSearch(e)}
-                                placeholder="Tìm kiếm đoạn thoại..."
+                                placeholder="Tìm kiếm điện thoại..."
                             ></input>
                             <Link
                                 to={`search/${searchTerm}`}

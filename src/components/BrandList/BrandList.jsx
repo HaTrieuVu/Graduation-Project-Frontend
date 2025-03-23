@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import "./BrandList.scss"
-import axios from 'axios';
+import axios from '../../config/axios';
 import { Link } from 'react-router-dom';
 
 
@@ -10,7 +10,7 @@ const BrandList = () => {
     const [brandList, setBrandList] = useState([])
 
     const fetchGetBrand = async () => {
-        let respone = await axios.get("/manage-brand/get-all")
+        let respone = await axios.get("/api/v1/manage-brand/get-all")
         if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
             setBrandList(respone?.data?.data)
         }

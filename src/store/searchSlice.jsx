@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { STATUS } from '../utils/status';
-import axios from 'axios';
+import axios from '../config/axios';
 import _ from "lodash";
 
 const initialState = {
@@ -35,7 +35,7 @@ const searchSlice = createSlice({
 });
 
 export const fetchAsyncSearchProduct = createAsyncThunk('product-search/fetch', async (keywordSearch) => {
-    const response = await axios.get(`/products/search?page=${1}&limit=${15}&keywordSearch=${keywordSearch}`)
+    const response = await axios.get(`/api/v1/products/search?page=${1}&limit=${15}&keywordSearch=${keywordSearch}`)
     if (response?.data?.errorCode === 0 && !_.isEmpty(response?.data?.data)) {
         return response?.data?.data;
     }

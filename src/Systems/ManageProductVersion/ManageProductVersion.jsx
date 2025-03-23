@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import axios from 'axios';
+import axios from '../../config/axios';
 import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
@@ -29,7 +29,7 @@ const ManageProductVersion = () => {
     }, [currentPage])
 
     const fetchAllProductVersion = async () => {
-        let respone = await axios.get(`/manage-product-version/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let respone = await axios.get(`/api/v1/manage-product-version/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
             setListProductVersion(respone?.data?.data?.productVersions)
@@ -49,7 +49,7 @@ const ManageProductVersion = () => {
     // hàm xác nhận xóa sản phẩm
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/manage-product-version/delete", { data: { id: dataModal?.PK_iPhienBanID } });
+            let response = await axios.delete("/api/v1/manage-product-version/delete", { data: { id: dataModal?.PK_iPhienBanID } });
             if (response?.data?.errorCode === 0) {
                 toast.success("Xóa Sản phẩm - phiên bản thành công!")
                 await fetchAllProductVersion()

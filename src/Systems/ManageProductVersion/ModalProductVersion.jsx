@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Button, Modal } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../../config/axios';
 import { toast } from 'react-toastify';
 
 import './ModalProductVersion.scss';
@@ -53,7 +53,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
     }, [dataModalProductVersion]);
 
     const fetchGetProduct = async () => {
-        let respone = await axios.get("/manage-product/get-all")
+        let respone = await axios.get("/api/v1/manage-product/get-all")
         if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
             setListProduct(respone?.data?.data)
         }
@@ -122,8 +122,8 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
         if (checkValid) {
             let respone =
                 action === 'CREATE'
-                    ? await axios.post('/manage-product-version/create', productVersionData)
-                    : await axios.put('/manage-product-version/update', productVersionData);
+                    ? await axios.post('/api/v1/manage-product-version/create', productVersionData)
+                    : await axios.put('/api/v1/manage-product-version/update', productVersionData);
             if (respone?.data?.errorCode === 0) {
                 action === 'CREATE'
                     ? toast.success('Thêm mới Sản phẩm - phiên bản thành công!')

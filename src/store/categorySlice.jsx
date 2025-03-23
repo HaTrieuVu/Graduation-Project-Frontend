@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import axios from 'axios';
+import axios from '../config/axios';
 import { STATUS } from '../utils/status';
 
 const initialState = {
@@ -42,13 +42,13 @@ const categorySlice = createSlice({
 });
 
 export const fetchAsyncCategories = createAsyncThunk('categories/fetch', async () => {
-    let response = await axios.get("/manage-category/get-all")
+    let response = await axios.get("/api/v1/manage-category/get-all")
     if (response?.data?.errorCode === 0 && response?.data?.data?.length > 0) {
         return response?.data?.data;
     }
 });
 
-export const fetchAsyncProductsOfCategory = createAsyncThunk('category-products/fetch', async (category) => {
+export const fetchAsyncProductsOfCategory = createAsyncThunk('category-products/fetch', async () => {
     // const response = await fetch(`${BASE_URL}products/category/${category}`);
     // const data = await response.json();
     // return data.products;

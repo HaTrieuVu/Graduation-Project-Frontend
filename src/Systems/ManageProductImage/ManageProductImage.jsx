@@ -5,7 +5,7 @@ import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
 import { IoReloadSharp } from "react-icons/io5";
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axios from '../../config/axios';
 import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import ModalProductImage from './ModalProductImage';
 
@@ -29,7 +29,7 @@ const ManageProductImage = () => {
     }, [currentPage])
 
     const fetchAllProductImage = async () => {
-        let respone = await axios.get(`/manage-product-image/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let respone = await axios.get(`/api/v1/manage-product-image/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
             setListProductImage(respone?.data?.data?.productImages)
@@ -49,7 +49,7 @@ const ManageProductImage = () => {
     // hàm xác nhận xóa sản phẩm - hình ảnh
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/manage-product-image/delete", { data: { id: dataModal?.PK_iHinhAnhID } });
+            let response = await axios.delete("/api/v1/manage-product-image/delete", { data: { id: dataModal?.PK_iHinhAnhID } });
             if (response?.data?.errorCode === 0) {
                 toast.success("Xóa Nhãn hàng thành công!")
                 await fetchAllProductImage()

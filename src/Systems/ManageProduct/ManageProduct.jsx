@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import axios from 'axios';
+import axios from '../../config/axios';
 import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
@@ -31,7 +31,7 @@ const ManageProduct = () => {
     }, [currentPage])
 
     const fetchAllProduct = async () => {
-        let respone = await axios.get(`/manage-product/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let respone = await axios.get(`/api/v1/manage-product/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
             setListProduct(respone?.data?.data?.products)
@@ -51,7 +51,7 @@ const ManageProduct = () => {
     // hàm xác nhận xóa sản phẩm
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/manage-product/delete", { data: { id: dataModal?.PK_iSanPhamID } });
+            let response = await axios.delete("/api/v1/manage-product/delete", { data: { id: dataModal?.PK_iSanPhamID } });
             if (response?.data?.errorCode === 0) {
                 toast.success("Xóa Sản phẩm thành công!")
                 await fetchAllProduct()
@@ -93,7 +93,7 @@ const ManageProduct = () => {
 
     const handleSearch = async (e) => {
         if (e.key === "Enter" && keywordSearch.trim() !== "") {
-            let respone = await axios.get(`/search-product?page=${currentPage}&limit=${currentLimit}&keywordSearch=${keywordSearch}`)
+            let respone = await axios.get(`/api/v1/search-product?page=${currentPage}&limit=${currentLimit}&keywordSearch=${keywordSearch}`)
             if (respone?.data?.data && respone?.data?.errorCode === 0) {
                 setTotalPage(respone?.data?.data?.totalPage)
                 setListProduct(respone?.data?.data?.products)

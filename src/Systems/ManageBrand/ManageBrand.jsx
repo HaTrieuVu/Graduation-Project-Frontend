@@ -5,7 +5,7 @@ import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
 import { IoReloadSharp } from "react-icons/io5";
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axios from '../../config/axios';
 import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import ModalBrand from './ModalBrand';
 
@@ -29,7 +29,7 @@ const ManageBrand = () => {
     }, [currentPage])
 
     const fetchAllBrand = async () => {
-        let respone = await axios.get(`/manage-brand/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let respone = await axios.get(`/api/v1/manage-brand/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
             setListBrand(respone?.data?.data?.brands)
@@ -49,7 +49,7 @@ const ManageBrand = () => {
     // hàm xác nhận xóa brand
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/manage-brand/delete", { data: { id: dataModal?.PK_iNhanHangID } });
+            let response = await axios.delete("/api/v1/manage-brand/delete", { data: { id: dataModal?.PK_iNhanHangID } });
             if (response?.data?.errorCode === 0) {
                 toast.success("Xóa Nhãn hàng thành công!")
                 await fetchAllBrand()

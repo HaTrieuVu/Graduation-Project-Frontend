@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import axios from "axios"
 
+import axios from '../../config/axios';
 import "./ManageUser.scss"
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
@@ -31,7 +31,7 @@ const ManageUser = () => {
     }, [currentPage])
 
     const fetchAllUser = async () => {
-        let respone = await axios.get(`/user/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let respone = await axios.get(`/api/v1/user/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
             setListUser(respone?.data?.data?.users)
@@ -51,7 +51,7 @@ const ManageUser = () => {
     // hàm xác nhận xóa user
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/user/delete", { data: { id: dataModal?.PK_iKhachHangID } });
+            let response = await axios.delete("/api/v1/user/delete", { data: { id: dataModal?.PK_iKhachHangID } });
             if (response?.data?.errorCode === 0) {
                 toast.success("Xóa người dùng thành công!")
                 console.log("ok")

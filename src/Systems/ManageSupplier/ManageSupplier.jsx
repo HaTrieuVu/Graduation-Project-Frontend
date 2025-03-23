@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import axios from 'axios';
+import axios from '../../config/axios';
 import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
@@ -29,7 +29,7 @@ const ManageSupplier = () => {
     }, [currentPage])
 
     const fetchAllSupplier = async () => {
-        let respone = await axios.get(`/manage-supplier/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let respone = await axios.get(`/api/v1/manage-supplier/get-all?page=${currentPage}&limit=${currentLimit}`)
         if (respone?.data?.data && respone?.data?.errorCode === 0) {
             setTotalPage(respone?.data?.data?.totalPage)
             setListSupplier(respone?.data?.data?.suppliers)
@@ -49,7 +49,7 @@ const ManageSupplier = () => {
     // hàm xác nhận xóa supplier
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/manage-supplier/delete", { data: { id: dataModal?.PK_iNhaCungCapID } });
+            let response = await axios.delete("/api/v1/manage-supplier/delete", { data: { id: dataModal?.PK_iNhaCungCapID } });
             if (response?.data?.errorCode === 0) {
                 toast.success("Xóa Nhà cung cấp thành công!")
                 await fetchAllSupplier()

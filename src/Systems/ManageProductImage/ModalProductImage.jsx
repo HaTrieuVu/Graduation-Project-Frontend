@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Button, Modal } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../../config/axios';
 import { toast } from 'react-toastify';
 
 import './ModalProductImage.scss';
@@ -50,7 +50,7 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
     }, [dataModalProductImage]);
 
     const fetchGetProduct = async () => {
-        let respone = await axios.get("/manage-product/get-all")
+        let respone = await axios.get("/api/v1/manage-product/get-all")
         if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
             setListProductImage(respone?.data?.data)
         }
@@ -116,8 +116,8 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
         if (checkValid) {
             let respone =
                 action === 'CREATE'
-                    ? await axios.post('/manage-product-image/create', productImageData)
-                    : await axios.put('/manage-product-image/update', productImageData);
+                    ? await axios.post('/api/v1/manage-product-image/create', productImageData)
+                    : await axios.put('/api/v1/manage-product-image/update', productImageData);
             if (respone?.data?.errorCode === 0) {
                 action === 'CREATE'
                     ? toast.success('Thêm mới Sản phẩm - hình ảnh thành công!')

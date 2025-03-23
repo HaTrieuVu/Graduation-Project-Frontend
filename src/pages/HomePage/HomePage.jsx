@@ -39,6 +39,8 @@ const HomePage = () => {
     setCurrentPage(+event.selected + 1)
   };
 
+  console.log(productList)
+
   return (
     <main>
       <div className="slider-wrapper">

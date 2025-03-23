@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Button, Modal } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../../config/axios';
 import { toast } from 'react-toastify';
 
 import './ModalProduct.scss';
@@ -56,14 +56,14 @@ const ModalProduct = ({ action, show, handleCloseModal, dataModalProduct, fetchA
     }, [dataModalProduct]);
 
     const fetchGetCategory = async () => {
-        let respone = await axios.get("/manage-category/get-all")
+        let respone = await axios.get("/api/v1/manage-category/get-all")
         if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
             setListCategory(respone?.data?.data)
         }
     }
 
     const fetchGetBrand = async () => {
-        let respone = await axios.get("/manage-brand/get-all")
+        let respone = await axios.get("/api/v1/manage-brand/get-all")
         if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
             setListBrand(respone?.data?.data)
         }
@@ -128,8 +128,8 @@ const ModalProduct = ({ action, show, handleCloseModal, dataModalProduct, fetchA
         if (checkValid) {
             let respone =
                 action === 'CREATE'
-                    ? await axios.post('/manage-product/create', productData)
-                    : await axios.put('/manage-product/update', productData);
+                    ? await axios.post('/api/v1/manage-product/create', productData)
+                    : await axios.put('/api/v1/manage-product/update', productData);
             if (respone?.data?.errorCode === 0) {
                 action === 'CREATE'
                     ? toast.success('Thêm mới Sản phẩm thành công!')

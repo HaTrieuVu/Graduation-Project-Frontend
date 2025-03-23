@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import axios from 'axios';
+import axios from '../config/axios';
 import { STATUS } from '../utils/status';
 import _ from "lodash";
 
@@ -31,7 +31,7 @@ const brandSlice = createSlice({
 });
 
 export const fetchAsyncProductOfBrand = createAsyncThunk('brand-product/fetch', async (brandId) => {
-    let response = await axios.get(`/product/brand/${brandId}`)
+    let response = await axios.get(`/api/v1/product/brand/${brandId}`)
     if (response?.data?.errorCode === 0 && !_.isEmpty(response?.data?.data)) {
         return response?.data?.data;
     }

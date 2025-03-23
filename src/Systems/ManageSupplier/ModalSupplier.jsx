@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { Button, Modal } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../../config/axios';
 import { toast } from 'react-toastify';
 
 import "./ModalSupplier.scss"
@@ -99,9 +99,9 @@ const ModalSupplier = ({ action, show, handleCloseModal, dataModalSupplier, fetc
 
         if (checkValid) {
             let respone = action === "CREATE" ?
-                await axios.post("/manage-supplier/create", supplierData)
+                await axios.post("/api/v1/manage-supplier/create", supplierData)
                 :
-                await axios.put("/manage-supplier/update", supplierData)
+                await axios.put("/api/v1/manage-supplier/update", supplierData)
             if (respone?.data?.errorCode === 0) {
                 action === "CREATE" ? toast.success("Thêm mới Nhà cung cấp thành công!") : toast.success("Câp nhật thông tin Nhà cung cấp thành công!")
                 await fetchAllSupplier();

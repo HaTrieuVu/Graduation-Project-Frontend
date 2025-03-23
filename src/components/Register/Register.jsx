@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../config/axios';
 import './Register.scss';
 import { FaInfoCircle } from 'react-icons/fa';
 import { MdOutlineEmail, MdOutlinePhoneIphone } from 'react-icons/md';
@@ -64,7 +64,7 @@ const Register = () => {
     let check = isValidInputs();
     if (check === true) {
       try {
-        let response = await axios.post("/register", {
+        let response = await axios.post("/api/v1/register", {
           fullName, email, phoneNumber, address, password, confirmPassword
         }, {
           headers: { "Content-Type": "application/json" }

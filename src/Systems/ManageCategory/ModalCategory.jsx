@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { Button, Modal } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../../config/axios';
 import { toast } from 'react-toastify';
 
 import "./ModalCategory.scss"
@@ -50,9 +50,9 @@ const ModalCategory = ({ action, show, handleCloseModal, dataModalCategory, fetc
             toast.error(`Mô tả không được để trống!`);
         } else {
             let respone = action === "CREATE" ?
-                await axios.post("/manage-category/create", categoryData)
+                await axios.post("/api/v1/manage-category/create", categoryData)
                 :
-                await axios.put("/manage-category/update", categoryData)
+                await axios.put("/api/v1/manage-category/update", categoryData)
             if (respone?.data?.errorCode === 0) {
                 action === "CREATE" ? toast.success("Thêm mới Danh mục sản phẩm thành công!") : toast.success("Câp nhật thông tin Danh mục sản phẩm thành công!")
                 await fetchAllCategory();
