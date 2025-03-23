@@ -31,10 +31,10 @@ const ManageUser = () => {
     }, [currentPage])
 
     const fetchAllUser = async () => {
-        let respone = await axios.get(`/api/v1/user/get-all?page=${currentPage}&limit=${currentLimit}`)
-        if (respone?.data?.data && respone?.data?.errorCode === 0) {
-            setTotalPage(respone?.data?.data?.totalPage)
-            setListUser(respone?.data?.data?.users)
+        let response = await axios.get(`/api/v1/user/get-all?page=${currentPage}&limit=${currentLimit}`)
+        if (response?.data && response?.errorCode === 0) {
+            setTotalPage(response?.data?.totalPage)
+            setListUser(response?.data?.users)
         }
     }
 
@@ -52,7 +52,7 @@ const ManageUser = () => {
     const confirmDeleteUser = async () => {
         try {
             let response = await axios.delete("/api/v1/user/delete", { data: { id: dataModal?.PK_iKhachHangID } });
-            if (response?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 toast.success("Xóa người dùng thành công!")
                 console.log("ok")
                 await fetchAllUser()

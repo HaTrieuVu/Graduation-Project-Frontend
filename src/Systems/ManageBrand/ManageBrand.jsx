@@ -29,10 +29,10 @@ const ManageBrand = () => {
     }, [currentPage])
 
     const fetchAllBrand = async () => {
-        let respone = await axios.get(`/api/v1/manage-brand/get-all?page=${currentPage}&limit=${currentLimit}`)
-        if (respone?.data?.data && respone?.data?.errorCode === 0) {
-            setTotalPage(respone?.data?.data?.totalPage)
-            setListBrand(respone?.data?.data?.brands)
+        let response = await axios.get(`/api/v1/manage-brand/get-all?page=${currentPage}&limit=${currentLimit}`)
+        if (response?.data && response?.errorCode === 0) {
+            setTotalPage(response?.data?.totalPage)
+            setListBrand(response?.data?.brands)
         }
     }
 
@@ -50,7 +50,7 @@ const ManageBrand = () => {
     const confirmDeleteUser = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-brand/delete", { data: { id: dataModal?.PK_iNhanHangID } });
-            if (response?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 toast.success("Xóa Nhãn hàng thành công!")
                 await fetchAllBrand()
                 setIsShowModelDelete(false)

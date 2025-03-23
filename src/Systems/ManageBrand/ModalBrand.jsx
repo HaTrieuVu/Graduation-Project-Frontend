@@ -94,11 +94,11 @@ const ModalBrand = ({ action, show, handleCloseModal, dataModalBrand, fetchAllBr
         let checkValid = checkValidateInput();
 
         if (checkValid) {
-            let respone =
+            let response =
                 action === 'CREATE'
                     ? await axios.post('/api/v1/manage-brand/create', brandData)
                     : await axios.put('/api/v1/manage-brand/update', brandData);
-            if (respone?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 action === 'CREATE'
                     ? toast.success('Thêm mới Nhãn hàng thành công!')
                     : toast.success('Câp nhật thông tin Nhãn hàng thành công!');
@@ -112,7 +112,7 @@ const ModalBrand = ({ action, show, handleCloseModal, dataModalBrand, fetchAllBr
                     previewImg: "",
                 });
             } else {
-                toast.error(respone?.data?.errorMessage);
+                toast.error(response?.errorMessage);
             }
         }
     };

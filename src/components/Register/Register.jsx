@@ -70,11 +70,11 @@ const Register = () => {
           headers: { "Content-Type": "application/json" }
         });
 
-        if (response?.data?.errorCode === 0) {
+        if (response?.errorCode === 0) {
           toast.success("Đăng ký tài khoản thành công!");
           navigate("/login");
         } else {
-          toast.error(response?.data?.errorMessage || "Có lỗi xảy ra!");
+          toast.error(response?.errorMessage || "Có lỗi xảy ra!");
         }
       } catch (error) {
         console.error("Lỗi API:", error);

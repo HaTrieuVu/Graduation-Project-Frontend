@@ -53,9 +53,9 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
     }, [dataModalProductVersion]);
 
     const fetchGetProduct = async () => {
-        let respone = await axios.get("/api/v1/manage-product/get-all")
-        if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
-            setListProduct(respone?.data?.data)
+        let response = await axios.get("/api/v1/manage-product/get-all")
+        if (response?.errorCode === 0 && response?.data?.length > 0) {
+            setListProduct(response?.data)
         }
     }
 
@@ -120,11 +120,11 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
         let checkValid = checkValidateInput();
 
         if (checkValid) {
-            let respone =
+            let response =
                 action === 'CREATE'
                     ? await axios.post('/api/v1/manage-product-version/create', productVersionData)
                     : await axios.put('/api/v1/manage-product-version/update', productVersionData);
-            if (respone?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 action === 'CREATE'
                     ? toast.success('Thêm mới Sản phẩm - phiên bản thành công!')
                     : toast.success('Câp nhật thông tin Sản phẩm - phiên bản thành công!');
@@ -140,7 +140,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                     status: "",
                 });
             } else {
-                toast.error(respone?.data?.errorMessage);
+                toast.error(response?.errorMessage);
             }
         }
     };

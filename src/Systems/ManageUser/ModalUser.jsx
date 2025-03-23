@@ -53,10 +53,10 @@ const ModalUser = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser
     }, [dataModalUser])
 
     const fetchGetRole = async () => {
-        let respone = await axios.get("/api/v1/manage-role/get-all")
+        let response = await axios.get("/api/v1/manage-role/get-all")
 
-        if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
-            setListRole(respone?.data?.data)
+        if (response?.errorCode === 0 && response?.data?.length > 0) {
+            setListRole(response?.data)
         }
     }
 
@@ -155,11 +155,11 @@ const ModalUser = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser
         let checkValid = checkValidateInput()
 
         if (checkValid) {
-            let respone = action === "CREATE" ?
+            let response = action === "CREATE" ?
                 await axios.post("/api/v1/user/create", userData)
                 :
                 await axios.put("/api/v1/user/update", userData)
-            if (respone?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 action === "CREATE" ? toast.success("Thêm mới người dùng thành công!") : toast.success("Câp nhật thông tin người dùng thành công!")
                 await fetchAllUser();
                 handleCloseModal()
@@ -173,7 +173,7 @@ const ModalUser = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser
                     role: ""
                 })
             } else {
-                toast.error(respone?.data?.errorMessage)
+                toast.error(response?.errorMessage)
             }
         }
     }

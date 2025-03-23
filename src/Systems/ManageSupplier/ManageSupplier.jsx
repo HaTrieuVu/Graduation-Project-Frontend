@@ -29,10 +29,10 @@ const ManageSupplier = () => {
     }, [currentPage])
 
     const fetchAllSupplier = async () => {
-        let respone = await axios.get(`/api/v1/manage-supplier/get-all?page=${currentPage}&limit=${currentLimit}`)
-        if (respone?.data?.data && respone?.data?.errorCode === 0) {
-            setTotalPage(respone?.data?.data?.totalPage)
-            setListSupplier(respone?.data?.data?.suppliers)
+        let response = await axios.get(`/api/v1/manage-supplier/get-all?page=${currentPage}&limit=${currentLimit}`)
+        if (response?.data && response?.errorCode === 0) {
+            setTotalPage(response?.data?.totalPage)
+            setListSupplier(response?.data?.suppliers)
         }
     }
 
@@ -50,7 +50,7 @@ const ManageSupplier = () => {
     const confirmDeleteUser = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-supplier/delete", { data: { id: dataModal?.PK_iNhaCungCapID } });
-            if (response?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 toast.success("Xóa Nhà cung cấp thành công!")
                 await fetchAllSupplier()
                 setIsShowModelDelete(false)

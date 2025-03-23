@@ -49,11 +49,11 @@ const ModalCategory = ({ action, show, handleCloseModal, dataModalCategory, fetc
         } else if (!categoryData.description) {
             toast.error(`Mô tả không được để trống!`);
         } else {
-            let respone = action === "CREATE" ?
+            let response = action === "CREATE" ?
                 await axios.post("/api/v1/manage-category/create", categoryData)
                 :
                 await axios.put("/api/v1/manage-category/update", categoryData)
-            if (respone?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 action === "CREATE" ? toast.success("Thêm mới Danh mục sản phẩm thành công!") : toast.success("Câp nhật thông tin Danh mục sản phẩm thành công!")
                 await fetchAllCategory();
                 handleCloseModal()
@@ -63,7 +63,7 @@ const ModalCategory = ({ action, show, handleCloseModal, dataModalCategory, fetc
                     description: '',
                 })
             } else {
-                toast.error(respone?.data?.errorMessage)
+                toast.error(response?.errorMessage)
             }
         }
 

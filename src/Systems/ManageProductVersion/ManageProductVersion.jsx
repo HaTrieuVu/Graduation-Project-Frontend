@@ -29,10 +29,10 @@ const ManageProductVersion = () => {
     }, [currentPage])
 
     const fetchAllProductVersion = async () => {
-        let respone = await axios.get(`/api/v1/manage-product-version/get-all?page=${currentPage}&limit=${currentLimit}`)
-        if (respone?.data?.data && respone?.data?.errorCode === 0) {
-            setTotalPage(respone?.data?.data?.totalPage)
-            setListProductVersion(respone?.data?.data?.productVersions)
+        let response = await axios.get(`/api/v1/manage-product-version/get-all?page=${currentPage}&limit=${currentLimit}`)
+        if (response?.data && response?.errorCode === 0) {
+            setTotalPage(response?.data?.totalPage)
+            setListProductVersion(response?.data?.productVersions)
         }
     }
 
@@ -50,7 +50,7 @@ const ManageProductVersion = () => {
     const confirmDeleteUser = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-product-version/delete", { data: { id: dataModal?.PK_iPhienBanID } });
-            if (response?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 toast.success("Xóa Sản phẩm - phiên bản thành công!")
                 await fetchAllProductVersion()
                 setIsShowModelDelete(false)

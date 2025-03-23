@@ -36,8 +36,8 @@ const searchSlice = createSlice({
 
 export const fetchAsyncSearchProduct = createAsyncThunk('product-search/fetch', async (keywordSearch) => {
     const response = await axios.get(`/api/v1/products/search?page=${1}&limit=${15}&keywordSearch=${keywordSearch}`)
-    if (response?.data?.errorCode === 0 && !_.isEmpty(response?.data?.data)) {
-        return response?.data?.data;
+    if (response?.errorCode === 0 && !_.isEmpty(response?.data)) {
+        return response?.data;
     }
 });
 

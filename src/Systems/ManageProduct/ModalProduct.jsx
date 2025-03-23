@@ -56,16 +56,16 @@ const ModalProduct = ({ action, show, handleCloseModal, dataModalProduct, fetchA
     }, [dataModalProduct]);
 
     const fetchGetCategory = async () => {
-        let respone = await axios.get("/api/v1/manage-category/get-all")
-        if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
-            setListCategory(respone?.data?.data)
+        let response = await axios.get("/api/v1/manage-category/get-all")
+        if (response?.errorCode === 0 && response?.data?.length > 0) {
+            setListCategory(response?.data)
         }
     }
 
     const fetchGetBrand = async () => {
-        let respone = await axios.get("/api/v1/manage-brand/get-all")
-        if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
-            setListBrand(respone?.data?.data)
+        let response = await axios.get("/api/v1/manage-brand/get-all")
+        if (response?.errorCode === 0 && response?.data?.length > 0) {
+            setListBrand(response?.data)
         }
     }
 
@@ -126,11 +126,11 @@ const ModalProduct = ({ action, show, handleCloseModal, dataModalProduct, fetchA
         let checkValid = checkValidateInput();
 
         if (checkValid) {
-            let respone =
+            let response =
                 action === 'CREATE'
                     ? await axios.post('/api/v1/manage-product/create', productData)
                     : await axios.put('/api/v1/manage-product/update', productData);
-            if (respone?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 action === 'CREATE'
                     ? toast.success('Thêm mới Sản phẩm thành công!')
                     : toast.success('Câp nhật thông tin Sản phẩm thành công!');
@@ -146,7 +146,7 @@ const ModalProduct = ({ action, show, handleCloseModal, dataModalProduct, fetchA
                     status: "",
                 });
             } else {
-                toast.error(respone?.data?.errorMessage);
+                toast.error(response?.errorMessage);
             }
         }
     };

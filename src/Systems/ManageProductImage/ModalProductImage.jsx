@@ -50,9 +50,9 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
     }, [dataModalProductImage]);
 
     const fetchGetProduct = async () => {
-        let respone = await axios.get("/api/v1/manage-product/get-all")
-        if (respone?.data?.errorCode === 0 && respone?.data?.data?.length > 0) {
-            setListProductImage(respone?.data?.data)
+        let response = await axios.get("/api/v1/manage-product/get-all")
+        if (response?.errorCode === 0 && response?.data?.length > 0) {
+            setListProductImage(response?.data)
         }
     }
 
@@ -114,11 +114,11 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
         let checkValid = checkValidateInput();
 
         if (checkValid) {
-            let respone =
+            let response =
                 action === 'CREATE'
                     ? await axios.post('/api/v1/manage-product-image/create', productImageData)
                     : await axios.put('/api/v1/manage-product-image/update', productImageData);
-            if (respone?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 action === 'CREATE'
                     ? toast.success('Thêm mới Sản phẩm - hình ảnh thành công!')
                     : toast.success('Câp nhật thông tin Sản phẩm - hình ảnh thành công!');
@@ -132,7 +132,7 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
                     previewImg: "",
                 });
             } else {
-                toast.error(respone?.data?.errorMessage);
+                toast.error(response?.errorMessage);
             }
         }
     };

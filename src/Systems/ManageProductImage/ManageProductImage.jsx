@@ -29,10 +29,10 @@ const ManageProductImage = () => {
     }, [currentPage])
 
     const fetchAllProductImage = async () => {
-        let respone = await axios.get(`/api/v1/manage-product-image/get-all?page=${currentPage}&limit=${currentLimit}`)
-        if (respone?.data?.data && respone?.data?.errorCode === 0) {
-            setTotalPage(respone?.data?.data?.totalPage)
-            setListProductImage(respone?.data?.data?.productImages)
+        let response = await axios.get(`/api/v1/manage-product-image/get-all?page=${currentPage}&limit=${currentLimit}`)
+        if (response?.data && response?.errorCode === 0) {
+            setTotalPage(response?.data?.totalPage)
+            setListProductImage(response?.data?.productImages)
         }
     }
 
@@ -50,7 +50,7 @@ const ManageProductImage = () => {
     const confirmDeleteUser = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-product-image/delete", { data: { id: dataModal?.PK_iHinhAnhID } });
-            if (response?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 toast.success("Xóa Nhãn hàng thành công!")
                 await fetchAllProductImage()
                 setIsShowModelDelete(false)

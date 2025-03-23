@@ -45,8 +45,8 @@ const productSlice = createSlice({
 // Lấy ds sản phẩm theo phân trang (giới hạn)
 export const fetchAsyncProducts = createAsyncThunk("products/fetch", async ({ page, limitProduct }) => {
     const response = await axios.get(`/api/v1/products/get-all?page=${page}&limit=${limitProduct}`);
-    if (response?.data?.errorCode === 0 && response?.data?.data?.products?.length > 0) {
-        return response?.data?.data;
+    if (response?.errorCode === 0 && response?.data?.products?.length > 0) {
+        return response?.data;
     }
 }
 );
@@ -54,8 +54,8 @@ export const fetchAsyncProducts = createAsyncThunk("products/fetch", async ({ pa
 // lấy thông tin chi tiết của 1 sản phẩm theo id
 export const fetchAsyncProductSingle = createAsyncThunk('product-single/fetch', async (id) => {
     const response = await axios.get(`/api/v1/product-single?id=${id}`);
-    if (response?.data?.errorCode === 0 && !_.isEmpty(response?.data?.data)) {
-        return response?.data?.data;
+    if (response?.errorCode === 0 && !_.isEmpty(response?.data)) {
+        return response?.data;
     }
 });
 

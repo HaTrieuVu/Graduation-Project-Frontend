@@ -98,11 +98,11 @@ const ModalSupplier = ({ action, show, handleCloseModal, dataModalSupplier, fetc
         let checkValid = checkValidateInput()
 
         if (checkValid) {
-            let respone = action === "CREATE" ?
+            let response = action === "CREATE" ?
                 await axios.post("/api/v1/manage-supplier/create", supplierData)
                 :
                 await axios.put("/api/v1/manage-supplier/update", supplierData)
-            if (respone?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 action === "CREATE" ? toast.success("Thêm mới Nhà cung cấp thành công!") : toast.success("Câp nhật thông tin Nhà cung cấp thành công!")
                 await fetchAllSupplier();
                 handleCloseModal()
@@ -114,7 +114,7 @@ const ModalSupplier = ({ action, show, handleCloseModal, dataModalSupplier, fetc
                     address: '',
                 })
             } else {
-                toast.error(respone?.data?.errorMessage)
+                toast.error(response?.errorMessage)
             }
         }
     }

@@ -32,18 +32,16 @@ const Login = () => {
       toast.error("Hãy nhập Mật khẩu!")
       return
     }
-    let respone = await axios.post("/api/v1/login", {
+    let response = await axios.post("/api/v1/login", {
       valueLogin, password
     })
 
-    console.log(respone)
-
-    if (respone?.data?.errorCode === 0) {
-      toast.success(respone?.data?.errorMessage)
-      dispatch(setInfoUser(respone?.data?.data))
+    if (response?.errorCode === 0) {
+      toast.success(response?.errorMessage)
+      dispatch(setInfoUser(response?.data))
       navigate("/")
     } else {
-      toast.error(respone?.data?.errorMessage)
+      toast.error(response?.errorMessage)
     }
 
   }

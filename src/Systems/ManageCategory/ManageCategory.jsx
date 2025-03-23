@@ -29,10 +29,10 @@ const ManageCategory = () => {
     }, [currentPage])
 
     const fetchAllCategory = async () => {
-        let respone = await axios.get(`/api/v1/manage-category/get-all?page=${currentPage}&limit=${currentLimit}`)
-        if (respone?.data?.data && respone?.data?.errorCode === 0) {
-            setTotalPage(respone?.data?.data?.totalPage)
-            setListCategory(respone?.data?.data?.categories)
+        let response = await axios.get(`/api/v1/manage-category/get-all?page=${currentPage}&limit=${currentLimit}`)
+        if (response?.data && response?.errorCode === 0) {
+            setTotalPage(response?.data?.totalPage)
+            setListCategory(response?.data?.categories)
         }
     }
 
@@ -50,7 +50,7 @@ const ManageCategory = () => {
     const confirmDeleteUser = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-category/delete", { data: { id: dataModal?.PK_iDanhMucID } });
-            if (response?.data?.errorCode === 0) {
+            if (response?.errorCode === 0) {
                 toast.success("Xóa Danh mục sản phẩm thành công!")
                 await fetchAllCategory()
                 setIsShowModelDelete(false)
