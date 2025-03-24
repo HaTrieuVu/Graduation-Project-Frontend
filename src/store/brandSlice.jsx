@@ -31,10 +31,18 @@ const brandSlice = createSlice({
 });
 
 export const fetchAsyncProductOfBrand = createAsyncThunk('brand-product/fetch', async (brandId) => {
-    let response = await axios.get(`/api/v1/product/brand/${brandId}`)
-    if (response?.errorCode === 0 && !_.isEmpty(response?.data)) {
-        return response?.data;
+    try {
+        let response = await axios.get(`/api/v1/product/brand/${brandId}`)
+        if (response?.errorCode === 0 && !_.isEmpty(response?.data)) {
+            return response?.data;
+        }
+        return [];
+    } catch (error) {
+        console.error("Error fetching product of brand", error);
+        return [];
     }
+
+
 });
 
 export const getAllProductsByBrand = (state) => state.brand.brandProducts;

@@ -70,7 +70,7 @@ const Header = () => {
                                     <div className='icon'>
                                         <img alt='avatar' src={userIcon} />
                                     </div>
-                                    <span>{userInfo?.sHoTen}</span>
+                                    <span>{userInfo?.user?.sHoTen}</span>
                                 </div> : <>
                                     <li>
                                         <Link to="/register" className="top-link-itm">

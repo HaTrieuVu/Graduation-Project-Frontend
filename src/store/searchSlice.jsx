@@ -35,10 +35,17 @@ const searchSlice = createSlice({
 });
 
 export const fetchAsyncSearchProduct = createAsyncThunk('product-search/fetch', async (keywordSearch) => {
-    const response = await axios.get(`/api/v1/products/search?page=${1}&limit=${15}&keywordSearch=${keywordSearch}`)
-    if (response?.errorCode === 0 && !_.isEmpty(response?.data)) {
-        return response?.data;
+    try {
+        const response = await axios.get(`/api/v1/products/search?page=${1}&limit=${15}&keywordSearch=${keywordSearch}`)
+        if (response?.errorCode === 0 && !_.isEmpty(response?.data)) {
+            return response?.data;
+        }
+        return [];
+    } catch (error) {
+        console.error("Error search products", error);
+        return [];
     }
+
 });
 
 export const { setSearchTerm, clearSearch } = searchSlice.actions;
