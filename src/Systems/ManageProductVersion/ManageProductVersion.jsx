@@ -134,10 +134,11 @@ const ManageProductVersion = () => {
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
                                         <td>{item?.PK_iPhienBanID}</td>
                                         <td>{item?.productData?.sTenSanPham}</td>
-                                        <td>{item?.sMauSac}</td>
+                                        <td>{item?.productImages?.sMoTa}</td>
                                         <td>{item?.sDungLuong}</td>
                                         <td>{item?.fGiaBan?.toLocaleString("vi-VN")} VNĐ</td>
                                         <td>{item?.iSoLuong}</td>
+                                        <td>{item?.bTrangThai}</td>
                                         <td className='btn-action'>
                                             <button onClick={() => handleCreateOrUpdateUser("UPDATE", item)} title='Sửa'><FaRegEdit /></button>
                                             <button onClick={() => handleDeleteProduct(item)} title='Xóa'><FaRegTrashCan /></button>

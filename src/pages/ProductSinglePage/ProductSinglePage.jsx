@@ -11,6 +11,7 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import { FaCartPlus, FaShopify } from "react-icons/fa";
 import RatingStar from '../../components/RatingStar/RatingStar';
 import { toast } from 'react-toastify';
+import { Buffer } from 'buffer';
 
 const ProductSinglePage = () => {
   const { id } = useParams();
@@ -22,6 +23,8 @@ const ProductSinglePage = () => {
   const [quantity, setQuantity] = useState(1);
   const [listImage, setlistImage] = useState([])    //ds hình ảnh của sp
   const [listVersion, setlistVersion] = useState([]) //ds phiên bản của sp
+  const [listColor, setListColor] = useState([])    // ds các thông tin của màu sắc được chọn(SL, tên, ảnh) theo phiên bản được chọn
+  const [stock, setStock] = useState(0)      // SL theo màu sắc đã chọn
 
   const [selectedVersion, setSelectedVersion] = useState(null);   //version nào được chọn
   const [selectedImageProduct, setSelectedImageProduct] = useState(null)  // màu sắc nào được chọn
@@ -37,21 +40,67 @@ const ProductSinglePage = () => {
     return discountedPrice.toLocaleString("vi-VN");
   };
 
+  // hàm nhóm các phiên bản có cùng dung lượng thành 1 nhóm
+  const groupVersionsByCapacity = (versions) => {
+    return Object.values(
+      versions?.reduce((acc, version) => {
+        const { sDungLuong } = version;
+        if (!acc[sDungLuong]) {
+          // Nếu chưa có nhóm này, tạo mới
+          acc[sDungLuong] = { ...version, groupedVersions: [version] };
+        } else {
+          // Nếu đã có nhóm, thêm vào danh sách groupedVersions
+          acc[sDungLuong].groupedVersions.push(version);
+        }
+        return acc;
+      }, {})
+    );
+  };
+
+  // hàm convert ảnh từ buffer sang base 64
+  const convertArrayImageToBase64 = (imageArray) => {
+    return imageArray.map((item) => {
+      let image = "";
+      if (Array.isArray(item?.productImages?.sUrl?.data)) {
+        image = new Buffer(item?.productImages?.sUrl?.data, "base64").toString("binary");
+      }
+      return {
+        imageId: item?.FK_iHinhAnhID,
+        image: image,
+        moTa: item?.productImages?.sMoTa,
+        stock: item?.iSoLuong
+      };
+    });
+  };
+
   useEffect(() => {
     dispatch(fetchAsyncProductSingle(id));
   }, [id]);
 
   useEffect(() => {
     setlistImage(product?.images)
-    setlistVersion(product?.versions)
+
+    if (product?.versions?.length > 0) {
+      let arrVersionGroup = groupVersionsByCapacity(product?.versions)
+      setlistVersion(arrVersionGroup)
+    }
+
   }, [product])
+
+  useEffect(() => {
+    if (selectedVersion?.groupedVersions?.length > 0) {
+      let arrImage = convertArrayImageToBase64(selectedVersion?.groupedVersions)
+      setListColor(arrImage)
+    }
+
+  }, [selectedVersion])
 
   const increaseQty = () => {
     setQuantity((prevQty) => {
       if (selectedVersion !== null) {
         let tempQty = prevQty + 1;
 
-        if (tempQty > selectedVersion?.iSoLuong) tempQty = selectedVersion?.iSoLuong;
+        if (tempQty > stock) tempQty = stock;
         return tempQty;
       } else {
         toast.warning("Hãy chọn phiên bản cần mua!")
@@ -68,17 +117,20 @@ const ProductSinglePage = () => {
     });
   };
 
-  // hàm click chọn version nào
+  // hàm click chọn version nào?
   const handleClickChooseVersion = (version) => {
     setSelectedVersion(version)
+    setSelectedImageProduct(null)
+    setStock(0)
+    setQuantity(1)
   }
 
-  // hàm click chọn version nào
+  // hàm click chọn color nào?
   const handleClickChooseImageProduct = (color) => {
     setSelectedImageProduct(color)
+    setStock(color?.stock)
+    setQuantity(1)
   }
-
-  console.log(selectedVersion)
 
   return (
     <main className="py-5 bg-whitesmoke">
@@ -94,9 +146,9 @@ const ProductSinglePage = () => {
                   <div className="product-img-zoom">
                     <img
                       className="img-cover"
-                      src={selectedImageProduct && selectedImageProduct?.sUrl //dk1
+                      src={selectedImageProduct !== null  //dk1
                         ?
-                        selectedImageProduct?.sUrl  //true
+                        selectedImageProduct?.image  //true
                         :
                         listImage?.length > 0 //false (dk2)
                           ?
@@ -177,10 +229,9 @@ const ProductSinglePage = () => {
                       </div>
 
                       <div className='box-stock'>
-                        Số lượng: <span> {selectedVersion && selectedVersion?.iSoLuong
-                          ? selectedVersion?.iSoLuong
-                          : listVersion?.length > 0 ?
-                            listVersion[0]?.iSoLuong : 0}</span>
+                        Số lượng: <span> {stock > 0
+                          ? stock
+                          : "?"}</span>
                       </div>
                     </div>
                   </div>
@@ -206,15 +257,15 @@ const ProductSinglePage = () => {
                     <span className='title'>Chọn màu sắc</span>
                     <div className='box-content'>
                       <ul className='list-color'>
-                        {listImage?.length > 0 && listImage?.map((item) => (
+                        {listColor?.length > 0 && listColor?.map((item, i) => (
                           <li
                             onClick={() => handleClickChooseImageProduct(item)}
-                            key={`color-${item?.PK_iHinhAnhID}-key-${item?.sMoTa}`}
-                            className={`item-color ${selectedImageProduct?.PK_iHinhAnhID === item?.PK_iHinhAnhID ? "active" : ""}`}
+                            key={`list-color-${i}-key-${item?.moTa}`}
+                            className={`item-color ${selectedImageProduct?.imageId === item?.imageId ? "active" : ""}`}
                           >
                             <div className='box'>
-                              <img className='img' src={item?.sUrl} alt={item?.sMoTa} />
-                              <strong>{item?.sMoTa}</strong>
+                              <img className='img' src={item?.image} alt={item?.moTa} />
+                              <strong>{item?.moTa}</strong>
                             </div>
                           </li>
                         ))}

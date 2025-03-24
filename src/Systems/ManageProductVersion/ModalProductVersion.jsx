@@ -1,24 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Button, Modal } from 'react-bootstrap';
 import axios from '../../config/axios';
 import { toast } from 'react-toastify';
+import _ from "lodash";
 
 import './ModalProductVersion.scss';
 
 
 const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductVersion, fetchAllProductVersion }) => {
-    const [productVersionData, setProductData] = useState({
+    const [productVersionData, setProductVersionData] = useState({
         id: "",
         productId: "",
-        color: "",
+        productImageId: "",
         capacity: "",
         price: "",
         quantity: "",
         status: "",
     });
 
+    const [selectedProductId, setSelectedProductId] = useState(null)
     const [listProduct, setListProduct] = useState([])
+    const [listColor, setlistColor] = useState({})          // list color của 1 sản phẩm (lấy theo productImage)
+
+    const fetchGetProduct = async () => {
+        let response = await axios.get("/api/v1/manage-product/get-all")
+        if (response?.errorCode === 0 && response?.data?.length > 0) {
+            setListProduct(response?.data)
+        }
+    }
+
+    //hàm lấy tất cả các màu của product
+    const fetchAllColorOfProduct = useCallback(async () => {
+        if (!selectedProductId) return;
+
+        let response = await axios.get(`/api/v1/manage-product-version/get-all-image?id=${selectedProductId}`);
+        if (response?.errorCode === 0 && !_.isEmpty(response?.data) && response?.data?.images?.length > 0) {
+            setlistColor(response?.data?.images)
+        }
+    }, [selectedProductId]); // Chỉ thay đổi khi `selectedProductId` đổi
 
     useEffect(() => {
         fetchGetProduct()
@@ -26,10 +46,10 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
 
     useEffect(() => {
         if (action === 'CREATE') {
-            setProductData({
+            setProductVersionData({
                 id: "",
                 productId: "",
-                color: "",
+                productImageId: "",
                 capacity: "",
                 price: "",
                 quantity: "",
@@ -40,10 +60,10 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
 
     useEffect(() => {
         if (action === 'UPDATE') {
-            setProductData({
+            setProductVersionData({
                 id: dataModalProductVersion?.PK_iPhienBanID,
                 productId: dataModalProductVersion?.FK_iSanPhamID,
-                color: dataModalProductVersion?.sMauSac,
+                productImageId: dataModalProductVersion?.FK_iHinhAnhID,
                 capacity: dataModalProductVersion?.sDungLuong,
                 price: dataModalProductVersion?.fGiaBan,
                 quantity: dataModalProductVersion?.iSoLuong,
@@ -52,27 +72,39 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
         }
     }, [dataModalProductVersion]);
 
-    const fetchGetProduct = async () => {
-        let response = await axios.get("/api/v1/manage-product/get-all")
-        if (response?.errorCode === 0 && response?.data?.length > 0) {
-            setListProduct(response?.data)
+    useEffect(() => {
+        fetchAllColorOfProduct();
+    }, [fetchAllColorOfProduct]);
+
+    // Theo dõi productVersionData và cập nhật selectedProductId
+    useEffect(() => {
+        if (productVersionData?.productId) {
+            setSelectedProductId(productVersionData.productId);
         }
-    }
+    }, [productVersionData]);
 
     const handleOnchangeInput = (value, name) => {
-        setProductData((prev) => ({
+        setProductVersionData((prev) => ({
             ...prev,
             [name]: value,
         }));
     };
 
     const handleChangeSelect = (e, name) => {
-        setProductData(prev => ({
-            ...prev,
-            [name]: e.target.value
-        }))
-    }
+        setProductVersionData((prev) => {
+            const updatedData = {
+                ...prev,
+                [name]: e.target.value
+            };
 
+            // Cập nhật selectedProductId sau khi state đã được cập nhật
+            if (name === "productId") {
+                setSelectedProductId(updatedData.productId);
+            }
+
+            return updatedData;
+        });
+    }
 
     const checkValidateInput = () => {
         let arr = [
@@ -81,7 +113,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                 valueErr: 'Tên Sản phẩm',
             },
             {
-                key: 'color',
+                key: 'productImageId',
                 valueErr: 'Màu sắc',
             },
             {
@@ -130,10 +162,11 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                     : toast.success('Câp nhật thông tin Sản phẩm - phiên bản thành công!');
                 await fetchAllProductVersion();
                 handleCloseModal();
-                setProductData({
+                setProductVersionData({
                     id: "",
                     productId: "",
-                    color: "",
+                    productImageId: "",
+
                     capacity: "",
                     price: "",
                     quantity: "",
@@ -170,14 +203,16 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
 
                         <div className="col-12 col-sm-6 mb-3 form-group">
                             <label>
-                                Màu sắc (<span className="red">*</span>)
+                                DS màu sắc của sản phẩm (<span className="red">*</span>)
                             </label>
-                            <input
-                                className="form-control"
-                                onChange={(e) => handleOnchangeInput(e.target.value, 'color')}
-                                value={productVersionData.color}
-                                type="text"
-                            />
+                            <select value={productVersionData.productImageId || ""} onChange={(e) => handleChangeSelect(e, "productImageId")} className='form-select'>
+                                <option value="">Chọn màu</option>
+                                {
+                                    listColor?.length > 0 && listColor.map((item) => (
+                                        <option key={`product-color-${item?.PK_iHinhAnhID}-key`} value={item?.PK_iHinhAnhID}>{item?.sMoTa}</option>
+                                    ))
+                                }
+                            </select>
                         </div>
 
                         <div className='col-12 col-sm-6 mb-3 form-group'>
@@ -225,8 +260,8 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                             <label>Trạng thái (<span className='red'>*</span>)</label>
                             <select value={productVersionData.status || ""} onChange={(e) => handleChangeSelect(e, "status")} className='form-select'>
                                 <option value="">Chọn</option>
-                                <option value="1">Còn hàng</option>
-                                <option value="0">Hết hàng</option>
+                                <option value="true">Còn hàng</option>
+                                <option value="false">Hết hàng</option>
                             </select>
                         </div>
                     </div>
