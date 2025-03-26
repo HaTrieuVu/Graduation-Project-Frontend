@@ -8,12 +8,12 @@ import _ from "lodash"
 
 import userIcon from "../../assets/user.png"
 import Navbar from '../Navbar/Navbar';
+import UserModal from '../UserModal/UserModal';
 // import Navbar from '../Navbar/Navbar';
 
 const Header = () => {
     const [userInfo, setUserInfo] = useState({})
     const user = useSelector(state => state.userInfo.user);
-
 
     useEffect(() => {
         setUserInfo(user)
@@ -71,6 +71,7 @@ const Header = () => {
                                         <img alt='avatar' src={userIcon} />
                                     </div>
                                     <span>{userInfo?.user?.sHoTen}</span>
+                                    <UserModal />
                                 </div> : <>
                                     <li>
                                         <Link to="/register" className="top-link-itm">

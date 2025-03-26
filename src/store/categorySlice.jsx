@@ -27,17 +27,17 @@ const categorySlice = createSlice({
                 state.categoriesStatus = STATUS.FAILED;
             });
 
-        builder
-            .addCase(fetchAsyncProductsOfCategory.pending, (state) => {
-                state.categoryProductsStatus = STATUS.LOADING;
-            })
-            .addCase(fetchAsyncProductsOfCategory.fulfilled, (state, action) => {
-                state.categoryProducts = action.payload;
-                state.categoryProductsStatus = STATUS.SUCCEEDED;
-            })
-            .addCase(fetchAsyncProductsOfCategory.rejected, (state) => {
-                state.categoryProductsStatus = STATUS.FAILED;
-            });
+        // builder
+        //     .addCase(fetchAsyncProductsOfCategory.pending, (state) => {
+        //         state.categoryProductsStatus = STATUS.LOADING;
+        //     })
+        //     .addCase(fetchAsyncProductsOfCategory.fulfilled, (state, action) => {
+        //         state.categoryProducts = action.payload;
+        //         state.categoryProductsStatus = STATUS.SUCCEEDED;
+        //     })
+        //     .addCase(fetchAsyncProductsOfCategory.rejected, (state) => {
+        //         state.categoryProductsStatus = STATUS.FAILED;
+        //     });
     },
 });
 
@@ -55,11 +55,11 @@ export const fetchAsyncCategories = createAsyncThunk('categories/fetch', async (
 
 });
 
-export const fetchAsyncProductsOfCategory = createAsyncThunk('category-products/fetch', async () => {
-    // const response = await fetch(`${BASE_URL}products/category/${category}`);
-    // const data = await response.json();
-    // return data.products;
-});
+// export const fetchAsyncProductsOfCategory = createAsyncThunk('category-products/fetch', async () => {
+//     const response = await fetch(`${BASE_URL}products/category/${category}`);
+//     const data = await response.json();
+//     return data.products;
+// });
 
 export const getAllCategories = (state) => state.category.categories;
 export const getAllProductsByCategory = (state) => state.category.categoryProducts;

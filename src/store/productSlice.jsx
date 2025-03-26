@@ -46,7 +46,7 @@ const productSlice = createSlice({
 export const fetchAsyncProducts = createAsyncThunk("products/fetch", async ({ page, limitProduct }) => {
     try {
         const response = await axios.get(`/api/v1/products/get-all?page=${page}&limit=${limitProduct}`);
-        if (response?.data?.errorCode === 0 && response?.data?.products?.length > 0) {
+        if (response?.errorCode === 0 && response?.data?.products?.length > 0) {
             return response?.data;
         }
         return [];

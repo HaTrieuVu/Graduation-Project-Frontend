@@ -12,6 +12,7 @@ import { FaCartPlus, FaShopify } from "react-icons/fa";
 import RatingStar from '../../components/RatingStar/RatingStar';
 import { toast } from 'react-toastify';
 import { Buffer } from 'buffer';
+import axios from '../../config/axios';
 
 const ProductSinglePage = () => {
   const { id } = useParams();
@@ -19,7 +20,9 @@ const ProductSinglePage = () => {
 
   const product = useSelector(getProductSingle);
   const productSingleStatus = useSelector(getSingleProductStatus);
+  const user = useSelector(state => state.userInfo.user);   //lấy thông tin người dùng từ redux
 
+  const [userInfo, setUserInfo] = useState({})    // mã người dùng
   const [quantity, setQuantity] = useState(1);
   const [listImage, setlistImage] = useState([])    //ds hình ảnh của sp
   const [listVersion, setlistVersion] = useState([]) //ds phiên bản của sp
@@ -31,6 +34,14 @@ const ProductSinglePage = () => {
 
   const discountPercentage = product?.promotion?.fGiaTriKhuyenMai //giá trị khuyến mãi của sp
 
+  console.log(user)
+
+  useEffect(() => {
+    setUserInfo({
+      userId: user?.user?.PK_iKhachHangID,
+      cardId: user?.user?.carts?.PK_iGioHangID
+    })
+  }, [user])
 
   // hàm tính giá sau khuyến mãi
   const calculateDiscountedPrice = (price, discountPercentage) => {
@@ -130,6 +141,45 @@ const ProductSinglePage = () => {
     setSelectedImageProduct(color)
     setStock(color?.stock)
     setQuantity(1)
+  }
+
+  const handleAddToCart = async () => {
+    if (!selectedVersion || !selectedVersion?.groupedVersions) {
+      toast.error("Hãy bạn phiên bản!")
+      return;
+    }
+
+    if (!selectedImageProduct || !selectedImageProduct?.imageId) {
+      toast.error("Hãy bạn màu sắc!")
+      return;
+    }
+
+    let productVersion = selectedVersion?.groupedVersions?.find(
+      (item) => item?.FK_iHinhAnhID === selectedImageProduct?.imageId
+    );
+
+    if (!productVersion) {
+      toast.error("Không tìm thấy phiên bản phù hợp!");
+      return;
+    }
+
+    // Tạo biến chứa dữ liệu giỏ hàng
+    let cartInfo = {
+      userId: userInfo?.userId,
+      cardId: userInfo?.cardId,
+      quantity: quantity,
+      productVersionId: productVersion.PK_iPhienBanID
+    };
+
+    try {
+      const response = await axios.post("/api/v1/cart/add-to-cart", cartInfo);
+      console.log("Response:", response);
+      if (response?.errorCode === 0) {
+        toast.success(response?.errorMessage)
+      }
+    } catch (error) {
+      console.error("Lỗi khi thêm vào giỏ hàng:", error);
+    }
   }
 
   return (
@@ -303,7 +353,7 @@ const ProductSinglePage = () => {
                     )}
                   </div>
                   <div className="btns">
-                    <button className="add-to-cart-btn btn" type="button">
+                    <button className="add-to-cart-btn btn" onClick={() => handleAddToCart()} type="button">
                       <FaCartPlus size={24} className='icon' />
                       <span className="btn-text mx-2">Thêm vào giỏ hàng</span>
                     </button>

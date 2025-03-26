@@ -41,8 +41,6 @@ const BrandProductPage = () => {
         }
     }, [productBrandResponse]);  // Chạy lại khi productsResponse thay đổi
 
-    console.log(productList)
-
     return (
         <div className="brand-products bg-whitesmoke">
             <div className="container">

@@ -1,0 +1,33 @@
+.user-modal {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 42px;
+    right: 0px;
+    background: white;
+    width: 200px;
+    color: black;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.25) 0px 7px 29px 0px;
+    z-index: 99;
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0px;
+        .item {
+            padding: 5px 10px;
+            border-bottom: 1px solid gray;
+            font-size: 16px;
+
+            &:last-child {
+                border: none;
+            }
+
+            &:hover {
+                background-color: #cfcfcf;
+                color: black;
+            }
+        }
+    }
+}

@@ -85,8 +85,8 @@ const Navbar = () => {
                         <Link to="/cart">
                             <FaCartPlus />
                         </Link>
-                        {/* <div className="cart-items-value">{itemsCount}</div>
-                        <CartModal carts={carts} /> */}
+                        <div className="cart-items-value">0</div>
+                        {/* <CartModal carts={carts} /> */}
                     </div>
                 </div>
             </div>

@@ -11,12 +11,30 @@
             .box-user {
                 display: flex;
                 align-items: center;
+                position: relative;
+                cursor: pointer;
                 .icon {
                     width: 35px;
                     height: 35px;
                     margin-right: 6px;
                     img {
                         object-fit: cover;
+                    }
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 150px;
+                    height: 30px;
+                    background-color: transparent;
+                    top: 20px;
+                }
+
+                &:hover {
+                    .user-modal {
+                        opacity: 1;
+                        visibility: visible;
                     }
                 }
             }
