@@ -41,7 +41,7 @@ const cartSlice = createSlice({
 
 export const fetchAsyncCarts = createAsyncThunk('carts/fetch', async (data) => {
     try {
-        let response = await axios.post("/api/v1/cart/get-info-to-cart", data); // Gửi dữ liệu trong body
+        let response = await axios.post("/api/v1/cart/get-info-to-cart", data);
 
         if (response?.errorCode === 0 && !_.isEmpty(response?.data)) {
             return response?.data;

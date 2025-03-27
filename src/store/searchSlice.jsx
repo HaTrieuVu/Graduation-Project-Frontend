@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { STATUS } from '../utils/status';
 import axios from '../config/axios';
 import _ from "lodash";
+import { toast } from 'react-toastify';
 
 const initialState = {
     searchProducts: [],
@@ -39,6 +40,8 @@ export const fetchAsyncSearchProduct = createAsyncThunk('product-search/fetch', 
         const response = await axios.get(`/api/v1/products/search?page=${1}&limit=${15}&keywordSearch=${keywordSearch}`)
         if (response?.errorCode === 0 && !_.isEmpty(response?.data)) {
             return response?.data;
+        } else {
+            response?.errorMessage === "Người dùng chưa đăng nhập!" && toast.error("Bạn chưa đăng nhập. Hãy đăng nhập...")
         }
         return [];
     } catch (error) {

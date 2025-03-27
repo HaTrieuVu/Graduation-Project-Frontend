@@ -46,9 +46,7 @@ const HomePage = () => {
       </div>
       <div className="main-content bg-whitesmoke">
         <div className="container">
-
           <BrandList />
-
           <div className="categories py-5">
             <div className="categories-item">
               <div className="title-md">

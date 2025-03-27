@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from '../config/axios';
 import { STATUS } from '../utils/status';
 import _ from "lodash";
+import { toast } from 'react-toastify';
 
 const initialState = {
     products: {},
@@ -63,7 +64,10 @@ export const fetchAsyncProductSingle = createAsyncThunk('product-single/fetch', 
         const response = await axios.get(`/api/v1/product-single?id=${id}`);
         if (response?.errorCode === 0 && !_.isEmpty(response?.data)) {
             return response?.data;
+        } else {
+            response?.errorMessage === "Người dùng chưa đăng nhập!" && toast.error("Bạn chưa đăng nhập. Hãy đăng nhập...")
         }
+        console.log(response)
         return [];
     } catch (error) {
         console.error("Error fetching products singer:", error);

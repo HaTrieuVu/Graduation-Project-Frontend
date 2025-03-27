@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import './SearchPage.scss';
 import { STATUS } from '../../utils/status';
@@ -19,9 +19,13 @@ import img from "../../assets/product_not_found.jpeg"
 const SearchPage = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { keywordSearch } = useParams();
 
   const [productList, setProductList] = useState([])
+
+  const user = useSelector(state => state.userInfo.user);   //lấy thông tin người dùng từ redux
+  const isUserLoaded = useSelector(state => state?.userInfo?.isUserLoaded);
 
   const searchProducts = useSelector(getSearchProducts);
   const searchProductsStatus = useSelector(getSearchProductsStatus);
@@ -34,6 +38,16 @@ const SearchPage = () => {
   useEffect(() => {
     setProductList(searchProducts?.products)
   }, [searchProducts])
+
+  useEffect(() => {
+    // Chỉ kiểm tra khi Redux đã tải xong user
+    if (!isUserLoaded) return;
+
+    if (!user?.userId) {
+      navigate("/login");
+      window.scrollTo(0, 0);
+    }
+  }, [user, isUserLoaded, navigate]);
 
   if (productList?.length === 0) {
     return (

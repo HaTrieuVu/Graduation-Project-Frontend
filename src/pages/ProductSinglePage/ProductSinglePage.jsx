@@ -13,6 +13,7 @@ import RatingStar from '../../components/RatingStar/RatingStar';
 import { toast } from 'react-toastify';
 import { Buffer } from 'buffer';
 import axios from '../../config/axios';
+import { fetchAsyncCarts } from '../../store/cartSlice';
 
 const ProductSinglePage = () => {
   const { id } = useParams();
@@ -21,7 +22,9 @@ const ProductSinglePage = () => {
 
   const product = useSelector(getProductSingle);
   const productSingleStatus = useSelector(getSingleProductStatus);
+
   const user = useSelector(state => state.userInfo.user);   //lấy thông tin người dùng từ redux
+  const isUserLoaded = useSelector(state => state?.userInfo?.isUserLoaded);
 
   const [userInfo, setUserInfo] = useState({})    // mã người dùng
   const [quantity, setQuantity] = useState(1);
@@ -36,11 +39,14 @@ const ProductSinglePage = () => {
   const discountPercentage = product?.promotion?.fGiaTriKhuyenMai //giá trị khuyến mãi của sp
 
   useEffect(() => {
+    // Chỉ kiểm tra khi Redux đã tải xong user
+    if (!isUserLoaded) return;
+
     if (!user?.userId) {
-      navigate("/login")
-      window.scrollTo(0, 0); // Cuộn lên đầu trang
+      navigate("/login");
+      window.scrollTo(0, 0);
     }
-  }, [user])
+  }, [user, isUserLoaded, navigate]);
 
   useEffect(() => {
     setUserInfo({
@@ -182,6 +188,13 @@ const ProductSinglePage = () => {
       console.log("Response:", response);
       if (response?.errorCode === 0) {
         toast.success(response?.errorMessage)
+        //cập nhật lại giỏ hàng
+        if (user && user?.userId && user?.cartId) {
+          dispatch(fetchAsyncCarts({
+            userId: user?.userId,
+            cartId: user?.cartId,
+          }));
+        }
       }
     } catch (error) {
       console.error("Lỗi khi thêm vào giỏ hàng:", error);
@@ -190,7 +203,7 @@ const ProductSinglePage = () => {
 
   return (
     <main className="py-5 bg-whitesmoke">
-      {productSingleStatus === STATUS.LOADING ? (
+      {productSingleStatus === STATUS.LOADING || !isUserLoaded ? (
         <Loader />
       ) : (
         <div className="product-single">

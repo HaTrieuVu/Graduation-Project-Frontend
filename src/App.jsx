@@ -10,7 +10,7 @@ import axios from "./config/axios";
 import { ToastContainer } from 'react-toastify';
 import Sidebar from './components/Sidebar/Sidebar';
 import { useDispatch } from 'react-redux';
-import { setInfoUser } from './store/userSlice';
+import { clearUser, setInfoUser } from './store/userSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -20,11 +20,18 @@ function App() {
   }, [])
 
   const fetchUserInfo = async () => {
-    let response = await axios.get("/api/v1/account");
-    if (response?.errorCode === 0) {
-      dispatch(setInfoUser(response?.data?.user))
+    try {
+      let response = await axios.get("/api/v1/account");
+      if (response?.errorCode === 0) {
+        dispatch(setInfoUser(response?.data?.user));
+      } else {
+        dispatch(clearUser());
+      }
+    } catch (error) {
+      console.log(error)
+      dispatch(clearUser());
     }
-  }
+  };
 
   return (
     <main>

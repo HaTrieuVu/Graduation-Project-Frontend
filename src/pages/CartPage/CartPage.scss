@@ -123,14 +123,15 @@
         .qty-change {
             .qty-decrease,
             .qty-increase {
-                font-size: 13px;
-                width: 28px;
-                height: 28px;
+                font-size: 16px;
+                width: 32px;
+                height: 32px;
                 border: 1px solid rgba(0, 0, 0, 0.1);
             }
             .qty-value {
                 width: 36px;
-                height: 28px;
+                height: 32px;
+                font-weight: 500;
                 border-top: 1px solid rgba(0, 0, 0, 0.1);
                 border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             }
