@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSidebarOn } from '../../store/sidebarSlice';
-// import { getAllCarts, getCartItemsCount, getCartTotal } from '../../store/cartSlice';
-// import CartModal from '../CartModal/CartModal';
+import { getAllCarts, getCartItemsCount, fetchAsyncCarts, getCartTotal } from '../../store/cartSlice';
+import CartModal from '../CartModal/CartModal';
 
 import { IoMenu, IoBag } from "react-icons/io5";
 import { FaCartPlus } from "react-icons/fa";
@@ -14,17 +14,36 @@ import { FiSearch } from "react-icons/fi";
 
 import './Navbar.scss';
 
+
 const Navbar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const carts = useSelector(getAllCarts);
-    // const itemsCount = useSelector(getCartItemsCount);
 
     const [searchTerm, setSearchTerm] = useState('');
+    const [userInfo, setUserInfo] = useState({})
 
-    // useEffect(() => {
-    //     dispatch(getCartTotal());
-    // }, [carts]);
+    const user = useSelector(state => state.userInfo.user);
+
+    const carts = useSelector(getAllCarts);
+    const itemsCount = useSelector(getCartItemsCount);
+
+    // lấy thông tin người dùng
+    useEffect(() => {
+        setUserInfo(user?.user)
+    }, [user])
+
+    useEffect(() => {
+        dispatch(getCartTotal());
+    }, [carts]);
+
+    // lấy thông tin cart: dispath action cartSlice
+    useEffect(() => {
+        let data = {
+            userId: userInfo?.PK_iKhachHangID,
+            cartId: userInfo?.carts?.PK_iGioHangID,
+        }
+        dispatch(fetchAsyncCarts(data));
+    }, [userInfo])
 
     const handleSearchTerm = (e) => {
         e.preventDefault();
@@ -85,8 +104,8 @@ const Navbar = () => {
                         <Link to="/cart">
                             <FaCartPlus />
                         </Link>
-                        <div className="cart-items-value">0</div>
-                        {/* <CartModal carts={carts} /> */}
+                        <div className="cart-items-value">{itemsCount ? itemsCount : 0}</div>
+                        <CartModal carts={carts?.cartDetails} />
                     </div>
                 </div>
             </div>

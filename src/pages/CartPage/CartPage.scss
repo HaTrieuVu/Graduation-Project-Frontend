@@ -1,0 +1,166 @@
+@import '../../App.scss';
+
+.empty-cart {
+    min-height: 60vh;
+    img {
+        width: 120px;
+        margin-bottom: 1rem;
+    }
+    .shopping-btn {
+        padding: 0.65rem 2.8rem;
+        margin-top: 1.6rem;
+        border: 1px solid $clr-orange;
+        transition: $transition-ease;
+        color: white;
+        border-radius: 5px;
+        &:hover {
+            background-color: transparent;
+            color: $clr-orange;
+        }
+    }
+}
+
+.cart {
+    overflow-x: scroll;
+    padding-top: 2rem;
+    min-height: 85vh;
+
+    &::-webkit-scrollbar {
+        height: 5px;
+    }
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: lighten($clr-light-orange, 5%);
+        outline: 1px solid $clr-light-orange;
+    }
+
+    .container {
+        padding: 0;
+    }
+    .cart-ctable {
+        min-width: 1000px;
+        .cart-ctr {
+            grid-template-columns: 0.4fr 5fr 2fr 1.5fr 2fr 1fr;
+            min-height: 40px;
+            border-bottom: 1px solid $clr-whitesmoke;
+            display: grid;
+            align-items: center !important;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .cart-chead {
+            margin-bottom: 2rem;
+            padding-right: 2rem;
+            padding-left: 2rem;
+            box-shadow: rgba(60, 64, 67, 0.01) 0px 1px 2px 0px, rgba(60, 64, 67, 0.01) 0px 1px 3px 1px;
+            border-radius: 3px;
+            color: rgba(0, 0, 0, 0.6);
+        }
+        .cart-cbody {
+            padding-right: 2rem;
+            padding-left: 2rem;
+            box-shadow: rgba(60, 64, 67, 0.01) 0px 1px 2px 0px, rgba(60, 64, 67, 0.01) 0px 1px 3px 1px;
+            border-radius: 3px;
+            font-size: 14.5px;
+            color: rgba(0, 0, 0, 0.6);
+
+            .cart-ctr {
+                .box-price {
+                    display: flex;
+                    flex-direction: column;
+                    .price-old {
+                        color: #0000008a;
+                        text-decoration: line-through;
+                        font-size: 14px;
+                    }
+
+                    .price-new {
+                        font-weight: normal;
+                    }
+                }
+            }
+        }
+        .cart-ctd,
+        .cart-cth {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-ctd:nth-child(2) {
+            display: flex;
+            margin-left: 20px;
+            justify-content: flex-start;
+        }
+
+        .delete-btn {
+            font-size: 14px;
+            transition: $transition-ease;
+            opacity: 0.6;
+            &:hover {
+                color: $clr-danger;
+                opacity: 1;
+            }
+        }
+        .cart-product-img {
+            height: 80px;
+            width: 80px;
+        }
+        .cart-title-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .title-brand {
+                font-weight: normal;
+                font-size: 14px;
+                color: #0000008a;
+            }
+        }
+        .qty-change {
+            .qty-decrease,
+            .qty-increase {
+                font-size: 13px;
+                width: 28px;
+                height: 28px;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+            .qty-value {
+                width: 36px;
+                height: 28px;
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+        }
+        .cart-cfoot {
+            margin-top: 2rem;
+            padding-right: 2rem;
+            padding-left: 2rem;
+
+            .total-txt {
+                margin-right: -1rem;
+            }
+
+            .clear-cart-btn {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                border: 1px solid $clr-danger;
+                padding: 0.7rem 1rem;
+                transition: $transition-ease;
+                border-radius: 5px;
+                &:hover {
+                    background-color: $clr-danger;
+                    color: white !important;
+                }
+            }
+            .checkout-btn {
+                padding: 0.8rem 2.8rem;
+                margin-top: 0.7rem;
+            }
+        }
+    }
+}

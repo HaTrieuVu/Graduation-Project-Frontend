@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Link, useParams } from 'react-router-dom';
+import { Link, redirect, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import './ProductSinglePage.scss';
@@ -180,6 +180,10 @@ const ProductSinglePage = () => {
     } catch (error) {
       console.error("Lỗi khi thêm vào giỏ hàng:", error);
     }
+  }
+
+  if (user || user?.user?.PK_iKhachHangID) {
+    redirect("/login")
   }
 
   return (

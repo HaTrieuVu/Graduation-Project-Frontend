@@ -36,8 +36,6 @@ const Login = () => {
       valueLogin, password
     })
 
-    console.log(response)
-
     if (response?.errorCode === 0) {
       toast.success(response?.errorMessage)
       dispatch(setInfoUser(response?.data))

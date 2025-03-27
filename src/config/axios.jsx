@@ -30,14 +30,14 @@ instance.interceptors.response.use(function (response) {
     switch (status) {
         // authentication (token related issues)
         case 401: {
-            window.location.href = "/login";
+            // window.location.href = "/login";
             toast.error("Bạn chưa đăng nhập. Hãy đăng nhập...");
             return Promise.reject(error);
         }
 
         // forbidden (permission related issues)
         case 403: {
-            window.location.href = "/";
+            // window.location.href = "/";
             toast.error("Bạn không có quyền thực hiện hành động này!");
             return Promise.reject(error);
         }
