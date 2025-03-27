@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useSelector } from 'react-redux';
 import { Buffer } from 'buffer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { getAllCarts } from '../../store/cartSlice';
 import "./CartPage.scss"
@@ -40,8 +40,18 @@ const convertArrayData = (cartsData) => {
 const CartPage = () => {
   const [cartsData, setCartsData] = useState([])
 
+  const user = useSelector(state => state.userInfo.user);
+
+  const navigate = useNavigate()
+
   const carts = useSelector(getAllCarts);
 
+  useEffect(() => {
+    if (!user?.userId) {
+      navigate("/login")
+      window.scrollTo(0, 0); // Cuộn lên đầu trang
+    }
+  }, [user])
 
   useEffect(() => {
     let cartsArr = convertArrayData(carts?.cartDetails)

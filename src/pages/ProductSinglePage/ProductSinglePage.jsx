@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Link, redirect, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import './ProductSinglePage.scss';
@@ -17,6 +17,7 @@ import axios from '../../config/axios';
 const ProductSinglePage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const product = useSelector(getProductSingle);
   const productSingleStatus = useSelector(getSingleProductStatus);
@@ -34,12 +35,17 @@ const ProductSinglePage = () => {
 
   const discountPercentage = product?.promotion?.fGiaTriKhuyenMai //giá trị khuyến mãi của sp
 
-  console.log(user)
+  useEffect(() => {
+    if (!user?.userId) {
+      navigate("/login")
+      window.scrollTo(0, 0); // Cuộn lên đầu trang
+    }
+  }, [user])
 
   useEffect(() => {
     setUserInfo({
-      userId: user?.user?.PK_iKhachHangID,
-      cardId: user?.user?.carts?.PK_iGioHangID
+      userId: user?.userId,
+      cardId: user?.cartId
     })
   }, [user])
 
@@ -180,10 +186,6 @@ const ProductSinglePage = () => {
     } catch (error) {
       console.error("Lỗi khi thêm vào giỏ hàng:", error);
     }
-  }
-
-  if (user || user?.user?.PK_iKhachHangID) {
-    redirect("/login")
   }
 
   return (

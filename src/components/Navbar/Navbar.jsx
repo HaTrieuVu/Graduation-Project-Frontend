@@ -20,7 +20,6 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const [searchTerm, setSearchTerm] = useState('');
-    const [userInfo, setUserInfo] = useState({})
 
     const user = useSelector(state => state.userInfo.user);
 
@@ -29,21 +28,18 @@ const Navbar = () => {
 
     // lấy thông tin người dùng
     useEffect(() => {
-        setUserInfo(user?.user)
+        if (user && user?.userId && user?.cartId) {
+            dispatch(fetchAsyncCarts({
+                userId: user?.userId,
+                cartId: user?.cartId,
+            }));
+        }
+
     }, [user])
 
     useEffect(() => {
         dispatch(getCartTotal());
     }, [carts]);
-
-    // lấy thông tin cart: dispath action cartSlice
-    useEffect(() => {
-        let data = {
-            userId: userInfo?.PK_iKhachHangID,
-            cartId: userInfo?.carts?.PK_iGioHangID,
-        }
-        dispatch(fetchAsyncCarts(data));
-    }, [userInfo])
 
     const handleSearchTerm = (e) => {
         e.preventDefault();

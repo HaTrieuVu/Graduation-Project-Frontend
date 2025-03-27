@@ -1,13 +1,30 @@
+import { useEffect } from 'react';
 
 import { Outlet } from 'react-router-dom'
 import './App.scss'
+
 import Footer from './components/Footer/Footer'
 import Header from './components/Header/Header'
+import axios from "./config/axios";
 
 import { ToastContainer } from 'react-toastify';
 import Sidebar from './components/Sidebar/Sidebar';
+import { useDispatch } from 'react-redux';
+import { setInfoUser } from './store/userSlice';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchUserInfo()
+  }, [])
+
+  const fetchUserInfo = async () => {
+    let response = await axios.get("/api/v1/account");
+    if (response?.errorCode === 0) {
+      dispatch(setInfoUser(response?.data?.user))
+    }
+  }
 
   return (
     <main>

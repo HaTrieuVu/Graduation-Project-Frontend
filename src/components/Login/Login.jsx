@@ -17,6 +17,14 @@ const Login = () => {
 
   const navigate = useNavigate()
 
+  const fetchUserInfo = async () => {
+    let response = await axios.get("/api/v1/account");
+    console.log(response)
+    if (response?.errorCode === 0) {
+      dispatch(setInfoUser(response?.data?.user))
+    }
+  }
+
   const handlePressEnter = (e) => {
     if (e.key === "Enter") {
       handleLogin()
@@ -38,7 +46,7 @@ const Login = () => {
 
     if (response?.errorCode === 0) {
       toast.success(response?.errorMessage)
-      dispatch(setInfoUser(response?.data))
+      fetchUserInfo()
       navigate("/")
     } else {
       toast.error(response?.errorMessage)

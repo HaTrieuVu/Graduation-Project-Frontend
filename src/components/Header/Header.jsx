@@ -70,7 +70,7 @@ const Header = () => {
                                     <div className='icon'>
                                         <img alt='avatar' src={userIcon} />
                                     </div>
-                                    <span>{userInfo?.user?.sHoTen}</span>
+                                    <span>{userInfo?.userName}</span>
                                     <UserModal />
                                 </div> : <>
                                     <li>
