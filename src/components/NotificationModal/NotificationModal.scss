@@ -1,0 +1,72 @@
+.notification-modal {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    background: white;
+    width: 240px;
+    color: black;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.25) 0px 7px 29px 0px;
+    z-index: 99;
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+
+        .notify-item {
+            display: flex;
+            gap: 15px;
+            min-width: 40px;
+            border-bottom: 1px solid gray;
+            padding: 10px 10px;
+
+            .img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .content {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+
+                .content-body {
+                    display: flex;
+                    flex-direction: column;
+
+                    .title-noti {
+                        font-size: 12px;
+                        font-weight: 600;
+                    }
+
+                    .title-product {
+                        font-size: 10px;
+                    }
+                }
+
+                .icon-remove {
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.1);
+                        color: black;
+                        transition: all 0.5s ease-in-out;
+                    }
+                }
+            }
+
+            &:last-child {
+                border: none;
+            }
+
+            &:hover {
+                background-color: #ececec;
+            }
+        }
+    }
+}

@@ -7,7 +7,79 @@
     .header-cnt-top {
         border-bottom: 1px solid lighten($clr-orange, 10%);
 
+        .header-cnt-top-l {
+            .box-follow {
+                a {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 1px;
+                    &:hover {
+                        color: white;
+                        transform: scale(1.05);
+                        transition: all 0.3s ease-in-out;
+                    }
+                }
+            }
+            .box-support {
+                display: flex;
+                .top-link-itm {
+                    &:hover {
+                        color: white;
+                        transform: scale(1.05);
+                        transition: all 0.3s ease-in-out;
+                    }
+                }
+            }
+        }
+
         .header-cnt-top-r {
+            .box-notify {
+                display: flex;
+                position: relative;
+                a {
+                    &:hover {
+                        color: white;
+                    }
+                }
+
+                .icon-notify {
+                    position: relative;
+
+                    .icon-notify-value {
+                        position: absolute;
+                        top: -2px;
+                        right: -4px;
+                        border: 0.5px solid rgb(214, 214, 214);
+                        background-color: $clr-white;
+                        font-size: 12px;
+                        font-weight: 500;
+                        color: $clr-orange;
+                        padding: 0 0.5rem;
+                        width: 20px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 150px;
+                    height: 30px;
+                    background-color: transparent;
+                    top: 20px;
+                }
+
+                &:hover {
+                    .notification-modal {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                }
+            }
             .box-user {
                 display: flex;
                 align-items: center;
@@ -36,6 +108,12 @@
                         opacity: 1;
                         visibility: visible;
                     }
+                }
+            }
+            .box-action {
+                display: flex;
+                .top-link-itm:hover {
+                    color: white !important;
                 }
             }
             .box-support {
