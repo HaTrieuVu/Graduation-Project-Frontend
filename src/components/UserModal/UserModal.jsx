@@ -1,14 +1,21 @@
 import React from 'react'
 
-import "./UserModal.scss"
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+
+import "./UserModal.scss"
+import axios from '../../config/axios';
+import { toast } from 'react-toastify';
 
 const UserModal = () => {
     const user = useSelector(state => state?.userInfo?.user);
 
-    const handleLogOut = () => {
-        alert("logout")
+    const handleLogOut = async () => {
+        const response = await axios.post("/api/v1/logout");
+        if (response?.errorCode === 0) {
+            toast.success(response?.errorMessage)
+            window.location.href = "/";
+        }
     }
 
     return (

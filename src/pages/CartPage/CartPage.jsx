@@ -11,6 +11,8 @@ import { FaRegTrashCan, FaMinus, FaPlus } from "react-icons/fa6";
 import Loader from '../../components/Loader/Loader';
 import axios from '../../config/axios';
 import { STATUS } from '../../utils/status';
+import { toast } from 'react-toastify';
+import ModalOrder from '../../components/ModalOrder/ModalOrder';
 
 
 // hàm convert ảnh từ buffer sang base 64 và lấy các thuộc tính cần thiết của cartData
@@ -43,16 +45,22 @@ const convertArrayData = (cartsData) => {
 
 const CartPage = () => {
   const [cartsData, setCartsData] = useState([])
+  const [selectedProducts, setSelectedProducts] = useState([]); // lưu thông tin sp đã chọn của user
+  const [totalPrice, setTotalPrice] = useState(0)   // tổng tiền
+  const [quantityProduct, setQuantityProduct] = useState(0) //tổng bao nhiêu sản phẩm
 
   const user = useSelector(state => state?.userInfo?.user);
   const isUserLoaded = useSelector(state => state?.userInfo?.isUserLoaded);
   const cartsStatus = useSelector(state => state.cart.cartsStatus);
+  const [dataOrder, setDataOrder] = useState(null)    // dữ liệu của đơn mua hàng
+  const [isShowModalOrder, setIsShowModalOrder] = useState(false)
 
   const navigate = useNavigate()
   const dispatch = useDispatch();
 
   const carts = useSelector(getAllCarts);
 
+  // chuyển hướng nếu chưa login
   useEffect(() => {
     if (!isUserLoaded) return;
 
@@ -62,14 +70,27 @@ const CartPage = () => {
     }
   }, [user, isUserLoaded, navigate]);
 
+
   useEffect(() => {
     let cartsArr = convertArrayData(carts?.cartDetails)
     setCartsData(cartsArr)
   }, [carts])
 
+  useEffect(() => {
+    let total = selectedProducts?.reduce((sum, product) => {
+      return sum + (product?.priceNew * product?.quantity); // Cộng dồn giá trị priceNew
+    }, 0);
+
+    let quantity = selectedProducts?.reduce((quantity, product) => {
+      return quantity + product?.quantity; // Cộng dồn số lượng
+    }, 0);
+
+    setTotalPrice(total);
+    setQuantityProduct(quantity)
+  }, [selectedProducts]);
+
   //hàm tăng, giảm số lượng sản phẩm
   const handleToggleCartQuantity = async (data) => {
-    console.log(data)
     let dataCart = {
       userId: user?.userId,
       cartId: user?.cartId,
@@ -107,6 +128,48 @@ const CartPage = () => {
       }
     }
 
+  }
+
+  // hàm chọn sp để mua
+  const handleChooseProduct = (e, cart) => {
+    if (e.target.checked) {
+      // Thêm sản phẩm vào danh sách nếu được chọn
+      setSelectedProducts([...selectedProducts, cart]);
+    } else {
+      // Loại bỏ sản phẩm khỏi danh sách nếu bỏ chọn
+      setSelectedProducts(selectedProducts.filter(item => item?.cartDetailId !== cart?.cartDetailId));
+    }
+  };
+
+  // hàm mua hàng
+  const handleBuyProduct = () => {
+    if (selectedProducts?.length > 0) {
+      let dataProduct = selectedProducts?.map((item) => {
+        return {
+          productVersionId: item?.productVersionId,
+          cartDetailId: item?.cartDetailId,
+          quantity: item?.quantity,
+          price: item?.price,
+          priceNew: item?.priceNew,
+          amount: item?.priceNew * item?.quantity,
+          color: item?.color,
+          thumbnail: item?.thumbnail,
+          productName: item?.productName
+        }
+      })
+
+      let dataBuyProduct = {
+        userId: user?.userId,
+        totalPrice: totalPrice,
+        quantityProduct: quantityProduct,
+        orderDetails: dataProduct
+      }
+
+      setDataOrder(dataBuyProduct)
+      setIsShowModalOrder(true)
+    } else {
+      toast.info("Hãy chọn sản phẩm cần mua!")
+    }
   }
 
   if (carts?.cartDetails?.length === 0) {
@@ -156,7 +219,7 @@ const CartPage = () => {
               {cartsData?.length > 0 && cartsData?.map((cart) => (
                 <div className="cart-ctr py-4" key={`list-cart-item-${cart?.cartDetailId}-key`}>
                   <div className="cart-ctd">
-                    <input type="checkbox" />
+                    <input onClick={(e) => handleChooseProduct(e, cart)} type="checkbox" />
                   </div>
                   <div className="cart-ctd">
                     <div className="cart-product-img">
@@ -220,15 +283,19 @@ const CartPage = () => {
               </div>
               <div className="cart-cfoot-r flex flex-column justify-end">
                 <div className="total-txt flex align-center justify-end">
-                  <div className="font-manrope fw-5">Tổng {cartsData?.length} sản phẩm:</div>
-                  <span className="text-orange fs-22 mx-2 fw-6">0đ</span>
+                  <div className="font-manrope fw-5">Tổng {quantityProduct} sản phẩm:</div>
+                  <span className="text-orange fs-22 mx-2 fw-6">{totalPrice.toLocaleString("vi-VN")} đ</span>
                 </div>
-                <button className="checkout-btn text-white bg-orange fs-16">Mua hàng</button>
+                <button onClick={() => handleBuyProduct()} className="checkout-btn text-white bg-orange fs-16">Mua hàng</button>
               </div>
             </div>
           </div>
         }
-
+        <ModalOrder
+          show={isShowModalOrder}
+          setIsShowModalOrder={setIsShowModalOrder}
+          dataOrder={dataOrder}
+        />
       </div>
     </div>
   )

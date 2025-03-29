@@ -43,11 +43,13 @@ function App() {
       <Footer />
       <ToastContainer
         position="top-right"
-        autoClose={3000} // Thử giảm thời gian tự đóng
-        hideProgressBar={true} // Ẩn thanh tiến trình
-        closeOnClick={true}
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
         pauseOnFocusLoss={false} // Tắt tính năng tạm dừng khi mất focus
-        pauseOnHover={true}
+        pauseOnHover={false}
         draggable
         theme="light"
       />

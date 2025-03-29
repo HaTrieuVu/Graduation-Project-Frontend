@@ -1,0 +1,86 @@
+@import '../../App.scss';
+
+.custom-modal-order {
+    .modal-dialog {
+        max-width: 800px; /* Định kích thước modal */
+        // height: 750px;
+        .modal-content {
+            height: 80%;
+            .custom-modal-order-header {
+                .modal-title {
+                    font-size: 25px;
+                }
+            }
+            .custom-modal-order-body {
+                .location {
+                    font-size: 20px;
+                    .location-title {
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                        color: $clr-orange;
+                    }
+
+                    .location-info {
+                        font-weight: 600;
+                    }
+                }
+
+                .product-order {
+                    margin-top: 20px;
+
+                    .order-item {
+                        grid-template-columns: 5fr 2fr 1fr 2fr;
+                        min-height: 40px;
+                        border-bottom: 1px solid $clr-whitesmoke;
+                        display: grid;
+                        align-items: center !important;
+                        font-size: 16px;
+                        margin-bottom: 10px;
+
+                        .order-cth,
+                        .order-ctd {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            &:first-child {
+                                justify-content: flex-start;
+                            }
+                        }
+
+                        .order-product-img {
+                            width: 60px;
+                            height: 60px;
+                        }
+                        .product-info {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 3px;
+
+                            .color {
+                                font-size: 12px;
+                                color: #0000008a;
+                            }
+                        }
+                    }
+                }
+
+                .payment {
+                    margin-top: 30px;
+                    padding: 0 20px;
+                    select {
+                        margin-left: 50px;
+                        border: 1px solid #0000008a;
+                        font-size: 14px;
+                    }
+                }
+            }
+            .custom-modal-order-footer {
+                button {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}

@@ -79,7 +79,7 @@
                     }
 
                     .price-new {
-                        font-weight: normal;
+                        font-weight: 500;
                     }
                 }
             }
@@ -98,10 +98,13 @@
 
         .delete-btn {
             font-size: 14px;
-            transition: $transition-ease;
+            transition: all 0.3s ease-in-out;
             opacity: 0.6;
             &:hover {
-                color: $clr-danger;
+                padding: 5px 14px;
+                border-radius: 5px;
+                background-color: $clr-danger;
+                color: white;
                 opacity: 1;
             }
         }
@@ -161,6 +164,7 @@
             .checkout-btn {
                 padding: 0.8rem 2.8rem;
                 margin-top: 0.7rem;
+                max-width: 170px;
             }
         }
     }
