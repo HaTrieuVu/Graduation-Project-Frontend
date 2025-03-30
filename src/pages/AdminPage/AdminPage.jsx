@@ -58,12 +58,8 @@ const AdminPage = () => {
 
     // 🔹 Chặn render nếu chưa kiểm tra xong
     if (isChecking) {
-        console.log(isChecking)
         return null;
     }
-
-    console.log(isChecking)
-    console.log(user)
 
     const OpenSidebar = () => {
         setOpenSidebarToggle(!openSidebarToggle)

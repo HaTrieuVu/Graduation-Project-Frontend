@@ -37,6 +37,8 @@ const Header = () => {
         fetchAllNotification(id)
     }, [user])
 
+
+
     return (
         <div className="header text-white">
             <div className="container">
@@ -74,7 +76,7 @@ const Header = () => {
                                             <span className='icon-notify-value'>{quantityNofification}</span>
                                         </span>
                                     </Link>
-                                    <NotificationModal notifications={notifications} />
+                                    <NotificationModal notifications={notifications} fetchAllNotification={fetchAllNotification} />
                                 </li>
                                 <li className="vert-line"></li>
                                 {userInfo && !_.isEmpty(userInfo) ? <div className='box-user'>

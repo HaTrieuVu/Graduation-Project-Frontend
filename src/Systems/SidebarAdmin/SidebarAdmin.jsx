@@ -68,6 +68,11 @@ const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
                     )}
                 </li>
                 <li className='sidebar-list-item'>
+                    <Link to={"/admin/manage-order"}>
+                        <TbBrand4Chan className='icon' /> QL Đơn mua
+                    </Link>
+                </li>
+                <li className='sidebar-list-item'>
                     <Link to={"/admin/manage-brand"}>
                         <TbBrand4Chan className='icon' /> QL Nhãn hàng
                     </Link>

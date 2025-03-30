@@ -43,7 +43,7 @@ const ModalCategory = ({ action, show, handleCloseModal, dataModalCategory, fetc
     }
 
     //hàm thêm mới hoặc sửa danh mục sản phẩm
-    const handleConfirmUser = async () => {
+    const handleConfirmCategory = async () => {
         if (!categoryData.nameCategory) {
             toast.error(`Tên danh mục không được để trống!`);
         } else if (!categoryData.description) {
@@ -111,7 +111,7 @@ const ModalCategory = ({ action, show, handleCloseModal, dataModalCategory, fetc
             </Modal.Body>
             <Modal.Footer className="custom-modal-footer">
                 <Button variant='secondary' onClick={handleCloseModal}>Hủy</Button>
-                <Button variant='primary' onClick={() => handleConfirmUser()}>{action === "CREATE" ? "Thêm mới" : "Cập nhật"}</Button>
+                <Button variant='primary' onClick={() => handleConfirmCategory()}>{action === "CREATE" ? "Thêm mới" : "Cập nhật"}</Button>
             </Modal.Footer>
         </Modal>
     )

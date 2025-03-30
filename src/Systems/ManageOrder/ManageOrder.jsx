@@ -1,0 +1,160 @@
+import React, { useEffect, useState } from 'react'
+
+import axios from '../../config/axios';
+
+import "./ManageOrder.scss"
+import _ from "lodash";
+import { IoReloadSharp } from "react-icons/io5";
+import { FaPlusCircle, FaRegEdit } from "react-icons/fa";
+import ReactPaginate from 'react-paginate';
+import ModalOrder from './ModalOrder';
+
+const ManageOrder = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const currentLimit = 5
+    const [totalPage, setTotalPage] = useState(0)
+
+    const [listOrders, setListOrders] = useState([])
+    const [isShowModel, setIsShowModel] = useState(false)
+    const [actionModalOrder, setActionModalOrder] = useState("")
+    const [dataModalOrder, setDataModalOrder] = useState({})
+    const [searchValue, setSearchValue] = useState(null)
+
+    useEffect(() => {
+        fetchAllOrders()
+    }, [currentPage])
+
+    const fetchAllOrders = async () => {
+        let response = await axios.get(`/api/v1/manage-order/get-all?page=${currentPage}&limit=${currentLimit}`)
+
+        if (!_.isEmpty(response?.data) && response?.errorCode === 0) {
+            setTotalPage(response?.data?.totalPage)
+            setListOrders(response?.data?.orders)
+        }
+    }
+
+    const handlePageClick = async (event) => {
+        setCurrentPage(+event.selected + 1)
+    };
+
+    const handleCloseModal = () => {
+        setIsShowModel(false)
+    }
+
+    const handleUpdateOrder = (data) => {
+        setIsShowModel(true)
+        setActionModalOrder("UPDATE")
+        if (data) {
+            setDataModalOrder(data)
+        }
+    }
+
+    const handleChangeSelect = (e) => {
+        setSearchValue(e.target.value)
+    }
+
+    console.log(searchValue)
+
+    return (
+        <main className='manage-order-container'>
+            <h2 className='title'>Quản lý Đơn mua hàng</h2>
+            <div className='order-header'>
+                <div className='order-title'>
+                    <h3>Danh sách Đơn mua hàng</h3>
+                </div>
+                <div className='actions'>
+                    <button className='btn btn-primary' >
+                        <span>Tạo mới</span>
+                        <span>
+                            <FaPlusCircle />
+                        </span>
+                    </button>
+                    <button className='btn btn-success'>
+                        <span>Refesh</span>
+                        <span>
+                            <IoReloadSharp />
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div className='box-search'>
+                <label>Lọc trạng thái đơn hàng</label>
+                <select value={searchValue} onChange={(e) => handleChangeSelect(e)} className='select-search'>
+                    <option>Chọn</option>
+                    <option value="Chờ xác nhận">Chờ xác nhận</option>
+                    <option value="Xác nhận">Xác nhận</option>
+                    <option value="Đang giao hàng">Đang giao hàng</option>
+                </select>
+            </div>
+            <div className='order-body'>
+                <table className="table table-hover table-bordered fs-20">
+                    <thead>
+                        <tr>
+                            <th scope="col">Mã đơn mua</th>
+                            <th scope="col">Thông tin KH</th>
+                            <th scope="col">Thông tin SP</th>
+                            <th scope="col">Tổng tiền</th>
+                            <th scope="col">Trạng thái đơn hàng</th>
+                            <th scope="col">Phương thức thanh toán</th>
+                            <th scope="col">Trạng thái thanh toán</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {listOrders?.length > 0 ?
+                            listOrders.map((item, i) => {
+                                return (
+                                    <tr key={item?.PK_iDonMuaHangID - "order-item" - i}>
+                                        <td scope="row">{`${item?.PK_iDonMuaHangID}`}</td>
+                                        <td>{`${item?.customer?.sHoTen}-${item?.customer?.sSoDienThoai}-${item?.customer?.sDiaChi}`}</td>
+                                        <td>{`${item?.orderDetails?.productVersion?.productData?.sTenSanPham}
+                                            -${item?.orderDetails?.productVersion?.productImages?.sMoTa}`}
+                                        </td>
+                                        <td>{item?.fTongTien.toLocaleString("vi-VN")} đ</td>
+                                        <td>{item?.sTrangThaiDonHang}</td>
+                                        <td>{item?.sPhuongThucThanhToan === "COD" ? "Thanh toán khi nhận hàng" : "Thanh toán Online"}</td>
+                                        <td>{item?.sTrangThaiThanhToan}</td>
+                                        <td className='btn-action'>
+                                            <button onClick={() => handleUpdateOrder(item)} title='Sửa'><FaRegEdit /></button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                            : <tr><td>Danh sách Danh mục sản phẩm trống</td></tr>}
+                    </tbody>
+                </table>
+            </div>
+            {totalPage > 0 && <div className='order-footer'>
+                <ReactPaginate
+                    nextLabel="next >"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    pageCount={totalPage}
+                    previousLabel="< previous"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                />
+            </div>}
+            <ModalOrder
+                show={isShowModel}
+                handleCloseModal={handleCloseModal}
+                action={actionModalOrder}
+                dataModalOrder={dataModalOrder}
+                fetchAllOrders={fetchAllOrders}
+            />
+        </main>
+    )
+}
+
+export default ManageOrder

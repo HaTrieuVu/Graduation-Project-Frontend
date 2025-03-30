@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 
 import "./NotificationModal.scss"
 
-import img from "../../assets/user.png"
 import { IoMdClose } from "react-icons/io";
 import { Buffer } from 'buffer';
+import axios from '../../config/axios';
 
-const NotificationModal = ({ notifications }) => {
+const NotificationModal = ({ notifications, fetchAllNotification }) => {
     const [notificationData, setNotificationData] = useState([])
 
     // hàm convert ảnh từ buffer sang base 64 và sửa lại data
@@ -18,6 +18,7 @@ const NotificationModal = ({ notifications }) => {
                     image = new Buffer(item?.order?.orderDetails?.productVersion?.productImages?.sUrl?.data, "base64").toString("binary");
                 }
                 return {
+                    notificationId: item?.PK_iThongBaoID,
                     notification: item?.sNoiDung,
                     thumbnail: image,
                     productName: item?.order?.orderDetails?.productVersion?.productData?.sTenSanPham,
@@ -33,27 +34,37 @@ const NotificationModal = ({ notifications }) => {
 
     }, [notifications])
 
-    console.log(notificationData)
+    const handleRemoveNotification = async (notifi) => {
+        let response = await axios.delete("/api/v1/notification/delete-notify", { data: { notificationId: notifi?.notificationId } });
 
+        if (response?.errorCode === 0) {
+            await fetchAllNotification()
+        }
 
+    }
 
     return (
         <div className='notification-modal'>
-            <ul className='body'>
-                {notificationData?.length > 0 && notificationData?.map((item, i) => (
-                    <li key={`notification-key-${i}`} className='notify-item'>
-                        <img className='img' src={item?.thumbnail} alt="img" />
-                        <div className='content'>
-                            <div className='content-body'>
-                                <span className='title-noti'>{item?.notification}</span>
-                                <span className='title-product'>{item?.productName}</span>
+            {notificationData?.length > 0
+                ?
+                <ul className='body'>
+                    {notificationData?.length > 0 && notificationData?.map((item, i) => (
+                        <li key={`notification-key-${i}`} className='notify-item'>
+                            <img className='img' src={item?.thumbnail} alt="img" />
+                            <div className='content'>
+                                <div className='content-body'>
+                                    <span className='title-noti'>{item?.notification}</span>
+                                    <span className='title-product'>{item?.productName}</span>
+                                </div>
+                                <span onClick={() => handleRemoveNotification(item)} className='icon-remove'><IoMdClose size={15} /></span>
                             </div>
-                            <span className='icon-remove'><IoMdClose size={15} /></span>
-                        </div>
-                    </li>
-                ))}
+                        </li>
+                    ))}
+                </ul>
+                :
+                <div className='no-notifi'>Không có thông báo</div>
+            }
 
-            </ul>
         </div>
     )
 }
