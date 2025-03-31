@@ -20,6 +20,7 @@ import ManageProductVersion from "../Systems/ManageProductVersion/ManageProductV
 import ManageProductImage from "../Systems/ManageProductImage/ManageProductImage";
 import BrandProductPage from "../pages/BrandProductPage/BrandProductPage";
 import ManageOrder from "../Systems/ManageOrder/ManageOrder";
+import ManageImportReceipt from "../Systems/ManageImportReceipt/ManageImportReceipt";
 
 
 const router = createBrowserRouter([
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
             {
                 path: "/admin/manage-order",
                 element: <ManageOrder />
+            },
+            {
+                path: "/admin/manage-import-receipt",
+                element: <ManageImportReceipt />
             },
             {
                 path: "/admin/manage-supplier",

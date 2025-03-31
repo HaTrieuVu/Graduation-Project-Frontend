@@ -172,7 +172,9 @@ const CartPage = () => {
     }
   }
 
-  if (carts?.cartDetails?.length === 0) {
+  console.log(carts)
+
+  if (carts?.length === 0) {
     return (
       <div className="container my-5">
         <div className="empty-cart flex align-center justify-center flex-column font-manrope">

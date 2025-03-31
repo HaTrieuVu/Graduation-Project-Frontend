@@ -8,8 +8,9 @@ import {
     from 'react-icons/bs'
 import { AiOutlineProduct } from "react-icons/ai";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { MdWarehouse } from "react-icons/md";
 import { TbBrand4Chan } from "react-icons/tb";
-import { RiImageAiFill } from "react-icons/ri";
+import { RiImageAiFill, RiBillFill } from "react-icons/ri";
 import { Link } from 'react-router-dom'
 
 const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
@@ -69,7 +70,12 @@ const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
                 </li>
                 <li className='sidebar-list-item'>
                     <Link to={"/admin/manage-order"}>
-                        <TbBrand4Chan className='icon' /> QL Đơn mua
+                        <RiBillFill className='icon' /> QL Đơn mua
+                    </Link>
+                </li>
+                <li className='sidebar-list-item'>
+                    <Link to={"/admin/manage-import-receipt"}>
+                        <MdWarehouse className='icon' /> QL Nhập kho
                     </Link>
                 </li>
                 <li className='sidebar-list-item'>

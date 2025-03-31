@@ -33,8 +33,6 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
         }
     }
 
-    console.log(dataOrder)
-
     const handleConfirmOrder = async () => {
         if (paymentMethod !== null) {
 
@@ -51,14 +49,17 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
                 orderDetails: data
             }
 
-            console.log(dataOrderConfirm)
-
             const res = await axios.post(`/api/v1/order/order-product`, dataOrderConfirm)
 
             if (res.errorCode === 0) {
                 setIsShowModalOrder(false)
                 await toast.success("Đơn hàng được đặt thành công!")
                 window.location.href = "/";
+            }
+
+            if (res?.errorCode === -2) {
+                setIsShowModalOrder(false)
+                toast.error("Số lượng mua của bạn không đủ tồn kho!")
             }
 
         } else {

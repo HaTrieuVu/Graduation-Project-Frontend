@@ -6,7 +6,7 @@ import { IoMdClose } from "react-icons/io";
 import { Buffer } from 'buffer';
 import axios from '../../config/axios';
 
-const NotificationModal = ({ notifications, fetchAllNotification }) => {
+const NotificationModal = ({ notifications, fetchAllNotification, userId }) => {
     const [notificationData, setNotificationData] = useState([])
 
     // hàm convert ảnh từ buffer sang base 64 và sửa lại data
@@ -38,7 +38,7 @@ const NotificationModal = ({ notifications, fetchAllNotification }) => {
         let response = await axios.delete("/api/v1/notification/delete-notify", { data: { notificationId: notifi?.notificationId } });
 
         if (response?.errorCode === 0) {
-            await fetchAllNotification()
+            await fetchAllNotification(userId)
         }
 
     }

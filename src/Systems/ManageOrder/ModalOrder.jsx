@@ -23,7 +23,9 @@ const ModalOrder = ({ show, handleCloseModal, action, dataModalOrder, fetchAllOr
             let data = {
                 orderId: dataModalOrder?.PK_iDonMuaHangID,
                 orderStatus,
-                paymentStatus
+                paymentStatus,
+                productVersionId: dataModalOrder?.orderDetails?.FK_iPhienBanID,
+                quantity: dataModalOrder?.orderDetails?.iSoLuong
             }
 
             let res = await axios.put('/api/v1/manage-order/update', data)
@@ -33,6 +35,7 @@ const ModalOrder = ({ show, handleCloseModal, action, dataModalOrder, fetchAllOr
                 toast.success("Cập nhật trạng thái đơn hàng thành công!")
                 await fetchAllOrders()
             }
+            console.log(data)
         } else {
             toast.info("Hãy chọn trạng thái cập nhật!")
         }
@@ -67,6 +70,8 @@ const ModalOrder = ({ show, handleCloseModal, action, dataModalOrder, fetchAllOr
                                 <option>Chọn</option>
                                 <option value="Xác nhận">Xác nhận</option>
                                 <option value="Đang giao hàng">Đang giao hàng</option>
+                                <option value="Giao hàng thành công">Giao hàng thành công</option>
+                                <option value="Đã hủy">Đã hủy</option>
                             </select>
                         </div>
                         <div className='col-12 col-sm-12 mb-3 form-group'>

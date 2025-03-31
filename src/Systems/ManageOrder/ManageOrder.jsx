@@ -5,7 +5,7 @@ import axios from '../../config/axios';
 import "./ManageOrder.scss"
 import _ from "lodash";
 import { IoReloadSharp } from "react-icons/io5";
-import { FaPlusCircle, FaRegEdit } from "react-icons/fa";
+import { FaPlusCircle, FaRegEdit, FaPrint } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
 import ModalOrder from './ModalOrder';
 
@@ -52,9 +52,15 @@ const ManageOrder = () => {
         }
     }
 
+    const handlePrintOrder = () => {
+
+    }
+
     const handleChangeSelect = (e) => {
         setStatusOrder(e.target.value)
     }
+
+    console.log(listOrders)
 
     return (
         <main className='manage-order-container'>
@@ -116,7 +122,10 @@ const ManageOrder = () => {
                                         <td>{item?.sPhuongThucThanhToan === "COD" ? "Thanh toán khi nhận hàng" : "Thanh toán Online"}</td>
                                         <td>{item?.sTrangThaiThanhToan}</td>
                                         <td className='btn-action'>
-                                            <button onClick={() => handleUpdateOrder(item)} title='Sửa'><FaRegEdit /></button>
+                                            {(item?.sTrangThaiDonHang !== "Giao hàng thành công" && item?.sTrangThaiDonHang !== "Đã hủy") && (
+                                                <button onClick={() => handleUpdateOrder(item)} title='Cập nhật'><FaRegEdit /></button>
+                                            )}
+                                            {item?.sTrangThaiDonHang !== "Đã hủy" && <button onClick={() => handlePrintOrder(item)} title='In hóa đơn'><FaPrint /></button>}
                                         </td>
                                     </tr>
                                 )

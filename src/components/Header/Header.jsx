@@ -28,6 +28,9 @@ const Header = () => {
         if (res?.errorCode === 0 && !_.isEmpty(res?.data)) {
             setNotifications(res?.data)
             setQuantityNofification(res?.data?.length)
+        } else {
+            setNotifications([]); // Reset nếu không có dữ liệu
+            setQuantityNofification(0);
         }
     }
 
@@ -76,7 +79,7 @@ const Header = () => {
                                             <span className='icon-notify-value'>{quantityNofification}</span>
                                         </span>
                                     </Link>
-                                    <NotificationModal notifications={notifications} fetchAllNotification={fetchAllNotification} />
+                                    <NotificationModal notifications={notifications} userId={user?.userId} fetchAllNotification={fetchAllNotification} />
                                 </li>
                                 <li className="vert-line"></li>
                                 {userInfo && !_.isEmpty(userInfo) ? <div className='box-user'>
