@@ -18,14 +18,17 @@ const ManageOrder = () => {
     const [isShowModel, setIsShowModel] = useState(false)
     const [actionModalOrder, setActionModalOrder] = useState("")
     const [dataModalOrder, setDataModalOrder] = useState({})
-    const [searchValue, setSearchValue] = useState(null)
+    const [statusOrder, setStatusOrder] = useState("all")
 
     useEffect(() => {
         fetchAllOrders()
-    }, [currentPage])
+    }, [currentPage, statusOrder])
+
+    console.log(statusOrder)
 
     const fetchAllOrders = async () => {
-        let response = await axios.get(`/api/v1/manage-order/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let response =
+            await axios.get(`/api/v1/manage-order/get-orders-by-status?page=${currentPage}&limit=${currentLimit}&statusOrder=${statusOrder}`)
 
         if (!_.isEmpty(response?.data) && response?.errorCode === 0) {
             setTotalPage(response?.data?.totalPage)
@@ -50,10 +53,8 @@ const ManageOrder = () => {
     }
 
     const handleChangeSelect = (e) => {
-        setSearchValue(e.target.value)
+        setStatusOrder(e.target.value)
     }
-
-    console.log(searchValue)
 
     return (
         <main className='manage-order-container'>
@@ -78,9 +79,9 @@ const ManageOrder = () => {
                 </div>
             </div>
             <div className='box-search'>
-                <label>Lọc trạng thái đơn hàng</label>
-                <select value={searchValue} onChange={(e) => handleChangeSelect(e)} className='select-search'>
-                    <option>Chọn</option>
+                <label>Trạng thái đơn hàng</label>
+                <select value={statusOrder} onChange={(e) => handleChangeSelect(e)} className='select-search'>
+                    <option value="all">Chọn</option>
                     <option value="Chờ xác nhận">Chờ xác nhận</option>
                     <option value="Xác nhận">Xác nhận</option>
                     <option value="Đang giao hàng">Đang giao hàng</option>
@@ -120,7 +121,7 @@ const ManageOrder = () => {
                                     </tr>
                                 )
                             })
-                            : <tr><td>Danh sách Danh mục sản phẩm trống</td></tr>}
+                            : <tr><td className='text-center' colSpan={8}>Danh sách Đơn mua hàng trống!</td></tr>}
                     </tbody>
                 </table>
             </div>

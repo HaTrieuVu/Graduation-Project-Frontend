@@ -9,6 +9,7 @@ import CommonUtils from '../../utils/CommonUtils';
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import Select from "react-select";
 
 const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductImage, fetchAllProductImage }) => {
     const [productImageData, setProductImageData] = useState({
@@ -19,7 +20,7 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
         previewImg: "",
     });
 
-    const [listProductImage, setListProductImage] = useState([])
+    const [listProduct, setListProduct] = useState([])
     const [isOpenPreviewImg, setIsOpenPreviewImg] = useState(false)
 
     useEffect(() => {
@@ -52,9 +53,20 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
     const fetchGetProduct = async () => {
         let response = await axios.get("/api/v1/manage-product/get-all")
         if (response?.errorCode === 0 && response?.data?.length > 0) {
-            setListProductImage(response?.data)
+            let dataBuild = buildOptions(response?.data)
+            setListProduct(dataBuild)
         }
     }
+
+    // lấy các thuộc tính cần thiết để sử dụng react-select
+    const buildOptions = (data) => {
+        return data.map(item => ({
+            value: item.PK_iSanPhamID,
+            label: item.sTenSanPham
+        }));
+    };
+
+    console.log(productImageData)
 
     const handleOnchangeInput = (value, name) => {
         setProductImageData((prev) => ({
@@ -78,11 +90,11 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
         }
     }
 
-    const handleChangeSelect = (e, name) => {
-        setProductImageData(prev => ({
-            ...prev,
-            [name]: e.target.value
-        }))
+    const handleChangeSelect = (selectedOption, field) => {
+        setProductImageData(prevState => ({
+            ...prevState,
+            [field]: selectedOption ? selectedOption.value : ""
+        }));
     }
 
     const checkValidateInput = () => {
@@ -150,14 +162,12 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
 
                         <div className='col-12 col-sm-6 mb-3 form-group'>
                             <label>Danh sách sản phẩm (<span className='red'>*</span>)</label>
-                            <select value={productImageData.productId || ""} onChange={(e) => handleChangeSelect(e, "productId")} className='form-select'>
-                                <option value="">Chọn sản phẩm</option>
-                                {
-                                    listProductImage?.length > 0 && listProductImage.map((item) => (
-                                        <option key={`product-image-${item?.PK_iSanPhamID}`} value={item?.PK_iSanPhamID}>{item?.sTenSanPham}</option>
-                                    ))
-                                }
-                            </select>
+                            <Select
+                                value={listProduct.find(option => option.value === productImageData.productId)}
+                                onChange={(e) => handleChangeSelect(e, "productId")}
+                                options={listProduct}
+                                placeholder="Chọn sản phẩm"
+                            />
                         </div>
 
                         <div className="col-12 col-sm-12 mb-5 form-group">

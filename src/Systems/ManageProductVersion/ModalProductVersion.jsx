@@ -4,6 +4,7 @@ import { Button, Modal } from 'react-bootstrap';
 import axios from '../../config/axios';
 import { toast } from 'react-toastify';
 import _ from "lodash";
+import Select from "react-select";
 
 import './ModalProductVersion.scss';
 
@@ -26,9 +27,18 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
     const fetchGetProduct = async () => {
         let response = await axios.get("/api/v1/manage-product/get-all")
         if (response?.errorCode === 0 && response?.data?.length > 0) {
-            setListProduct(response?.data)
+            let dataBuild = buildOptions(response?.data)
+            setListProduct(dataBuild)
         }
     }
+
+    // lấy các thuộc tính cần thiết để sử dụng react-select
+    const buildOptions = (data) => {
+        return data.map(item => ({
+            value: item.PK_iSanPhamID,
+            label: item.sTenSanPham
+        }));
+    };
 
     //hàm lấy tất cả các màu của product
     const fetchAllColorOfProduct = useCallback(async () => {
@@ -90,21 +100,22 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
         }));
     };
 
-    const handleChangeSelect = (e, name) => {
-        setProductVersionData((prev) => {
+    const handleChangeSelect = (value, field, isReactSelect = false) => {
+        setProductVersionData(prevState => {
             const updatedData = {
-                ...prev,
-                [name]: e.target.value
+                ...prevState,
+                [field]: isReactSelect ? value?.value || "" : value.target.value
             };
 
-            // Cập nhật selectedProductId sau khi state đã được cập nhật
-            if (name === "productId") {
+            // Nếu field là "productId", cập nhật selectedProductId
+            if (field === "productId") {
                 setSelectedProductId(updatedData.productId);
             }
 
             return updatedData;
         });
-    }
+    };
+
 
     const checkValidateInput = () => {
         let arr = [
@@ -178,6 +189,8 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
         }
     };
 
+    console.log(productVersionData)
+
     return (
         <Modal size="xl" show={show} className="custom-modal" onHide={handleCloseModal}>
             <Modal.Header closeButton className="custom-modal-header">
@@ -188,17 +201,15 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
             <Modal.Body className="custom-modal-body">
                 <div className="content-body">
                     <div className="row">
-
                         <div className='col-12 col-sm-6 mb-3 form-group'>
                             <label>Danh sách sản phẩm (<span className='red'>*</span>)</label>
-                            <select value={productVersionData.productId || ""} onChange={(e) => handleChangeSelect(e, "productId")} className='form-select'>
-                                <option value="">Chọn sản phẩm</option>
-                                {
-                                    listProduct?.length > 0 && listProduct.map((item) => (
-                                        <option key={`product-version-${item?.PK_iSanPhamID}`} value={item?.PK_iSanPhamID}>{item?.sTenSanPham}</option>
-                                    ))
-                                }
-                            </select>
+                            <Select
+                                value={listProduct.find(option => option.value === productVersionData.productId)}
+                                onChange={(selectedOption) => handleChangeSelect(selectedOption, "productId", true)}
+                                options={listProduct}
+                                placeholder="Chọn sản phẩm"
+                            />
+
                         </div>
 
                         <div className="col-12 col-sm-6 mb-3 form-group">
