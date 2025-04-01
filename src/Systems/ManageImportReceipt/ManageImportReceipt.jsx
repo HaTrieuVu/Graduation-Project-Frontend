@@ -19,15 +19,18 @@ const ManageImportReceipt = () => {
     const [valueSearch, setValueSearch] = useState("all")
 
     useEffect(() => {
-        fetchAllProduct()
-    }, [currentPage])
+        fetchAllImportReceipt()
+    }, [currentPage, valueSearch])
 
-    const fetchAllProduct = async () => {
-        let response = await axios.get(`/api/v1/manage-import-receipt/get-all?page=${currentPage}&limit=${currentLimit}`)
+    const fetchAllImportReceipt = async () => {
+        let response = await axios.get(`/api/v1/manage-import-receipt/get-all?page=${currentPage}&limit=${currentLimit}&valueSearch=${valueSearch}`)
 
         if (response?.data?.importReceipts?.length > 0 && response?.errorCode === 0) {
             setTotalPage(response?.data?.totalPage)
             setListImportReceipt(response?.data?.importReceipts)
+        } else {
+            setTotalPage(response?.data?.totalPage)
+            setListImportReceipt([])
         }
     }
 
@@ -52,7 +55,6 @@ const ManageImportReceipt = () => {
             setActionModalImportReceipt(action)
             setDataModalImportReceipt({})
         }
-
     }
 
     const handlePrintOrder = () => {
@@ -61,13 +63,10 @@ const ManageImportReceipt = () => {
 
     const handleOnChangeSearch = (e) => {
         const searchValue = e.target.value;
-
         if (!searchValue) return;
 
-        // Chuyển đổi ngày về cùng định dạng YYYY-MM-DD để gửi API
-        const formattedSearchDate = new Date(searchValue).toISOString().split("T")[0];
-
-        console.log("Ngày tìm kiếm:", formattedSearchDate);
+        const formattedSearchDate = new Date(searchValue).toISOString().split("T")[0]
+        setValueSearch(formattedSearchDate)
     }
 
     return (
@@ -84,7 +83,7 @@ const ManageImportReceipt = () => {
                             <FaPlusCircle />
                         </span>
                     </button>
-                    <button className='btn btn-success'>
+                    <button className='btn btn-success' onClick={() => setValueSearch("all")} >
                         <span>Refesh</span>
                         <span>
                             <IoReloadSharp />
@@ -94,7 +93,7 @@ const ManageImportReceipt = () => {
             </div>
             <div className='box-search'>
                 <label>Ngày lập đơn</label>
-                <input className='input-search' onChange={(e) => handleOnChangeSearch(e)} type="date" />
+                <input className='input-search' value={valueSearch} onChange={(e) => handleOnChangeSearch(e)} type="date" />
             </div>
             {!isShowImportNote ? <>
                 <div className='import-receipt-body'>
@@ -155,8 +154,6 @@ const ManageImportReceipt = () => {
                                 </tr>
                             )}
                         </tbody>
-
-
                     </table>
                 </div>
                 {totalPage > 0 && <div className='import-receipt-footer'>
@@ -186,9 +183,8 @@ const ManageImportReceipt = () => {
                 handleCloseImportNote={handleCloseImportNote}
                 action={actionModalImportReceipt}
                 dataModalImportReceipt={dataModalImportReceipt}
+                fetchAllImportReceipt={fetchAllImportReceipt}
             />}
-
-
         </main>
     )
 }

@@ -8,7 +8,7 @@ import './ImportReceiptNote.scss';
 import { useSelector } from 'react-redux';
 
 
-const ImportReceiptNote = ({ action, handleCloseImportNote }) => {
+const ImportReceiptNote = ({ action, handleCloseImportNote, fetchAllImportReceipt }) => {
     const user = useSelector(state => state.userInfo.user);
 
     const [importReceiptData, setImportReceiptData] = useState({
@@ -30,9 +30,7 @@ const ImportReceiptNote = ({ action, handleCloseImportNote }) => {
 
     useEffect(() => {
         const userId = user?.userId
-
         fetchGetAllSupplier()
-
         setImportReceiptData({ ...importReceiptData, userId: userId })
     }, [])
 
@@ -121,9 +119,9 @@ const ImportReceiptNote = ({ action, handleCloseImportNote }) => {
         }
 
         const response = await axios.post('/api/v1/manage-import-receipt/create', importReceiptData)
-
         if (response?.errorCode === 0) {
             handleCloseImportNote()
+            await fetchAllImportReceipt()
             toast.success(response?.errorMessage)
             setImportReceiptData({
                 supplierId: "",
@@ -131,6 +129,7 @@ const ImportReceiptNote = ({ action, handleCloseImportNote }) => {
                 products: [],
                 note: "",
             })
+            await fetchAllImportReceipt()
         }
     };
 
@@ -231,7 +230,6 @@ const ImportReceiptNote = ({ action, handleCloseImportNote }) => {
                             <button className="btn btn-primary btn-add" onClick={addProduct}>+ Thêm sản phẩm</button>
                         </div>
 
-                        {/* Ghi chú */}
                         <div className="col-12 col-sm-6 mb-5 form-group box-note">
                             <label>Ghi chú</label>
                             <textarea
