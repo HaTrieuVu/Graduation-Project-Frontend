@@ -1,0 +1,55 @@
+.import-receipt-note {
+    width: 100%;
+    padding: 10px 10px;
+    border: 1px solid black;
+    .import-receipt-note-header {
+        width: 100%;
+        text-align: center;
+        .title-import {
+            font-size: 25px;
+        }
+    }
+    .import-receipt-note-body {
+        font-size: 20px;
+        .content-body {
+            .red {
+                color: red;
+            }
+            .form-group {
+                input,
+                select {
+                    font-size: 18px;
+                }
+            }
+
+            .list-product {
+                margin: 20px 0;
+
+                .btn-remove {
+                    font-size: 14px;
+                    padding: 4px 16px;
+                }
+
+                .btn-add {
+                    font-size: 16px;
+                }
+            }
+
+            .box-note {
+                textarea {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+    .import-receipt-note-footer {
+        display: flex;
+        justify-content: flex-end;
+        button {
+            font-size: 20px;
+            margin-right: 15px;
+            width: 120px;
+            padding: 5px 0;
+        }
+    }
+}

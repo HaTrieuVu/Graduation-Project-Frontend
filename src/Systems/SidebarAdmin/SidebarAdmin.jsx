@@ -75,7 +75,7 @@ const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
                 </li>
                 <li className='sidebar-list-item'>
                     <Link to={"/admin/manage-import-receipt"}>
-                        <MdWarehouse className='icon' /> QL Nhập kho
+                        <MdWarehouse className='icon' /> QL Nhập hàng
                     </Link>
                 </li>
                 <li className='sidebar-list-item'>

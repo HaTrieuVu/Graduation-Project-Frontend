@@ -159,7 +159,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
 
 
     //hàm thêm mới hoặc sửa Sản phẩm
-    const handleConfirmUser = async () => {
+    const handleConfirmProductVersion = async () => {
         let checkValid = checkValidateInput();
 
         if (checkValid) {
@@ -282,7 +282,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                 <Button variant="secondary" onClick={handleCloseModal}>
                     Hủy
                 </Button>
-                <Button variant="primary" onClick={() => handleConfirmUser()}>
+                <Button variant="primary" onClick={() => handleConfirmProductVersion()}>
                     {action === 'CREATE' ? 'Thêm mới' : 'Cập nhật'}
                 </Button>
             </Modal.Footer>

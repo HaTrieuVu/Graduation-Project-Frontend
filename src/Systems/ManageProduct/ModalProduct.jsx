@@ -24,7 +24,6 @@ const ModalProduct = ({ action, show, handleCloseModal, dataModalProduct, fetchA
     useEffect(() => {
         fetchGetCategory()
         fetchGetBrand()
-
     }, [])
 
 

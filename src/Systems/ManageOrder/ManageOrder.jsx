@@ -24,8 +24,6 @@ const ManageOrder = () => {
         fetchAllOrders()
     }, [currentPage, statusOrder])
 
-    console.log(statusOrder)
-
     const fetchAllOrders = async () => {
         let response =
             await axios.get(`/api/v1/manage-order/get-orders-by-status?page=${currentPage}&limit=${currentLimit}&statusOrder=${statusOrder}`)
@@ -59,8 +57,6 @@ const ManageOrder = () => {
     const handleChangeSelect = (e) => {
         setStatusOrder(e.target.value)
     }
-
-    console.log(listOrders)
 
     return (
         <main className='manage-order-container'>
