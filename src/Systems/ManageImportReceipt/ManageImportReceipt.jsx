@@ -63,11 +63,8 @@ const ManageImportReceipt = () => {
 
     const handleOnChangeSearch = (e) => {
         const searchValue = e.target.value;
-
         if (!searchValue) return;
-
         const formattedSearchDate = new Date(searchValue).toISOString().split("T")[0]
-        console.log(formattedSearchDate)
         setValueSearch(formattedSearchDate)
     }
 

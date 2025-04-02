@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import "./ManageWarranty.scss"
 import axios from '../../config/axios';
@@ -8,6 +8,8 @@ import { IoReloadSharp } from "react-icons/io5";
 import { FaRegEdit, FaPlusCircle, FaPrint } from "react-icons/fa";
 import { BsSearch } from 'react-icons/bs'
 import ModalWarranty from './ModalWarranty';
+import WarrantyPrint from './WarrantyPrint';
+import { useReactToPrint } from "react-to-print";
 
 const ManageWarranty = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,18 +21,27 @@ const ManageWarranty = () => {
     const [actionModalWarranty, setActionModalWarranty] = useState("") //state action create or update
     const [dataModalWarranty, setDataModalWarranty] = useState({})
 
-    const [keywordSearch, setKeywordSearch] = useState("")
+    const [keywordSearch, setKeywordSearch] = useState("all")
+    const [dateSearch, setDateSearch] = useState("")
+    const [selectedWarranty, setSelectedWarranty] = useState(null);
+
+
 
     useEffect(() => {
-        fetchAllWarranty()
+        fetchAllWarranty("all")
     }, [currentPage])
 
-    const fetchAllWarranty = async () => {
-        let response = await axios.get(`/api/v1/manage-warranty/get-all?page=${currentPage}&limit=${currentLimit}`)
+    const fetchAllWarranty = async (valueSearch) => {
+        let response = await axios.get(`/api/v1/manage-warranty/get-all?page=${currentPage}
+            &limit=${currentLimit}&keywordSearch=${valueSearch}`
+        )
 
         if (response?.data?.warranties?.length > 0 && response?.errorCode === 0) {
             setTotalPage(response?.data?.totalPage)
             setListWarranty(response?.data?.warranties)
+        } else {
+            setTotalPage(response?.data?.totalPage)
+            setListWarranty([])
         }
     }
 
@@ -56,19 +67,34 @@ const ManageWarranty = () => {
         }
     }
 
-    const handlePrintWarranty = () => {
-
-    }
-
     const handleSearch = async (e) => {
         if (e.key === "Enter" && keywordSearch.trim() !== "") {
-            let response = await axios.get(`/api/v1/search-product?page=${currentPage}&limit=${currentLimit}&keywordSearch=${keywordSearch}`)
-            if (response?.data && response?.errorCode === 0) {
-                setTotalPage(response?.data?.totalPage)
-                setListWarranty(response?.data?.products)
-            }
+            fetchAllWarranty(keywordSearch)
         }
     }
+
+    const handleSearchByDate = (e) => {
+        const searchValue = e.target.value;
+        if (!searchValue) return;
+        const formattedSearchDate = new Date(searchValue).toISOString().split("T")[0]
+        setDateSearch(formattedSearchDate)
+        fetchAllWarranty(formattedSearchDate)
+    }
+
+    const contentRef = useRef(null);
+    const printWarranty = useReactToPrint({ contentRef });
+
+    const handlePrintWarranty = (data) => {
+        setSelectedWarranty(data)
+
+
+        setTimeout(() => {
+            // printWarranty()
+        }, 300);
+
+    }
+
+    console.log(selectedWarranty)
 
     return (
         <main className='manage-warranty-container'>
@@ -84,7 +110,7 @@ const ManageWarranty = () => {
                             <FaPlusCircle />
                         </span>
                     </button> */}
-                    <button className='btn btn-success'>
+                    <button onClick={() => fetchAllWarranty("all")} className='btn btn-success'>
                         <span>Refesh</span>
                         <span>
                             <IoReloadSharp />
@@ -97,10 +123,17 @@ const ManageWarranty = () => {
                     <BsSearch className='icon' />
                     <input
                         type="text"
-                        placeholder='Mã phiếu hoặc tên khác hàng...'
-                        onChange={(e) => setKeywordSearch(e.target.value)}
+                        placeholder='Mã phiếu hoặc sđt hoặc tên KH...'
+                        onChange={(e) => {
+                            setKeywordSearch(e.target.value)
+                            setDateSearch("")
+                        }}
                         onKeyDown={(e) => handleSearch(e)}
                     />
+                </div>
+                <div className='date-search'>
+                    <label>Ngày lập</label>
+                    <input className='input-search' value={dateSearch} onChange={(e) => handleSearchByDate(e)} type="date" />
                 </div>
             </div>
             <div className='warranty-body'>
@@ -139,10 +172,14 @@ const ManageWarranty = () => {
                                     </tr>
                                 )
                             })
-                            : <tr><td>Danh sách Phiếu bảo hành trống</td></tr>}
+                            : <tr><td colSpan={8} className='text-center'>Danh sách Phiếu bảo hành trống</td></tr>}
                     </tbody>
                 </table>
             </div>
+            <div className='box-warranty'>
+                <WarrantyPrint ref={contentRef} data={selectedWarranty} />
+            </div>
+
             {totalPage > 0 && <div className='warranty-footer'>
                 <ReactPaginate
                     nextLabel="next >"

@@ -94,7 +94,6 @@ const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
                         <BsPeopleFill className='icon' /> QL Nhà cung cấp
                     </Link>
                 </li>
-
                 <li className='sidebar-list-item'>
                     <Link to={"/admin/manage-category"}>
                         <BsFillGrid3X3GapFill className='icon' /> QL Danh mục sản phẩm
