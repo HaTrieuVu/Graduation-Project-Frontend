@@ -11,6 +11,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdWarehouse } from "react-icons/md";
 import { TbBrand4Chan } from "react-icons/tb";
 import { RiImageAiFill, RiBillFill } from "react-icons/ri";
+import { FcOvertime } from "react-icons/fc";
 import { Link } from 'react-router-dom'
 
 const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
@@ -76,6 +77,11 @@ const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
                 <li className='sidebar-list-item'>
                     <Link to={"/admin/manage-import-receipt"}>
                         <MdWarehouse className='icon' /> QL Nhập hàng
+                    </Link>
+                </li>
+                <li className='sidebar-list-item'>
+                    <Link to={"/admin/manage-warranty"}>
+                        <FcOvertime className='icon' /> QL Bảo hành
                     </Link>
                 </li>
                 <li className='sidebar-list-item'>

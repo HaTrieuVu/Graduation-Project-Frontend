@@ -94,7 +94,7 @@ const ModalSupplier = ({ action, show, handleCloseModal, dataModalSupplier, fetc
     }
 
     //hàm thêm mới hoặc sửa ncc
-    const handleConfirmUser = async () => {
+    const handleConfirmSupplier = async () => {
         let checkValid = checkValidateInput()
 
         if (checkValid) {
@@ -178,7 +178,7 @@ const ModalSupplier = ({ action, show, handleCloseModal, dataModalSupplier, fetc
             </Modal.Body>
             <Modal.Footer className="custom-modal-footer">
                 <Button variant='secondary' onClick={handleCloseModal}>Hủy</Button>
-                <Button variant='primary' onClick={() => handleConfirmUser()}>{action === "CREATE" ? "Thêm mới" : "Cập nhật"}</Button>
+                <Button variant='primary' onClick={() => handleConfirmSupplier()}>{action === "CREATE" ? "Thêm mới" : "Cập nhật"}</Button>
             </Modal.Footer>
         </Modal>
     )

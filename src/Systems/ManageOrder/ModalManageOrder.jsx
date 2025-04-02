@@ -3,13 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import axios from '../../config/axios';
 import { toast } from 'react-toastify';
-import "./ModalOrder.scss"
+import "./ModalManageOrder.scss"
 
-const ModalOrder = ({ show, handleCloseModal, action, dataModalOrder, fetchAllOrders }) => {
+const ModalManageOrder = ({ show, handleCloseModal, action, dataModalOrder, fetchAllOrders }) => {
 
     const [orderStatus, setOrderStatus] = useState("")
     const [paymentStatus, setPaymentStatus] = useState("")
-
 
     useEffect(() => {
         if (show === false) {
@@ -24,9 +23,10 @@ const ModalOrder = ({ show, handleCloseModal, action, dataModalOrder, fetchAllOr
                 orderId: dataModalOrder?.PK_iDonMuaHangID,
                 orderStatus,
                 paymentStatus,
-                productVersionId: dataModalOrder?.orderDetails?.FK_iPhienBanID,
-                quantity: dataModalOrder?.orderDetails?.iSoLuong
+                orderDetails: dataModalOrder?.orderDetails
             }
+
+            console.log(data)
 
             let res = await axios.put('/api/v1/manage-order/update', data)
 
@@ -35,7 +35,7 @@ const ModalOrder = ({ show, handleCloseModal, action, dataModalOrder, fetchAllOr
                 toast.success("Cập nhật trạng thái đơn hàng thành công!")
                 await fetchAllOrders()
             }
-            console.log(data)
+
         } else {
             toast.info("Hãy chọn trạng thái cập nhật!")
         }
@@ -92,4 +92,4 @@ const ModalOrder = ({ show, handleCloseModal, action, dataModalOrder, fetchAllOr
     )
 }
 
-export default ModalOrder
+export default ModalManageOrder

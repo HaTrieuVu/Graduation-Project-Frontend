@@ -49,6 +49,8 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
                 orderDetails: data
             }
 
+            console.log(dataOrderConfirm)
+
             const res = await axios.post(`/api/v1/order/order-product`, dataOrderConfirm)
 
             if (res.errorCode === 0) {

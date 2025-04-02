@@ -74,7 +74,7 @@ const ManageSupplier = () => {
         setIsShowModel(false)
     }
 
-    const handleCreateOrUpdateUser = (action, data) => {
+    const handleCreateOrUpdateSupplier = (action, data) => {
         if (action === "UPDATE") {
             setIsShowModel(true)
             setActionModalSupplier(action)
@@ -97,7 +97,7 @@ const ManageSupplier = () => {
                     <h3>Danh sách Nhà cung cấp</h3>
                 </div>
                 <div className='actions'>
-                    <button className='btn btn-primary' onClick={() => handleCreateOrUpdateUser("CREATE")} >
+                    <button className='btn btn-primary' onClick={() => handleCreateOrUpdateSupplier("CREATE")} >
                         <span>Tạo mới</span>
                         <span>
                             <FaPlusCircle />
@@ -136,7 +136,7 @@ const ManageSupplier = () => {
                                         <td>{item?.sEmail}</td>
                                         <td>{item?.sSoDienThoai}</td>
                                         <td className='btn-action'>
-                                            <button onClick={() => handleCreateOrUpdateUser("UPDATE", item)} title='Sửa'><FaRegEdit /></button>
+                                            <button onClick={() => handleCreateOrUpdateSupplier("UPDATE", item)} title='Sửa'><FaRegEdit /></button>
                                             <button onClick={() => handleDeleteSupplier(item)} title='Xóa'><FaRegTrashCan /></button>
                                         </td>
                                     </tr>

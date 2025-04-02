@@ -104,17 +104,6 @@ const ManageProduct = () => {
     return (
         <main className='manage-product-container'>
             <h2 className='title'>Quản lý Sản phẩm</h2>
-            <div className='product-search'>
-                <div className='product-search-body'>
-                    <BsSearch className='icon' />
-                    <input
-                        type="text"
-                        placeholder='Tên sản phẩm...'
-                        onChange={(e) => setKeywordSearch(e.target.value)}
-                        onKeyDown={(e) => handleSearch(e)}
-                    />
-                </div>
-            </div>
             <div className='product-header'>
                 <div className='product-title'>
                     <h3>Danh sách Sản phẩm</h3>
@@ -132,6 +121,17 @@ const ManageProduct = () => {
                             <IoReloadSharp />
                         </span>
                     </button>
+                </div>
+            </div>
+            <div className='product-search'>
+                <div className='product-search-body'>
+                    <BsSearch className='icon' />
+                    <input
+                        type="text"
+                        placeholder='Tên sản phẩm...'
+                        onChange={(e) => setKeywordSearch(e.target.value)}
+                        onKeyDown={(e) => handleSearch(e)}
+                    />
                 </div>
             </div>
             <div className='product-body'>

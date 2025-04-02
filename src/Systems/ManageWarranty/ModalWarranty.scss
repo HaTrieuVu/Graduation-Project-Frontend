@@ -1,0 +1,39 @@
+.custom-modal-warranty {
+    .modal-dialog {
+        max-width: 700px;
+        height: 100%;
+        .modal-content {
+            height: 66%;
+            .custom-modal-warranty-header {
+                .modal-title {
+                    font-size: 25px;
+                }
+            }
+            .custom-modal-warranty-body {
+                font-size: 20px;
+                .content-body {
+                    .red {
+                        color: red;
+                    }
+                    .form-group {
+                        input,
+                        select {
+                            font-size: 18px;
+                        }
+                    }
+                    .box-description {
+                        font-size: 20px;
+                    }
+                }
+            }
+            .custom-modal-warranty-footer {
+                button {
+                    font-size: 20px;
+                    margin-right: 15px;
+                    width: 120px;
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+}

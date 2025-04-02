@@ -7,7 +7,7 @@ import _ from "lodash";
 import { IoReloadSharp } from "react-icons/io5";
 import { FaPlusCircle, FaRegEdit, FaPrint } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
-import ModalOrder from './ModalOrder';
+import ModalManageOrder from './ModalManageOrder';
 
 const ManageOrder = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -96,6 +96,7 @@ const ManageOrder = () => {
                             <th scope="col">Mã đơn mua</th>
                             <th scope="col">Thông tin KH</th>
                             <th scope="col">Thông tin SP</th>
+                            <th scope="col">SL</th>
                             <th scope="col">Tổng tiền</th>
                             <th scope="col">Trạng thái đơn hàng</th>
                             <th scope="col">Phương thức thanh toán</th>
@@ -104,30 +105,63 @@ const ManageOrder = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {listOrders?.length > 0 ?
-                            listOrders.map((item, i) => {
-                                return (
-                                    <tr key={item?.PK_iDonMuaHangID - "order-item" - i}>
-                                        <td scope="row">{`${item?.PK_iDonMuaHangID}`}</td>
-                                        <td>{`${item?.customer?.sHoTen}-${item?.customer?.sSoDienThoai}-${item?.customer?.sDiaChi}`}</td>
-                                        <td>{`${item?.orderDetails?.productVersion?.productData?.sTenSanPham}
-                                            -${item?.orderDetails?.productVersion?.productImages?.sMoTa}`}
+                        {listOrders?.length > 0 ? (
+                            listOrders.map((item) =>
+                                item?.orderDetails?.map((order, index) => (
+                                    <tr key={`${item?.PK_iDonMuaHangID}-${index}-key`}>
+                                        {index === 0 && (
+                                            <td rowSpan={item?.orderDetails?.length}>{item?.PK_iDonMuaHangID}</td>
+                                        )}
+
+                                        {index === 0 && (
+                                            <td rowSpan={item?.orderDetails?.length}>
+                                                {`${item?.customer?.sHoTen} - ${item?.customer?.sSoDienThoai} - ${item?.customer?.sDiaChi}`}
+                                            </td>
+                                        )}
+
+                                        <td>
+                                            {`${order?.productVersion?.productData?.sTenSanPham} - ${order?.productVersion?.sDungLuong} - 
+                                                ${order?.productVersion?.productImages?.sMoTa}`}
                                         </td>
-                                        <td>{item?.fTongTien.toLocaleString("vi-VN")} đ</td>
-                                        <td>{item?.sTrangThaiDonHang}</td>
-                                        <td>{item?.sPhuongThucThanhToan === "COD" ? "Thanh toán khi nhận hàng" : "Thanh toán Online"}</td>
-                                        <td>{item?.sTrangThaiThanhToan}</td>
-                                        <td className='btn-action'>
-                                            {(item?.sTrangThaiDonHang !== "Giao hàng thành công" && item?.sTrangThaiDonHang !== "Đã hủy") && (
-                                                <button onClick={() => handleUpdateOrder(item)} title='Cập nhật'><FaRegEdit /></button>
-                                            )}
-                                            {item?.sTrangThaiDonHang !== "Đã hủy" && <button onClick={() => handlePrintOrder(item)} title='In hóa đơn'><FaPrint /></button>}
-                                        </td>
+                                        <td>{order?.iSoLuong}</td>
+
+                                        {index === 0 && (
+                                            <td rowSpan={item?.orderDetails?.length}>
+                                                {item?.fTongTien.toLocaleString("vi-VN")} đ
+                                            </td>
+                                        )}
+
+                                        {index === 0 && (
+                                            <>
+                                                <td rowSpan={item?.orderDetails?.length}>{item?.sTrangThaiDonHang}</td>
+                                                <td rowSpan={item?.orderDetails?.length}>
+                                                    {item?.sPhuongThucThanhToan === "COD" ? "Thanh toán khi nhận hàng" : "Thanh toán Online"}
+                                                </td>
+                                                <td rowSpan={item?.orderDetails?.length}>{item?.sTrangThaiThanhToan}</td>
+                                                <td rowSpan={item?.orderDetails?.length} className="btn-action">
+                                                    {(item?.sTrangThaiDonHang !== "Giao hàng thành công" && item?.sTrangThaiDonHang !== "Đã hủy") && (
+                                                        <button onClick={() => handleUpdateOrder(item)} title="Cập nhật">
+                                                            <FaRegEdit />
+                                                        </button>
+                                                    )}
+                                                    {item?.sTrangThaiDonHang !== "Đã hủy" && (
+                                                        <button onClick={() => handlePrintOrder(item)} title="In hóa đơn">
+                                                            <FaPrint />
+                                                        </button>
+                                                    )}
+                                                </td>
+                                            </>
+                                        )}
                                     </tr>
-                                )
-                            })
-                            : <tr><td className='text-center' colSpan={8}>Danh sách Đơn mua hàng trống!</td></tr>}
+                                ))
+                            )
+                        ) : (
+                            <tr>
+                                <td className="text-center" colSpan={8}>Danh sách Đơn mua hàng trống!</td>
+                            </tr>
+                        )}
                     </tbody>
+
                 </table>
             </div>
             {totalPage > 0 && <div className='order-footer'>
@@ -152,7 +186,7 @@ const ManageOrder = () => {
                     renderOnZeroPageCount={null}
                 />
             </div>}
-            <ModalOrder
+            <ModalManageOrder
                 show={isShowModel}
                 handleCloseModal={handleCloseModal}
                 action={actionModalOrder}
