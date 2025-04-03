@@ -25,8 +25,6 @@ const ManageWarranty = () => {
     const [dateSearch, setDateSearch] = useState("")
     const [selectedWarranty, setSelectedWarranty] = useState(null);
 
-
-
     useEffect(() => {
         fetchAllWarranty("all")
     }, [currentPage])
@@ -85,16 +83,23 @@ const ManageWarranty = () => {
     const printWarranty = useReactToPrint({ contentRef });
 
     const handlePrintWarranty = (data) => {
-        setSelectedWarranty(data)
+        const filteredWarranty = {
+            ...data,
+            order: {
+                ...data.order,
+                orderDetails: data.order.orderDetails.filter(
+                    (item) => item.FK_iPhienBanID === data.FK_iPhienBanID
+                ),
+            },
+        };
 
+        setSelectedWarranty(filteredWarranty)
 
         setTimeout(() => {
-            // printWarranty()
+            printWarranty()
         }, 300);
 
     }
-
-    console.log(selectedWarranty)
 
     return (
         <main className='manage-warranty-container'>

@@ -1,9 +1,6 @@
-
-
 import "./WarrantyPrint.scss"
 
 const WarrantyPrint = ({ ref, data }) => {
-    console.log(data)
     return (
         <div className="container-print">
             <div className="warranty-print" ref={ref}>
@@ -37,10 +34,13 @@ const WarrantyPrint = ({ ref, data }) => {
                     </div>
                     <div className="info-more">
                         <span className="box">Màu sắc: {data?.productVersion?.productImages?.sMoTa}</span>
-                        <span className="box">Giá bán: {data?.productVersion?.productData?.sTenSanPham}</span>
+                        <span className="box">Số lượng: {data?.order?.orderDetails[0]?.iSoLuong}</span>
+                    </div>
+                    <div className="info-more">
+                        <span className="box">Giá bán: {data?.order?.orderDetails[0]?.fGiaBan.toLocaleString("vi-VN")} đ</span>
                     </div>
                 </div>
-                <h4 className="warranty-info">Thời gian BH</h4>
+                <h4 className="warranty-info">Thời gian BH: {data?.sMota}</h4>
                 <div className="box-signature">
                     <span>Khách hàng</span>
                     <span>Cửa hàng</span>
