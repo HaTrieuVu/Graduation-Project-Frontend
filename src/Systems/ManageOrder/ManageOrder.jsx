@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import axios from '../../config/axios';
 
@@ -8,6 +8,8 @@ import { IoReloadSharp } from "react-icons/io5";
 import { FaPlusCircle, FaRegEdit, FaPrint } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
 import ModalManageOrder from './ModalManageOrder';
+import { useReactToPrint } from 'react-to-print';
+import OrderPrint from './OrderPrint';
 
 const ManageOrder = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +21,8 @@ const ManageOrder = () => {
     const [actionModalOrder, setActionModalOrder] = useState("")
     const [dataModalOrder, setDataModalOrder] = useState({})
     const [statusOrder, setStatusOrder] = useState("all")
+
+    const [selectedOrder, setSelectedOrder] = useState(null);        // thông tin order nào dc chọn để in
 
     useEffect(() => {
         fetchAllOrders()
@@ -50,9 +54,29 @@ const ManageOrder = () => {
         }
     }
 
-    const handlePrintOrder = () => {
+    const contentRef = useRef(null);
+    const printOrderNote = useReactToPrint({ contentRef });
+
+    const handlePrintOrder = (data) => {
+        // const filteredWarranty = {
+        //     ...data,
+        //     order: {
+        //         ...data.order,
+        //         orderDetails: data.order.orderDetails.filter(
+        //             (item) => item.FK_iPhienBanID === data.FK_iPhienBanID
+        //         ),
+        //     },
+        // };
+
+        setSelectedOrder(data)
+
+        setTimeout(() => {
+            printOrderNote()
+        }, 300);
 
     }
+
+    console.log(selectedOrder)
 
     const handleChangeSelect = (e) => {
         setStatusOrder(e.target.value)
@@ -163,6 +187,9 @@ const ManageOrder = () => {
                     </tbody>
 
                 </table>
+            </div>
+            <div className='box-order'>
+                <OrderPrint ref={contentRef} data={selectedOrder} />
             </div>
             {totalPage > 0 && <div className='order-footer'>
                 <ReactPaginate
