@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import "./ManageImportReceipt.scss"
 import ReactPaginate from 'react-paginate';
@@ -6,6 +6,8 @@ import { IoReloadSharp } from "react-icons/io5";
 import { FaPlusCircle, FaRegEdit, FaPrint } from "react-icons/fa";
 import ImportReceiptNote from './ImportReceiptNote';
 import axios from '../../config/axios';
+import { useReactToPrint } from 'react-to-print';
+import ImportReceiptPrint from './ImportReceiptPrint';
 
 const ManageImportReceipt = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -17,6 +19,8 @@ const ManageImportReceipt = () => {
     const [actionModalImportReceipt, setActionModalImportReceipt] = useState("") //state action create or update
     const [dataModalImportReceipt, setDataModalImportReceipt] = useState({})
     const [valueSearch, setValueSearch] = useState("all")
+
+    const [selectedImportReceipt, setSelectedImportReceipt] = useState(null);        // thông tin phiếu nhập kho nào dc chọn để in
 
     useEffect(() => {
         fetchAllImportReceipt()
@@ -57,8 +61,15 @@ const ManageImportReceipt = () => {
         }
     }
 
-    const handlePrintOrder = () => {
+    const contentRef = useRef(null);
+    const printImportReceiptNote = useReactToPrint({ contentRef });
 
+    const handlePrintImportReceipt = (data) => {
+        setSelectedImportReceipt(data)
+
+        setTimeout(() => {
+            printImportReceiptNote()
+        }, 300);
     }
 
     const handleOnChangeSearch = (e) => {
@@ -70,10 +81,10 @@ const ManageImportReceipt = () => {
 
     return (
         <main className='manage-import-receipt-container'>
-            <h2 className='title'>Quản lý Nhập hàng</h2>
+            <h2 className='title'>Quản lý Nhập Kho</h2>
             <div className='import-receipt-header'>
                 <div className='import-receipt-title'>
-                    <h3>Danh sách Đơn nhập hàng</h3>
+                    <h3>Danh sách Đơn nhập kho</h3>
                 </div>
                 <div className='actions'>
                     <button className='btn btn-primary' onClick={() => handleCreateOrUpdateUser("CREATE")} >
@@ -136,7 +147,7 @@ const ManageImportReceipt = () => {
                                                         {new Date(item?.dNgayLap).toLocaleDateString("vi-VN")}
                                                     </td>
                                                     <td rowSpan={item?.importDetails?.length} className="btn-action">
-                                                        <button onClick={() => handlePrintOrder(item)} title="In hóa đơn">
+                                                        <button onClick={() => handlePrintImportReceipt(item)} title="In phiếu nhập">
                                                             <FaPrint />
                                                         </button>
                                                     </td>
@@ -148,12 +159,15 @@ const ManageImportReceipt = () => {
                             ) : (
                                 <tr>
                                     <td className="text-center" colSpan={8}>
-                                        Danh sách Đơn nhập hàng trống!
+                                        Danh sách Đơn nhập kho trống!
                                     </td>
                                 </tr>
                             )}
                         </tbody>
                     </table>
+                </div>
+                <div className='box-import-receipt'>
+                    <ImportReceiptPrint ref={contentRef} data={selectedImportReceipt} />
                 </div>
                 {totalPage > 0 && <div className='import-receipt-footer'>
                     <ReactPaginate

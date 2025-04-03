@@ -58,16 +58,6 @@ const ManageOrder = () => {
     const printOrderNote = useReactToPrint({ contentRef });
 
     const handlePrintOrder = (data) => {
-        // const filteredWarranty = {
-        //     ...data,
-        //     order: {
-        //         ...data.order,
-        //         orderDetails: data.order.orderDetails.filter(
-        //             (item) => item.FK_iPhienBanID === data.FK_iPhienBanID
-        //         ),
-        //     },
-        // };
-
         setSelectedOrder(data)
 
         setTimeout(() => {
