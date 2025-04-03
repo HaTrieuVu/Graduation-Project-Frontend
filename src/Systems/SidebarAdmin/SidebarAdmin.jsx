@@ -15,7 +15,8 @@ import { FcOvertime } from "react-icons/fc";
 import { Link } from 'react-router-dom'
 
 const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpenProduct, setIsOpenProduct] = useState(false);
+    const [isOpenUser, setIsOpenUser] = useState(false);
     return (
         <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
             <div className='sidebar-title'>
@@ -35,21 +36,40 @@ const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
                         <BsGrid1X2Fill className='icon' /> Dashboard
                     </Link>
                 </li>
-                <li className='sidebar-list-item'>
-                    <Link to={"/admin/manage-user"}>
-                        <BsPeopleFill className='icon' /> QL Người dùng
-                    </Link>
+                {/* Dropdown QL User */}
+                <li className='sidebar-list-item-dropdown'>
+                    <button
+                        className="dropdown-btn"
+                        onClick={() => setIsOpenUser(!isOpenUser)}
+                    >
+                        <BsFillArchiveFill className='icon' /> QL Người dùng
+                        <BsChevronDown className={`dropdown-icon icon ${isOpenUser ? "rotate" : ""}`} />
+                    </button>
+                    {isOpenUser && (
+                        <ul className="dropdown-content">
+                            <li >
+                                <Link to={"/admin/manage-customer"}>
+                                    <BsPeopleFill className='icon' /> QL Khách hàng
+                                </Link>
+                            </li>
+                            <li >
+                                <Link to={"/admin/manage-employee"}>
+                                    <BsPeopleFill className='icon' /> QL Nhân viên
+                                </Link>
+                            </li>
+                        </ul>
+                    )}
                 </li>
                 {/* Dropdown QL Sản phẩm */}
                 <li className='sidebar-list-item-dropdown'>
                     <button
                         className="dropdown-btn"
-                        onClick={() => setIsOpen(!isOpen)}
+                        onClick={() => setIsOpenProduct(!isOpenProduct)}
                     >
                         <BsFillArchiveFill className='icon' /> QL Sản phẩm
-                        <BsChevronDown className={`dropdown-icon icon ${isOpen ? "rotate" : ""}`} />
+                        <BsChevronDown className={`dropdown-icon icon ${isOpenProduct ? "rotate" : ""}`} />
                     </button>
-                    {isOpen && (
+                    {isOpenProduct && (
                         <ul className="dropdown-content">
                             <li>
                                 <Link to="/admin/manage-product">

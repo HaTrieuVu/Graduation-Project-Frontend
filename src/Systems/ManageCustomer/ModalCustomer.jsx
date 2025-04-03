@@ -4,9 +4,9 @@ import { Button, Modal } from 'react-bootstrap';
 import axios from '../../config/axios';
 import { toast } from 'react-toastify';
 
-import "./ModalUser.scss"
+import "./ModalCustomer.scss"
 
-const ModalUser = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser }) => {
+const ModalCustomer = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser }) => {
 
     const [listRole, setListRole] = useState([])
     const [userData, setUserData] = useState({
@@ -258,4 +258,4 @@ const ModalUser = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser
     );
 }
 
-export default ModalUser
+export default ModalCustomer

@@ -11,7 +11,7 @@ import App from "../App";
 import NotFound from "../components/NotFound/NotFound";
 import AdminPage from "../pages/AdminPage/AdminPage";
 import HomeAdmin from "../Systems/HomeAdmin/HomeAdmin";
-import ManageUser from "../Systems/ManageUser/ManageUser";
+import ManageCustomer from "../Systems/ManageCustomer/ManageCustomer";
 import ManageSupplier from "../Systems/ManageSupplier/ManageSupplier";
 import ManageBrand from "../Systems/ManageBrand/ManageBrand";
 import ManageCategory from "../Systems/ManageCategory/ManageCategory";
@@ -22,6 +22,7 @@ import BrandProductPage from "../pages/BrandProductPage/BrandProductPage";
 import ManageOrder from "../Systems/ManageOrder/ManageOrder";
 import ManageImportReceipt from "../Systems/ManageImportReceipt/ManageImportReceipt";
 import ManageWarranty from "../Systems/ManageWarranty/ManageWarranty";
+import ManageEmployee from "../Systems/ManageEmployee/ManageEmployee";
 
 
 const router = createBrowserRouter([
@@ -72,8 +73,12 @@ const router = createBrowserRouter([
                 element: <HomeAdmin />
             },
             {
-                path: "/admin/manage-user",
-                element: <ManageUser />
+                path: "/admin/manage-customer",
+                element: <ManageCustomer />
+            },
+            {
+                path: "/admin/manage-employee",
+                element: <ManageEmployee />
             },
             {
                 path: "/admin/manage-product",
