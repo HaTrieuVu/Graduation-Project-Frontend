@@ -8,10 +8,11 @@ import {
     from 'react-icons/bs'
 import { AiOutlineProduct } from "react-icons/ai";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { MdWarehouse } from "react-icons/md";
+import { MdWarehouse, MdDiscount } from "react-icons/md";
 import { TbBrand4Chan } from "react-icons/tb";
 import { RiImageAiFill, RiBillFill } from "react-icons/ri";
 import { FcOvertime } from "react-icons/fc";
+import { FaTruck } from "react-icons/fa6";
 import { Link } from 'react-router-dom'
 
 const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
@@ -111,12 +112,17 @@ const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
                 </li>
                 <li className='sidebar-list-item'>
                     <Link to={"/admin/manage-supplier"}>
-                        <BsPeopleFill className='icon' /> QL Nhà cung cấp
+                        <FaTruck className='icon' /> QL Nhà cung cấp
                     </Link>
                 </li>
                 <li className='sidebar-list-item'>
                     <Link to={"/admin/manage-category"}>
-                        <BsFillGrid3X3GapFill className='icon' /> QL Danh mục sản phẩm
+                        <BsFillGrid3X3GapFill className='icon' /> QL Danh mục SP
+                    </Link>
+                </li>
+                <li className='sidebar-list-item'>
+                    <Link to={"/admin/manage-promition"}>
+                        <MdDiscount className='icon' /> QL Khuyến mãi
                     </Link>
                 </li>
             </ul>

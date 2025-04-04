@@ -23,6 +23,7 @@ import ManageOrder from "../Systems/ManageOrder/ManageOrder";
 import ManageImportReceipt from "../Systems/ManageImportReceipt/ManageImportReceipt";
 import ManageWarranty from "../Systems/ManageWarranty/ManageWarranty";
 import ManageEmployee from "../Systems/ManageEmployee/ManageEmployee";
+import ManagePromotion from "../Systems/ManagePromotion/ManagePromotion";
 
 
 const router = createBrowserRouter([
@@ -115,6 +116,10 @@ const router = createBrowserRouter([
             {
                 path: "/admin/manage-category",
                 element: <ManageCategory />
+            },
+            {
+                path: "/admin/manage-promition",
+                element: <ManagePromotion />
             },
         ]
     }

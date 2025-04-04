@@ -8,12 +8,12 @@ import ReactPaginate from 'react-paginate';
 import { IoReloadSharp } from "react-icons/io5";
 import { toast } from 'react-toastify';
 
-import "./ManageProductVersion.scss"
-import ModalProductVersion from './ModalProductVersion';
+import "./ManagePromotion.scss"
 import Select from "react-select";
+import ModalPromotion from './ModalPromotion';
 
-const ManageProductVersion = () => {
-    const [listProductVersion, setListProductVersion] = useState([])
+const ManagePromotion = () => {
+    const [listPromotion, setListPromotion] = useState([])
     const [listProduct, setListProduct] = useState([])
 
 
@@ -21,30 +21,28 @@ const ManageProductVersion = () => {
     const currentLimit = 8
     const [totalPage, setTotalPage] = useState(0)
 
-    const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa sản phẩm
+    const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa khuyến mãi
     const [isShowModelDelete, setIsShowModelDelete] = useState(false)
     const [dataModal, setDataModal] = useState({})  // data của modal delete
-    const [actionModalProductVersion, setActionModalProductVersion] = useState("") //state action create or update
-    const [dataModalProductVersion, setDataModalProductVersion] = useState({})
+    const [actionModalPromotion, setActionModalPromotion] = useState("") //state action create or update
+    const [dataModalPromotion, setDataModalPromotion] = useState({})
 
     const [valueSearch, setValueSearch] = useState("all")
 
 
     useEffect(() => {
-
-        fetchAllProductVersion()
+        fetchAllPromotion()
     }, [currentPage, valueSearch])
 
     useEffect(() => {
         fetchGetProduct()
     }, [])
 
-
-    const fetchAllProductVersion = async () => {
-        let response = await axios.get(`/api/v1/manage-product-version/get-all?page=${currentPage}&limit=${currentLimit}&valueSearch=${valueSearch}`)
+    const fetchAllPromotion = async () => {
+        let response = await axios.get(`/api/v1/manage-promotion/get-all?page=${currentPage}&limit=${currentLimit}&valueSearch=${valueSearch}`)
         if (response?.data && response?.errorCode === 0) {
             setTotalPage(response?.data?.totalPage)
-            setListProductVersion(response?.data?.productVersions)
+            setListPromotion(response?.data?.promotions)
         }
     }
 
@@ -68,36 +66,38 @@ const ManageProductVersion = () => {
         setCurrentPage(+event.selected + 1)
     };
 
-    // hàm xóa sản phẩm (mở modal xóa sản phẩm)
-    const handleDeleteProduct = async (product) => {
+    // hàm xóa khuyến mãi (mở modal xóa khuyến mãi)
+    const handleDeleteProduct = (product) => {
         setDataModal(product)
         setIsShowModelDelete(true)
     };
 
-    // hàm xác nhận xóa sản phẩm
+    console.log(dataModal)
+
+    // hàm xác nhận xóa khuyến mãi
     const confirmDeleteUser = async () => {
         try {
-            let response = await axios.delete("/api/v1/manage-product-version/delete", { data: { id: dataModal?.PK_iPhienBanID } });
+            let response = await axios.delete("/api/v1/manage-promotion/delete", { data: { id: dataModal?.PK_iKhuyenMaiID } });
             if (response?.errorCode === 0) {
-                toast.success("Xóa Sản phẩm - phiên bản thành công!")
-                await fetchAllProductVersion()
+                toast.success("Xóa khuyến mãi bản thành công!")
+                await fetchAllPromotion()
                 setIsShowModelDelete(false)
             } else {
                 toast.error("Xóa thất bại! Vui lòng thử lại.")
             }
         } catch (error) {
-            console.error("Lỗi khi xóa ncc", error);
+            console.error("Lỗi khi xóa khuyến mãi", error);
             toast.error("Xóa thất bại! Vui lòng thử lại.")
         }
     }
 
-    // hàm đóng modal xóa category
+    // hàm đóng modal xóa khuyến mãi
     const handleCloseModalDelete = () => {
         setIsShowModelDelete(false);
         setDataModal({})
     }
 
-    // hàm đóng modal thêm or sửa category
+    // hàm đóng modal thêm or sửa khuyến mãi
     const handleCloseModal = () => {
         setIsShowModel(false)
     }
@@ -105,23 +105,23 @@ const ManageProductVersion = () => {
     const handleCreateOrUpdateUser = (action, data) => {
         if (action === "UPDATE") {
             setIsShowModel(true)
-            setActionModalProductVersion(action)
+            setActionModalPromotion(action)
             if (data) {
-                setDataModalProductVersion(data)
+                setDataModalPromotion(data)
             }
         } else {
             setIsShowModel(true)
-            setActionModalProductVersion(action)
-            setDataModalProductVersion({})
+            setActionModalPromotion(action)
+            setDataModalPromotion({})
         }
     }
 
     return (
-        <main className='manage-product-container'>
-            <h2 className='title'>Quản lý Sản phẩm</h2>
-            <div className='product-header'>
-                <div className='product-title'>
-                    <h3>Danh sách Sản phẩm - Phiên bản </h3>
+        <main className='manage-promotion-container'>
+            <h2 className='title'>Quản lý Khuyến mãi</h2>
+            <div className='promotion-header'>
+                <div className='promotion-title'>
+                    <h3>Danh sách khuyến mãi </h3>
                 </div>
                 <div className='actions'>
                     <button className='btn btn-primary' onClick={() => handleCreateOrUpdateUser("CREATE")} >
@@ -130,7 +130,7 @@ const ManageProductVersion = () => {
                             <FaPlusCircle />
                         </span>
                     </button>
-                    <button onClick={() => { fetchAllProductVersion(), setValueSearch("all") }} className='btn btn-success'>
+                    <button onClick={() => { fetchAllPromotion(), setValueSearch("all") }} className='btn btn-success'>
                         <span>Refesh</span>
                         <span>
                             <IoReloadSharp />
@@ -148,34 +148,28 @@ const ManageProductVersion = () => {
                     className='search'
                 />
             </div>
-            <div className='product-body'>
+            <div className='promotion-body'>
                 <table className="table table-hover table-bordered fs-20">
                     <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">Mã phiên bản</th>
+                            <th scope="col">Mã khuyến mãi</th>
                             <th scope="col">Tên sản phẩm</th>
-                            <th scope="col">Màu sắc</th>
-                            <th scope="col">Dung lượng</th>
-                            <th scope="col">Giá bán</th>
-                            <th scope="col">Số lượng</th>
+                            <th scope="col">Giá trị(%)</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {listProductVersion?.length > 0 ?
-                            listProductVersion.map((item, i) => {
+                        {listPromotion?.length > 0 ?
+                            listPromotion.map((item, i) => {
                                 return (
-                                    <tr key={`${item?.PK_iPhienBanID}-productVersion"-key`}>
+                                    <tr key={`${item?.PK_iKhuyenMaiID}-promotion"-key`}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
-                                        <td>{item?.PK_iPhienBanID}</td>
-                                        <td>{item?.productData?.sTenSanPham}</td>
-                                        <td>{item?.productImages?.sMoTa}</td>
-                                        <td>{item?.sDungLuong}</td>
-                                        <td>{item?.fGiaBan?.toLocaleString("vi-VN")} VNĐ</td>
-                                        <td>{item?.iSoLuong}</td>
-                                        <td>{item?.bTrangThai}</td>
+                                        <td>{item?.PK_iKhuyenMaiID}</td>
+                                        <td>{item?.product?.sTenSanPham}</td>
+                                        <td>{item?.fGiaTriKhuyenMai}</td>
+                                        <td>{item?.bTrangThai === 1 ? "Khuyến mãi" : "Hết khuyến mãi"}</td>
                                         <td className='btn-action'>
                                             <button onClick={() => handleCreateOrUpdateUser("UPDATE", item)} title='Sửa'><FaRegEdit /></button>
                                             <button onClick={() => handleDeleteProduct(item)} title='Xóa'><FaRegTrashCan /></button>
@@ -183,11 +177,11 @@ const ManageProductVersion = () => {
                                     </tr>
                                 )
                             })
-                            : <tr><td colSpan={9} className='text-center'>Danh sách trống!</td></tr>}
+                            : <tr><td colSpan={6} className='text-center'>Danh sách trống!</td></tr>}
                     </tbody>
                 </table>
             </div>
-            {totalPage > 0 && <div className='product-footer'>
+            {totalPage > 0 && <div className='promotion-footer'>
                 <ReactPaginate
                     nextLabel="next >"
                     onPageChange={handlePageClick}
@@ -210,21 +204,21 @@ const ManageProductVersion = () => {
                 />
             </div>}
             <ModalDelete show={isShowModelDelete}
-                title={"sản phẩm - phiên bản"}
-                name={`${dataModal?.productData?.sTenSanPham} - ${dataModal?.sDungLuong} - ${dataModal?.sMauSac}`}
+                title={"khuyến mãi"}
+                name={`${dataModal?.product?.sTenSanPham} - ${dataModal?.fGiaTriKhuyenMai} %`}
                 handleCloseModalDelete={handleCloseModalDelete}
                 confirmDeleteUser={confirmDeleteUser}
             />
-            <ModalProductVersion
+            <ModalPromotion
                 show={isShowModel}
                 handleCloseModal={handleCloseModal}
-                action={actionModalProductVersion}
-                dataModalProductVersion={dataModalProductVersion}
+                action={actionModalPromotion}
+                dataModalPromotion={dataModalPromotion}
                 listProduct={listProduct}
-                fetchAllProductVersion={fetchAllProductVersion}
+                fetchAllPromotion={fetchAllPromotion}
             />
         </main>
     )
 }
 
-export default ManageProductVersion
+export default ManagePromotion
