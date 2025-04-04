@@ -46,6 +46,39 @@
         }
     }
 
+    .user-search {
+        margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 50px;
+        .user-search-body {
+            width: 400px;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgb(137, 137, 137);
+            border-radius: 10px;
+            padding: 0px 10px;
+
+            input {
+                font-size: 20px;
+                flex: 1;
+                padding: 5px;
+            }
+        }
+
+        .date-search {
+            font-size: 20px;
+            display: flex;
+            gap: 15px;
+
+            .input-search {
+                border: 1px solid rgb(176, 176, 176);
+                padding: 4px 20px;
+            }
+        }
+    }
+
     .user-body {
         .btn-action {
             button {

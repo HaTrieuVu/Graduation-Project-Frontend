@@ -9,7 +9,7 @@ import Select from "react-select";
 import './ModalProductVersion.scss';
 
 
-const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductVersion, fetchAllProductVersion }) => {
+const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductVersion, fetchAllProductVersion, listProduct }) => {
     const [productVersionData, setProductVersionData] = useState({
         id: "",
         productId: "",
@@ -21,24 +21,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
     });
 
     const [selectedProductId, setSelectedProductId] = useState(null)
-    const [listProduct, setListProduct] = useState([])
     const [listColor, setlistColor] = useState({})          // list color của 1 sản phẩm (lấy theo productImage)
-
-    const fetchGetProduct = async () => {
-        let response = await axios.get("/api/v1/manage-product/get-all")
-        if (response?.errorCode === 0 && response?.data?.length > 0) {
-            let dataBuild = buildOptions(response?.data)
-            setListProduct(dataBuild)
-        }
-    }
-
-    // lấy các thuộc tính cần thiết để sử dụng react-select
-    const buildOptions = (data) => {
-        return data.map(item => ({
-            value: item.PK_iSanPhamID,
-            label: item.sTenSanPham
-        }));
-    };
 
     //hàm lấy tất cả các màu của product
     const fetchAllColorOfProduct = useCallback(async () => {
@@ -49,10 +32,6 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
             setlistColor(response?.data?.images)
         }
     }, [selectedProductId]); // Chỉ thay đổi khi `selectedProductId` đổi
-
-    useEffect(() => {
-        fetchGetProduct()
-    }, [])
 
     useEffect(() => {
         if (action === 'CREATE') {

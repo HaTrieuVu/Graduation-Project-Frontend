@@ -11,7 +11,7 @@ import "yet-another-react-lightbox/styles.css";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import Select from "react-select";
 
-const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductImage, fetchAllProductImage }) => {
+const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductImage, fetchAllProductImage, listProduct }) => {
     const [productImageData, setProductImageData] = useState({
         id: '',
         productId: '',
@@ -20,12 +20,7 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
         previewImg: "",
     });
 
-    const [listProduct, setListProduct] = useState([])
     const [isOpenPreviewImg, setIsOpenPreviewImg] = useState(false)
-
-    useEffect(() => {
-        fetchGetProduct()
-    }, [])
 
     useEffect(() => {
         if (action === 'CREATE') {
@@ -49,22 +44,6 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
             });
         }
     }, [dataModalProductImage]);
-
-    const fetchGetProduct = async () => {
-        let response = await axios.get("/api/v1/manage-product/get-all")
-        if (response?.errorCode === 0 && response?.data?.length > 0) {
-            let dataBuild = buildOptions(response?.data)
-            setListProduct(dataBuild)
-        }
-    }
-
-    // lấy các thuộc tính cần thiết để sử dụng react-select
-    const buildOptions = (data) => {
-        return data.map(item => ({
-            value: item.PK_iSanPhamID,
-            label: item.sTenSanPham
-        }));
-    };
 
     const handleOnchangeInput = (value, name) => {
         setProductImageData((prev) => ({

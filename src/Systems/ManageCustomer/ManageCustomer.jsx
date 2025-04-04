@@ -6,6 +6,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEdit, FaPlusCircle } from "react-icons/fa";
 import ReactPaginate from 'react-paginate';
 import { IoReloadSharp } from "react-icons/io5";
+import { BsSearch } from 'react-icons/bs'
 import { toast } from 'react-toastify';
 import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import ModalUser from './ModalCustomer';
@@ -25,13 +26,14 @@ const ManageCustomer = () => {
     const [actionModalUser, setActionModalUser] = useState("") //state action create or update
     const [dataModalUser, setDataModalUser] = useState({})
 
+    const [keywordSearch, setKeywordSearch] = useState("all")
 
     useEffect(() => {
         fetchAllUser()
-    }, [currentPage])
+    }, [currentPage, keywordSearch])
 
     const fetchAllUser = async () => {
-        let response = await axios.get(`/api/v1/user/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let response = await axios.get(`/api/v1/user/get-all?page=${currentPage}&limit=${currentLimit}&keywordSearch=${keywordSearch}`)
         if (response?.data && response?.errorCode === 0) {
             setTotalPage(response?.data?.totalPage)
             setListUser(response?.data?.users)
@@ -92,6 +94,14 @@ const ManageCustomer = () => {
 
     }
 
+    const handleSearch = async (e) => {
+        if (e.key === "Enter") {
+            setKeywordSearch(e.target.value.trim())
+        }
+    }
+
+    console.log(keywordSearch)
+
     return (
         <main className='manage-user-container'>
             <h2 className='title'>Quản lý Khách hàng</h2>
@@ -106,12 +116,22 @@ const ManageCustomer = () => {
                             <FaPlusCircle />
                         </span>
                     </button>
-                    <button className='btn btn-success'>
+                    <button onClick={() => { fetchAllUser, setKeywordSearch("all") }} className='btn btn-success'>
                         <span>Refesh</span>
                         <span>
                             <IoReloadSharp />
                         </span>
                     </button>
+                </div>
+            </div>
+            <div className='user-search'>
+                <div className='user-search-body'>
+                    <BsSearch className='icon' />
+                    <input
+                        type="text"
+                        placeholder='Tên KH hoặc SĐT hoặc Email...'
+                        onKeyDown={(e) => handleSearch(e)}
+                    />
                 </div>
             </div>
             <div className='user-body'>
@@ -147,7 +167,7 @@ const ManageCustomer = () => {
                                     </tr>
                                 )
                             })
-                            : <tr><td>Danh sách khách hàng trống</td></tr>}
+                            : <tr><td colSpan={8} className='text-center'>Danh sách Khách hàng trống!</td></tr>}
                     </tbody>
                 </table>
             </div>

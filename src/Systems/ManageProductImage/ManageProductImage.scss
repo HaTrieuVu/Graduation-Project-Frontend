@@ -46,6 +46,18 @@
         }
     }
 
+    .search-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 40%;
+        margin: 40px 0 40px 50px;
+
+        .search {
+            flex: 1;
+        }
+    }
+
     .product-image-body {
         .box-image {
             display: flex;

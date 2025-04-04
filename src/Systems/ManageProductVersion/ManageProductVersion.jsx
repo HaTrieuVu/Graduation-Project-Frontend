@@ -10,12 +10,15 @@ import { toast } from 'react-toastify';
 
 import "./ManageProductVersion.scss"
 import ModalProductVersion from './ModalProductVersion';
+import Select from "react-select";
 
 const ManageProductVersion = () => {
     const [listProductVersion, setListProductVersion] = useState([])
+    const [listProduct, setListProduct] = useState([])
+
 
     const [currentPage, setCurrentPage] = useState(1);
-    const currentLimit = 5
+    const currentLimit = 8
     const [totalPage, setTotalPage] = useState(0)
 
     const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa sản phẩm
@@ -24,17 +27,41 @@ const ManageProductVersion = () => {
     const [actionModalProductVersion, setActionModalProductVersion] = useState("") //state action create or update
     const [dataModalProductVersion, setDataModalProductVersion] = useState({})
 
+    const [valueSearch, setValueSearch] = useState("all")
+
+
     useEffect(() => {
-        fetchAllProductVersion()
+        fetchGetProduct()
     }, [currentPage])
 
+    useEffect(() => {
+        fetchAllProductVersion()
+    }, [valueSearch])
+
+
     const fetchAllProductVersion = async () => {
-        let response = await axios.get(`/api/v1/manage-product-version/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let response = await axios.get(`/api/v1/manage-product-version/get-all?page=${currentPage}&limit=${currentLimit}&valueSearch=${valueSearch}`)
         if (response?.data && response?.errorCode === 0) {
             setTotalPage(response?.data?.totalPage)
             setListProductVersion(response?.data?.productVersions)
         }
     }
+
+    const fetchGetProduct = async () => {
+        let response = await axios.get("/api/v1/manage-product/get-all")
+        if (response?.errorCode === 0 && response?.data?.length > 0) {
+            let dataBuild = buildOptions(response?.data)
+            setListProduct(dataBuild)
+        }
+    }
+
+    // lấy các thuộc tính cần thiết để sử dụng react-select
+    const buildOptions = (data) => {
+        return data.map(item => ({
+            value: item.PK_iSanPhamID,
+            label: item.sTenSanPham
+        }));
+    };
 
     const handlePageClick = async (event) => {
         setCurrentPage(+event.selected + 1)
@@ -86,7 +113,6 @@ const ManageProductVersion = () => {
             setActionModalProductVersion(action)
             setDataModalProductVersion({})
         }
-
     }
 
     return (
@@ -103,13 +129,23 @@ const ManageProductVersion = () => {
                             <FaPlusCircle />
                         </span>
                     </button>
-                    <button className='btn btn-success'>
+                    <button onClick={() => { fetchAllProductVersion(), setValueSearch("all") }} className='btn btn-success'>
                         <span>Refesh</span>
                         <span>
                             <IoReloadSharp />
                         </span>
                     </button>
                 </div>
+            </div>
+            <div className='search-box'>
+                <label htmlFor="">Tìm sản phẩm</label>
+                <Select
+                    value={valueSearch === "all" ? null : listProduct.find(option => option.value === valueSearch)}
+                    onChange={(selectedOption) => setValueSearch(selectedOption.value)}
+                    options={listProduct}
+                    placeholder="Tìm sản phẩm"
+                    className='search'
+                />
             </div>
             <div className='product-body'>
                 <table className="table table-hover table-bordered fs-20">
@@ -146,7 +182,7 @@ const ManageProductVersion = () => {
                                     </tr>
                                 )
                             })
-                            : <tr><td>Danh sách Sản phẩm trống</td></tr>}
+                            : <tr><td colSpan={9} className='text-center'>Danh sách trống!</td></tr>}
                     </tbody>
                 </table>
             </div>
@@ -183,6 +219,7 @@ const ManageProductVersion = () => {
                 handleCloseModal={handleCloseModal}
                 action={actionModalProductVersion}
                 dataModalProductVersion={dataModalProductVersion}
+                listProduct={listProduct}
                 fetchAllProductVersion={fetchAllProductVersion}
             />
         </main>

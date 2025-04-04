@@ -99,6 +99,8 @@ const ManageOrder = () => {
                     <option value="Chờ xác nhận">Chờ xác nhận</option>
                     <option value="Xác nhận">Xác nhận</option>
                     <option value="Đang giao hàng">Đang giao hàng</option>
+                    <option value="Giao hàng thành công">Giao hàng thành công</option>
+                    <option value="Đã hủy">Đã hủy</option>
                 </select>
             </div>
             <div className='order-body'>
@@ -169,7 +171,7 @@ const ManageOrder = () => {
                             )
                         ) : (
                             <tr>
-                                <td className="text-center" colSpan={8}>Danh sách Đơn mua hàng trống!</td>
+                                <td className="text-center" colSpan={8}>Danh sách trống!</td>
                             </tr>
                         )}
                     </tbody>

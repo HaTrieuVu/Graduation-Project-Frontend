@@ -8,11 +8,13 @@ import { toast } from 'react-toastify';
 import axios from '../../config/axios';
 import ModalDelete from '../../components/ModalDelete/ModalDelete';
 import ModalProductImage from './ModalProductImage';
+import Select from "react-select";
 
 import "./ManageProductImage.scss"
 
 const ManageProductImage = () => {
     const [listProductImage, setListProductImage] = useState([])
+    const [listProduct, setListProduct] = useState([])
 
     const [currentPage, setCurrentPage] = useState(1);
     const currentLimit = 4
@@ -24,17 +26,39 @@ const ManageProductImage = () => {
     const [actionModaProductImage, setActionModalProductImage] = useState("") //state action create or update
     const [dataModalProductImage, setDataModalProductImage] = useState({})
 
+    const [valueSearch, setValueSearch] = useState("all")
+
     useEffect(() => {
-        fetchAllProductImage()
+        fetchGetProduct()
     }, [currentPage])
 
+    useEffect(() => {
+        fetchAllProductImage()
+    }, [valueSearch])
+
     const fetchAllProductImage = async () => {
-        let response = await axios.get(`/api/v1/manage-product-image/get-all?page=${currentPage}&limit=${currentLimit}`)
+        let response = await axios.get(`/api/v1/manage-product-image/get-all?page=${currentPage}&limit=${currentLimit}&valueSearch=${valueSearch}`)
         if (response?.data && response?.errorCode === 0) {
             setTotalPage(response?.data?.totalPage)
             setListProductImage(response?.data?.productImages)
         }
     }
+
+    const fetchGetProduct = async () => {
+        let response = await axios.get("/api/v1/manage-product/get-all")
+        if (response?.errorCode === 0 && response?.data?.length > 0) {
+            let dataBuild = buildOptions(response?.data)
+            setListProduct(dataBuild)
+        }
+    }
+
+    // lấy các thuộc tính cần thiết để sử dụng react-select
+    const buildOptions = (data) => {
+        return data.map(item => ({
+            value: item.PK_iSanPhamID,
+            label: item.sTenSanPham
+        }));
+    };
 
     const handlePageClick = async (event) => {
         setCurrentPage(+event.selected + 1)
@@ -86,8 +110,9 @@ const ManageProductImage = () => {
             setActionModalProductImage(action)
             setDataModalProductImage({})
         }
-
     }
+
+    console.log(valueSearch)
 
     return (
         <main className='manage-product-image-container'>
@@ -110,6 +135,16 @@ const ManageProductImage = () => {
                         </span>
                     </button>
                 </div>
+            </div>
+            <div className='search-box'>
+                <label htmlFor="">Tìm sản phẩm</label>
+                <Select
+                    value={valueSearch === "all" ? null : listProduct.find(option => option.value === valueSearch)}
+                    onChange={(selectedOption) => setValueSearch(selectedOption.value)}
+                    options={listProduct}
+                    placeholder="Tìm sản phẩm"
+                    className='search'
+                />
             </div>
             <div className='product-image-body'>
                 <table className="table table-hover table-bordered fs-20">
@@ -145,7 +180,7 @@ const ManageProductImage = () => {
                                     </tr>
                                 )
                             })
-                            : <tr><td>Danh sách Nhãn hàng trống</td></tr>}
+                            : <tr><td colSpan={6} className='text-center'>Danh sách trống</td></tr>}
                     </tbody>
                 </table>
             </div>
@@ -182,6 +217,7 @@ const ManageProductImage = () => {
                 handleCloseModal={handleCloseModal}
                 action={actionModaProductImage}
                 dataModalProductImage={dataModalProductImage}
+                listProduct={listProduct}
                 fetchAllProductImage={fetchAllProductImage}
             />
         </main>

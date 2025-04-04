@@ -167,7 +167,7 @@ const ManageProduct = () => {
                                     </tr>
                                 )
                             })
-                            : <tr><td>Danh sách Sản phẩm trống</td></tr>}
+                            : <tr><td colSpan={8} className='text-center'>Danh sách Sản phẩm trống</td></tr>}
                     </tbody>
                 </table>
             </div>
