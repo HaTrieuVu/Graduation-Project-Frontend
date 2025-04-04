@@ -34,6 +34,7 @@ const OrderPrint = ({ ref, data }) => {
                                 <th scope="col">STT</th>
                                 <th scope="col">Tên sản phẩm</th>
                                 <th scope="col">Dung lượng</th>
+                                <th scope="col">Màu sắc</th>
                                 <th scope="col">Số lượng</th>
                                 <th scope="col">Giá bán</th>
                                 <th scope="col">Thành tiền</th>
@@ -45,6 +46,7 @@ const OrderPrint = ({ ref, data }) => {
                                     <td scope="row">{(i + 1)}</td>
                                     <td>{item?.productVersion?.productData?.sTenSanPham}</td>
                                     <td>{item?.productVersion?.sDungLuong}</td>
+                                    <td>{item?.productVersion?.productImages?.sMoTa}</td>
                                     <td>{item?.iSoLuong}</td>
                                     <td>{item?.fGiaBan.toLocaleString("vi-VN")} đ</td>
                                     <td>{item?.fThanhTien.toLocaleString("vi-VN")} đ</td>
@@ -53,15 +55,21 @@ const OrderPrint = ({ ref, data }) => {
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colSpan="6" className="text-end fw-bold">Tổng tiền: {data?.fTongTien.toLocaleString("vi-VN")} đ</td>
+                                <td colSpan="7" className="text-end fw-bold">Tổng tiền: {data?.fTongTien.toLocaleString("vi-VN")} đ</td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
                 {/* <h4 className="order-info">Thời gian BH: {data?.sMota}</h4> */}
                 <div className="box-signature">
-                    <span>Khách hàng</span>
-                    <span>Cửa hàng</span>
+                    <div className="box">
+                        <span>Cửa hàng</span>
+                        <span>(Ký, họ tên)</span>
+                    </div>
+                    <div className="box">
+                        <span>Khách hàng</span>
+                        <span>(Ký, họ tên)</span>
+                    </div>
                 </div>
 
             </div>

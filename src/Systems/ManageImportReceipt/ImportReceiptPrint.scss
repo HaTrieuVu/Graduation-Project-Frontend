@@ -51,6 +51,25 @@
             }
         }
     }
+    .info-supplier {
+        margin: 30px 0;
+        padding: 0 50px;
+        .info-more {
+            display: flex;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 0 15px;
+            .box {
+                width: 50%;
+                font-size: 16px;
+            }
+            .box-all {
+                width: 100%;
+                font-size: 16px;
+            }
+        }
+    }
+
     .customer-info {
         margin-bottom: 20px;
         h4 {
@@ -89,12 +108,25 @@
         font-weight: 600;
     }
     .box-signature {
-        font-size: 20px;
-        font-weight: 600;
-        text-transform: uppercase;
+        font-size: 16px;
         display: flex;
         justify-content: space-between;
-        padding: 0 80px;
+        padding: 0 20px;
         margin: 30px 0 100px 0;
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-style: italic;
+            span {
+                &:first-child {
+                    font-weight: 600;
+                }
+                &:last-child {
+                    font-size: 14px;
+                }
+            }
+        }
     }
 }

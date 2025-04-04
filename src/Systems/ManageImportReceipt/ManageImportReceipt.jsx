@@ -103,7 +103,7 @@ const ManageImportReceipt = () => {
             </div>
             <div className='box-search'>
                 <label>Ngày lập đơn</label>
-                <input className='input-search' value={valueSearch} onChange={(e) => handleOnChangeSearch(e)} type="date" />
+                <input className='input-search' value={valueSearch === "all" ? "" : valueSearch} onChange={(e) => handleOnChangeSearch(e)} type="date" />
             </div>
             {!isShowImportNote ? <>
                 <div className='import-receipt-body'>
@@ -112,6 +112,7 @@ const ManageImportReceipt = () => {
                             <tr>
                                 <th scope="col">Mã đơn nhập</th>
                                 <th scope="col">Thông tin SP</th>
+                                <th scope="col">Thông tin NV</th>
                                 <th scope="col">Số lượng</th>
                                 <th scope="col">Giá nhập</th>
                                 <th scope="col">Tổng tiền</th>
@@ -132,6 +133,9 @@ const ManageImportReceipt = () => {
                                                 {`${product?.productVersion?.productData?.sTenSanPham} - ${product?.productVersion?.sDungLuong} - 
                                                     ${product?.productVersion?.productImages?.sMoTa}`}
                                             </td>
+                                            {index === 0 && (
+                                                <td rowSpan={item?.importDetails?.length}>{`${item?.employee?.sHoTen} - ${item?.employee?.sSoDienThoai}`}</td>
+                                            )}
                                             <td>{product?.iSoLuongNhap}</td>
                                             <td>{product?.fGiaNhap.toLocaleString("vi-VN")} đ</td>
 

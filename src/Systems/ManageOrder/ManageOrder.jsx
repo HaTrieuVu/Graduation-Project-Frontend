@@ -66,8 +66,6 @@ const ManageOrder = () => {
 
     }
 
-    console.log(selectedOrder)
-
     const handleChangeSelect = (e) => {
         setStatusOrder(e.target.value)
     }

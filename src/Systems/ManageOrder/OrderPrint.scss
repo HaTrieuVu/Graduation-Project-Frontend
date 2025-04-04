@@ -64,7 +64,7 @@
             padding: 0 15px;
             .box {
                 width: 50%;
-                font-size: 14px;
+                font-size: 16px;
             }
         }
     }
@@ -89,12 +89,26 @@
         font-weight: 600;
     }
     .box-signature {
-        font-size: 20px;
-        font-weight: 600;
-        text-transform: uppercase;
+        font-size: 18px;
         display: flex;
         justify-content: space-between;
-        padding: 0 80px;
+        padding: 0 150px;
         margin: 30px 0 100px 0;
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-style: italic;
+            span {
+                &:first-child {
+                    font-weight: 600;
+                    text-transform: uppercase;
+                }
+                &:last-child {
+                    font-size: 14px;
+                }
+            }
+        }
     }
 }

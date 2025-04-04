@@ -7,8 +7,6 @@ import { toast } from 'react-toastify';
 import "./ModalCustomer.scss"
 
 const ModalCustomer = ({ action, show, handleCloseModal, dataModalUser, fetchAllUser }) => {
-
-    const [listRole, setListRole] = useState([])
     const [userData, setUserData] = useState({
         id: "",
         email: '',
@@ -18,10 +16,6 @@ const ModalCustomer = ({ action, show, handleCloseModal, dataModalUser, fetchAll
         address: '',
         role: ""
     });
-
-    useEffect(() => {
-        fetchGetRole()
-    }, [])
 
     useEffect(() => {
         if (action === "CREATE") {
@@ -51,14 +45,6 @@ const ModalCustomer = ({ action, show, handleCloseModal, dataModalUser, fetchAll
             })
         }
     }, [dataModalUser])
-
-    const fetchGetRole = async () => {
-        let response = await axios.get("/api/v1/manage-role/get-all")
-
-        if (response?.errorCode === 0 && response?.data?.length > 0) {
-            setListRole(response?.data)
-        }
-    }
 
     const handleOnchangeInput = (value, name) => {
         setUserData(prev => ({
@@ -240,11 +226,8 @@ const ModalCustomer = ({ action, show, handleCloseModal, dataModalUser, fetchAll
                         <div className='col-12 col-sm-6 mb-3 form-group'>
                             <label>Role (<span className='red'>*</span>)</label>
                             <select value={userData.role} onChange={(e) => handleChangeSelect(e)} className='form-select'>
-                                {
-                                    listRole?.length > 0 && listRole.map((item) => (
-                                        <option key={`role-user-${item?.PK_iQuyenHanID}`} value={item?.PK_iQuyenHanID}>{item?.sMoTa}</option>
-                                    ))
-                                }
+                                <option value="">Chọn</option>
+                                <option value="3">Khách hàng</option>
                             </select>
                         </div>
                     </div>
