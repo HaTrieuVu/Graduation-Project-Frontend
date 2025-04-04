@@ -152,7 +152,7 @@ const ManageProduct = () => {
                         {listProduct?.length > 0 ?
                             listProduct.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iSanPhamID - "product-key" - i}>
+                                    <tr key={`${item?.PK_iSanPhamID}-product-key-${i}`}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
                                         <td>{item?.PK_iSanPhamID}</td>
                                         <td>{item?.sTenSanPham}</td>

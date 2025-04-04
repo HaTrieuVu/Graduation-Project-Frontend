@@ -189,8 +189,6 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
         }
     };
 
-    console.log(productVersionData)
-
     return (
         <Modal size="xl" show={show} className="custom-modal" onHide={handleCloseModal}>
             <Modal.Header closeButton className="custom-modal-header">

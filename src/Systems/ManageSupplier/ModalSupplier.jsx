@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import "./ModalSupplier.scss"
 
 const ModalSupplier = ({ action, show, handleCloseModal, dataModalSupplier, fetchAllSupplier }) => {
-
     const [supplierData, setSupplierData] = useState({
         id: "",
         email: '',
@@ -47,8 +46,6 @@ const ModalSupplier = ({ action, show, handleCloseModal, dataModalSupplier, fetc
             [name]: value
         }))
     }
-
-    console.log(supplierData)
 
     const checkValidateInput = () => {
         const regexEmail = /\S+@\S+\.\S+/;
@@ -143,7 +140,6 @@ const ModalSupplier = ({ action, show, handleCloseModal, dataModalSupplier, fetc
                                 type="email"
                             // readOnly={action === "UPDATE"}
                             />
-
                         </div>
                         <div className='col-12 col-sm-6 mb-3 form-group'>
                             <label>Số điện thoại ncc (<span className='red'>*</span>)</label>

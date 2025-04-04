@@ -132,7 +132,7 @@ const ManageCustomer = () => {
                         {listUser?.length > 0 ?
                             listUser.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iKhachHangID - "customer"}>
+                                    <tr key={`${item?.PK_iKhachHangID}-customer-key`}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
                                         <td>{item?.PK_iKhachHangID}</td>
                                         <td>{item?.sHoTen}</td>

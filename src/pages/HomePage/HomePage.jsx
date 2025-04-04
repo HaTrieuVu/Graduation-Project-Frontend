@@ -7,9 +7,7 @@ import { getAllProducts, getAllProductsStatus, fetchAsyncProducts } from '../../
 import { STATUS } from '../../utils/status';
 import ReactPaginate from 'react-paginate';
 import ProductList from '../../components/ProductList/ProductList';
-import Loader from '../../components/Loader/Loader';
-
-import { Link } from 'react-router-dom';
+import Loader from '../../components/Loader/Loader'
 import BrandList from '../../components/BrandList/BrandList';
 
 const HomePage = () => {

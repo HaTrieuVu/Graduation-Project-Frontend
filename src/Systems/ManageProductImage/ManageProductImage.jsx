@@ -127,7 +127,7 @@ const ManageProductImage = () => {
                         {listProductImage?.length > 0 ?
                             listProductImage.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iHinhAnhID - "productImageKey"}>
+                                    <tr key={`${item?.PK_iHinhAnhID}-productImage-key`}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
                                         <td>{item?.PK_iHinhAnhID}</td>
                                         <td>{item?.product?.sTenSanPham}</td>

@@ -137,13 +137,9 @@ const ModalEmployee = ({ action, show, handleCloseModal, dataModalEmployee, fetc
         }
     }
 
-    console.log(employeeData)
-
     //hàm thêm mới hoặc sửa employee
     const handleConfirmUser = async () => {
         let checkValid = checkValidateInput()
-
-        console.log(employeeData)
 
         if (checkValid) {
             let response = action === "CREATE" ?

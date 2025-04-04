@@ -8,7 +8,7 @@ const Product = ({ product }) => {
 
     const [listImage, setListImage] = useState([])
     const [listVersion, setListVersion] = useState([])
-    let image = ""
+    let image = null;
 
     useEffect(() => {
         setListImage(product?.images)
@@ -22,7 +22,7 @@ const Product = ({ product }) => {
     let newPrice = listVersion[0]?.fGiaBan - listVersion[0]?.fGiaBan * (product?.promotion?.fGiaTriKhuyenMai / 100);
 
     return (
-        <Link to={`/product/${product?.PK_iSanPhamID}`} key={product?.PK_iSanPhamID - "key"}>
+        <Link to={`/product/${product?.PK_iSanPhamID}`} key={`${product?.PK_iSanPhamID}-key-render-product`}>
             <div className="product-item bg-white">
                 <div className="category">{product?.categoryData?.sTenDanhMuc}</div>
                 <div className="promotion">Giảm {product?.promotion?.fGiaTriKhuyenMai} %</div>

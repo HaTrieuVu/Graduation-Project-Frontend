@@ -126,7 +126,7 @@ const ManageCategory = () => {
                         {listCategory?.length > 0 ?
                             listCategory.map((item, i) => {
                                 return (
-                                    <tr key={item?.PK_iDanhMucID - "category"}>
+                                    <tr key={`${item?.PK_iDanhMucID}-category-key`}>
                                         <td scope="row">{(currentPage - 1) * currentLimit + (i + 1)}</td>
                                         <td>{item?.PK_iDanhMucID}</td>
                                         <td>{item?.sTenDanhMuc}</td>

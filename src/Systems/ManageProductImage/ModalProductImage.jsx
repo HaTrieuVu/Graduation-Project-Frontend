@@ -66,8 +66,6 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
         }));
     };
 
-    console.log(productImageData)
-
     const handleOnchangeInput = (value, name) => {
         setProductImageData((prev) => ({
             ...prev,

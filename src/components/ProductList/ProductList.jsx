@@ -5,10 +5,8 @@ import Product from '../Product/Product';
 const ProductList = ({ products }) => {
     return (
         <div className="product-lists grid bg-whitesmoke my-3">
-            {products?.map((product) => {
-                // let discountedPrice = product.price - product.price * (product.discountPercentage / 100);
-
-                return <Product key={product.id - "productKEY"} product={product} />;
+            {products?.length > 0 && products?.map((product) => {
+                return <Product key={`${product?.PK_iSanPhamID}-product-KEY-list`} product={product} />;
             })}
         </div>
     );

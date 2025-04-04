@@ -27,7 +27,7 @@ const Sidebar = () => {
                 <div className="cat-title fs-17 text-uppercase fw-6 ls-1h">Danh mục sản phẩm</div>
                 <ul className="cat-list">
                     {categories.map((category, index) => (
-                        <li key={index} onClick={() => dispatch(setSidebarOff())}>
+                        <li key={`${index}-category-sidebar-key`} onClick={() => dispatch(setSidebarOff())}>
                             <Link to={`category/${category?.slug}`} className="cat-list-link text-capitalize">
                                 {category?.sTenDanhMuc}
                             </Link>
