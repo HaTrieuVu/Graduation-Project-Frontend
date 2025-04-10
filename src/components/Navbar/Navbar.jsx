@@ -11,6 +11,8 @@ import { IoMenu, IoBag } from "react-icons/io5";
 import { FaCartPlus } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 
+import logo from "../../assets/logo.png"
+
 
 import './Navbar.scss';
 
@@ -56,6 +58,11 @@ const Navbar = () => {
         <nav className="navbar-container">
             <div className="navbar-cnt ">
                 <div className="brand-and-toggler ">
+                    <Link to="/" className="box-logo">
+                        <div className='logo'>
+                            <img src={logo} alt="logoImg" />
+                        </div>
+                    </Link>
                     <button
                         className="sidebar-show-btn"
                         type="button"
@@ -63,14 +70,6 @@ const Navbar = () => {
                     >
                         <IoMenu />
                     </button>
-                    <Link to="/" className="navbar-brand ">
-                        <span className="navbar-brand-ico">
-                            <IoBag />
-                        </span>
-                        <span className="navbar-brand-txt">
-                            <span className="fw-7">Snap</span>Up.
-                        </span>
-                    </Link>
                 </div>
 
                 <div className="navbar-collapse-body">

@@ -1,8 +1,44 @@
+@import '../../App.scss';
+
 .slider-wrapper {
     margin: 32px 0;
 }
 .main-content {
     min-height: 100vh;
+
+    .box-filter {
+        display: flex;
+        flex-direction: column;
+
+        .filter-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 15px 0 10px 0;
+        }
+
+        .filter-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-left: 10px;
+            margin-bottom: 20px;
+
+            button {
+                font-size: 16px;
+                padding: 5px 10px;
+                border: 1px solid $clr-gray;
+                align-items: center;
+                display: flex;
+                border-radius: 10px;
+                gap: 5px;
+
+                &.active {
+                    border: 1px solid $clr-red;
+                    color: $clr-red;
+                }
+            }
+        }
+    }
 
     .categories {
         .categories-item {
@@ -16,7 +52,7 @@
 
     .product-footer {
         margin: auto;
-        width: 30%;
+        width: 33%;
         margin-bottom: 50px;
         .pagination {
             .page-item {
@@ -30,6 +66,27 @@
                     padding: 10px 20px;
                 }
             }
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        // từ 768 -> 992
+        .product-footer {
+            width: 42%;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        // từ 576 -> 768
+        .product-footer {
+            width: 60%;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        // nhỏ hơn 576
+        .product-footer {
+            width: 92%;
         }
     }
 }

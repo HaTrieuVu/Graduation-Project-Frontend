@@ -14,6 +14,7 @@ import { toast } from 'react-toastify';
 import { Buffer } from 'buffer';
 import axios from '../../config/axios';
 import { fetchAsyncCarts } from '../../store/cartSlice';
+import ModalOrder from '../../components/ModalOrder/ModalOrder';
 
 const ProductSinglePage = () => {
   const { id } = useParams();
@@ -35,6 +36,9 @@ const ProductSinglePage = () => {
 
   const [selectedVersion, setSelectedVersion] = useState(null);   //version nào được chọn
   const [selectedImageProduct, setSelectedImageProduct] = useState(null)  // màu sắc nào được chọn
+
+  const [dataOrder, setDataOrder] = useState(null)    // dữ liệu của đơn mua hàng
+  const [isShowModalOrder, setIsShowModalOrder] = useState(false)
 
   const discountPercentage = product?.promotion?.fGiaTriKhuyenMai //giá trị khuyến mãi của sp
 
@@ -155,14 +159,15 @@ const ProductSinglePage = () => {
     setQuantity(1)
   }
 
+  // hàm thêm sp vào giỏ hàng
   const handleAddToCart = async () => {
     if (!selectedVersion || !selectedVersion?.groupedVersions) {
-      toast.error("Hãy bạn phiên bản!")
+      toast.info("Hãy chọn phiên bản!")
       return;
     }
 
     if (!selectedImageProduct || !selectedImageProduct?.imageId) {
-      toast.error("Hãy bạn màu sắc!")
+      toast.info("Hãy chọn màu sắc!")
       return;
     }
 
@@ -171,7 +176,7 @@ const ProductSinglePage = () => {
     );
 
     if (!productVersion) {
-      toast.error("Không tìm thấy phiên bản phù hợp!");
+      toast.info("Không tìm thấy phiên bản phù hợp!");
       return;
     }
 
@@ -185,7 +190,6 @@ const ProductSinglePage = () => {
 
     try {
       const response = await axios.post("/api/v1/cart/add-to-cart", cartInfo);
-      console.log("Response:", response);
       if (response?.errorCode === 0) {
         toast.success(response?.errorMessage)
         //cập nhật lại giỏ hàng
@@ -199,6 +203,53 @@ const ProductSinglePage = () => {
     } catch (error) {
       console.error("Lỗi khi thêm vào giỏ hàng:", error);
     }
+  }
+
+  const handleBuyProduct = () => {
+    if (!selectedVersion || !selectedVersion?.groupedVersions) {
+      toast.info("Hãy chọn phiên bản!")
+      return;
+    }
+
+    if (!selectedImageProduct || !selectedImageProduct?.imageId) {
+      toast.info("Hãy chọn màu sắc!")
+      return;
+    }
+
+    let productVersion = selectedVersion?.groupedVersions?.find(
+      (item) => item?.FK_iHinhAnhID === selectedImageProduct?.imageId
+    );
+
+    if (!productVersion) {
+      toast.info("Không tìm thấy phiên bản phù hợp!");
+      return;
+    }
+
+    let priceBuy = selectedVersion?.fGiaBan - selectedVersion?.fGiaBan * (discountPercentage / 100)
+    let totalPrice = priceBuy * quantity
+
+    let dataProduct = [
+      {
+        productVersionId: selectedVersion?.PK_iPhienBanID,
+        quantity: quantity,
+        price: selectedVersion?.fGiaBan,
+        priceNew: priceBuy,
+        amount: priceBuy * quantity,
+        color: selectedImageProduct?.moTa,
+        thumbnail: selectedImageProduct?.image,
+        productName: product?.sTenSanPham
+      }
+    ]
+
+    let dataBuyProduct = {
+      userId: user?.userId,
+      totalPrice: totalPrice,
+      quantityProduct: quantity,
+      orderDetails: dataProduct
+    }
+
+    setDataOrder(dataBuyProduct)
+    setIsShowModalOrder(true)
   }
 
   return (
@@ -377,7 +428,7 @@ const ProductSinglePage = () => {
                       <span className="btn-text mx-2">Thêm vào giỏ hàng</span>
                     </button>
 
-                    <button className="buy-now btn" type="button">
+                    <button onClick={() => handleBuyProduct()} className="buy-now btn" type="button">
                       <FaShopify size={24} />
                       <span className="btn-text mx-2">Mua ngay</span>
                     </button>
@@ -388,6 +439,11 @@ const ProductSinglePage = () => {
           </div>
         </div>
       )}
+      <ModalOrder
+        show={isShowModalOrder}
+        setIsShowModalOrder={setIsShowModalOrder}
+        dataOrder={dataOrder}
+      />
       {/* {CartMessageStatus && <CartMessage />} */}
     </main>
   )

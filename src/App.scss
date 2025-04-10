@@ -4,13 +4,14 @@
 $clr-black: #000;
 $clr-white: #fff;
 $clr-orange: #f94e30;
+$clr-red: #d70018;
 $clr-light-orange: #ff6433;
 $clr-light-gray: #f2f2f2;
 $clr-light: #f4f4f4;
 $clr-whitesmoke: #f5f5f5;
 $clr-dark: #212529;
 $clr-danger: #dc3545;
-$clr-gray: #929292;
+$clr-gray: #d1d1d1;
 $font-family-manrope: 'Manrope', sans-serif;
 $font-family-poppins: 'Poppins', sans-serif;
 $transition-ease: all 300ms ease-in-out;
@@ -198,6 +199,9 @@ select {
 .bg {
     &-orange {
         background-color: $clr-orange;
+    }
+    &-red {
+        background-color: $clr-red;
     }
     &-light-orange {
         background-color: $clr-light-orange;

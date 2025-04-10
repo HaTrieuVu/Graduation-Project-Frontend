@@ -8,6 +8,7 @@
     &:hover {
         transform: scale(1.02);
         transition: $transition-ease;
+        border: 1px solid $clr-red;
     }
 
     .category {

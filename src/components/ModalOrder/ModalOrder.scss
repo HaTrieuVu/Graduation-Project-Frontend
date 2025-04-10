@@ -73,6 +73,64 @@
                         margin-left: 50px;
                         border: 1px solid #0000008a;
                         font-size: 14px;
+                        padding: 5px 5px;
+                    }
+                }
+
+                .payment-success {
+                    margin-top: 50px;
+                    text-align: center;
+
+                    span {
+                        font-size: 20px;
+                        color: $clr-orange;
+                        font-weight: 600;
+                    }
+                }
+
+                .paymeny-logo {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 0 150px;
+                    margin-top: 20px;
+
+                    .box-img {
+                        display: flex;
+                        justify-content: space-between;
+                        .box-img-payment {
+                            width: 100px;
+                            height: 100px;
+
+                            &.active {
+                                border: 1px solid $clr-orange;
+                            }
+
+                            &:hover {
+                                border: 1px solid $clr-orange;
+                                transition: $transition-ease;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    .update-box {
+                        display: flex;
+                        justify-content: flex-end;
+                        .update-btn {
+                            font-size: 14px;
+                            padding: 3px 14px;
+                            border-radius: 10px;
+                            border: 1px solid #adadad;
+                            margin-top: 15px;
+                            width: 100px;
+
+                            &:hover {
+                                background-color: $clr-orange;
+                                color: white;
+                                border: 1px solid $clr-orange;
+                                transition: $transition-ease;
+                            }
+                        }
                     }
                 }
             }
