@@ -24,6 +24,7 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
     const [isLoadingDataUrl, setIsLoadingDataUrl] = useState(false)     // trạng thái xem load xong data thanh toán từ server
     const [paymentSelected, setPaymentSelected] = useState(null)          // lưu xem thanh toán bằng thẻ nào
     const [appTransIdZaloPay, setAppTransIdZaloPay] = useState(null)        // id đơn giao dịch của zalopay
+    const [appOrderIdMoMo, setAppOrderIdMoMo] = useState(null)                      // id đơn giao dịch của momo
     const [isPaymentSuccess, setIsPaymentSuccess] = useState(false)
 
     const fetchUserInfo = async () => {
@@ -37,42 +38,52 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
         fetchUserInfo()
     }, [id])
 
+    // chọn phương thức thanh toán nào
     const handleChangeSelect = async (e) => {
-        if (e.target.value === "None") {
-            setPaymentMethod(e.target.value)
+        const method = e.target.value;
+        setPaymentMethod(method);
+
+        if (method === "None") return;
+
+        if (method === "COD") {
+            setStatusPayment("Chưa thanh toán");
+            return;
         }
 
-        if (e.target.value === "COD") {
-            setPaymentMethod(e.target.value)
-            setStatusPayment("Chưa thanh toán")
-        }
-
-        if (e.target.value === "TTOL") {
-            setPaymentMethod(e.target.value)
-
-            let data = dataOrder?.orderDetails.map((
-                { thumbnail, color, productName, ...rest }) => rest
-            )
+        if (method === "TTOL") {
+            const data = dataOrder?.orderDetails.map(({ thumbnail, color, productName, ...rest }) => rest);
 
             const order = {
                 items: data,
                 totalPrice: dataOrder?.totalPrice,
-            }
+            };
 
-            const res = await axios.post("/api/v1/payment-zalo-pay/order", order)
+            try {
+                const [resZaloPay, resMomo] = await Promise.all([
+                    axios.post("/api/v1/payment-zalo-pay/order", order),
+                    axios.post("/api/v1/payment-momo-pay/order", order),
+                ]);
 
-            console.log(res)
-
-            if (res?.data?.return_code === 1) {
-                setDataUrlPayment({
-                    orderURLZaloPay: res?.data?.order_url
-                })
-                setAppTransIdZaloPay(res?.app_trans_id)
-                setIsLoadingDataUrl(true)
+                if (
+                    resZaloPay?.data?.return_code === 1 &&
+                    resMomo?.data?.resultCode === 0
+                ) {
+                    setDataUrlPayment({
+                        orderURLZaloPay: resZaloPay.data.order_url,
+                        orderURLMoMo: resMomo.data.shortLink,
+                    });
+                    setAppTransIdZaloPay(resZaloPay.data.app_trans_id);
+                    setAppOrderIdMoMo(resMomo.data.orderId);
+                    setIsLoadingDataUrl(true);
+                }
+            } catch (error) {
+                console.error("Lỗi khi khởi tạo thanh toán:", error);
+                toast.error("Không thể tạo đơn thanh toán. Vui lòng thử lại.");
             }
         }
-    }
+    };
 
+    // xác nhận đơn hàng
     const handleConfirmOrder = async () => {
         if (paymentMethod === "None") {
             toast.info("Bạn hãy chọn phương thức thanh toán!")
@@ -103,8 +114,6 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
                 orderDetails: data
             }
 
-            console.log(dataOrderConfirm)
-
             const res = await axios.post(`/api/v1/order/order-product`, dataOrderConfirm)
 
             if (res.errorCode === 0) {
@@ -123,31 +132,47 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
         }
     }
 
+    // click chọn thanh toán qua cổng nào
     const handlePayment = (payment) => {
-        setPaymentSelected(payment)
+        setPaymentSelected(payment);
+        const paymentUrls = {
+            zalopay: dataUrlPayment?.orderURLZaloPay,
+            momo: dataUrlPayment?.orderURLMoMo,
+        };
 
-        if (payment === "zalopay") {
-            if (dataUrlPayment?.orderURLZaloPay) {
-                window.open(dataUrlPayment.orderURLZaloPay, "_blank");
-            } else {
-                console.warn("Không có đường dẫn thanh toán ZaloPay.");
-            }
+        const url = paymentUrls[payment];
+        if (url) {
+            window.open(url, "_blank");
+        } else {
+            console.warn(`Không có đường dẫn thanh toán cho ${payment}.`);
         }
-    }
+    };
 
+
+    // cập nhật trạng thái đơn hàng
     const handleUpdateStatusPayment = async () => {
         if (paymentSelected === "zalopay") {
-            const resStatusOrder = await axios.post(`/api/v1/payment-zalo-pay/check-status`, { app_trans_id: appTransIdZaloPay })
+            const resStatusOrderZaloPay = await axios.post(`/api/v1/payment-zalo-pay/check-status`, { app_trans_id: appTransIdZaloPay })
 
-            console.log(resStatusOrder)
-
-            if (resStatusOrder?.return_code === 1) {
+            if (resStatusOrderZaloPay?.return_code === 1) {
                 setStatusPayment("Đã thanh toán")
                 setIsPaymentSuccess(true)
                 toast.success("Đơn hàng của bạn đã được thành toán thành công!")
             }
+            if (resStatusOrderZaloPay?.return_code === 3) {
+                toast.error("Đơn hàng chưa được thanh toán. Hãy thanh toán!")
+            }
+        }
 
-            if (resStatusOrder?.return_code === 3) {
+        if (paymentSelected === "momo") {
+            const resStatusOrderMoMo = await axios.post(`/api/v1/payment-momo-pay/check-status`, { orderId: appOrderIdMoMo })
+
+            if (resStatusOrderMoMo?.resultCode === 0) {
+                setStatusPayment("Đã thanh toán")
+                setIsPaymentSuccess(true)
+                toast.success("Đơn hàng của bạn đã được thành toán thành công!")
+            }
+            if (resStatusOrderMoMo?.resultCode === 1000) {
                 toast.error("Đơn hàng chưa được thanh toán. Hãy thanh toán!")
             }
         }
@@ -220,7 +245,7 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
                     <span>Đơn hàng đã được thành toán thành công. Hãy chọn xác nhận!</span>
                 </div> : isLoadingDataUrl === false && paymentMethod === "TTOL" ? <Loader />
                     :
-                    dataUrlPayment !== null && <div className='paymeny-logo'>
+                    dataUrlPayment !== null && paymentMethod === "TTOL" && <div className='paymeny-logo'>
                         <div className='box-img'>
                             <div onClick={() => handlePayment("zalopay")} className={`box-img-payment ${paymentSelected === "zalopay" ? "active" : ""}`}>
                                 <img src={zaloIcon} alt="" />
