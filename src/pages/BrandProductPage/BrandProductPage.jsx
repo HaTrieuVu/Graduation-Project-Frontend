@@ -25,7 +25,7 @@ const BrandProductPage = () => {
     const productBrandResponse = useSelector(getAllProductsByBrand);
     const productBrandStatus = useSelector(getBrandProductsStatus);
 
-    let logo = ""
+    let logo = "";
 
     if (Array.isArray(productBrandResponse?.sLogo?.data)) {
         logo = new Buffer(productBrandResponse?.sLogo?.data, "base64").toString("binary");
@@ -51,7 +51,7 @@ const BrandProductPage = () => {
                             Sản phẩm - Nhãn hàng
                         </h3>
                         <div className='icon'>
-                            <img src={logo} alt={`logo-${productBrandResponse?.sTenNhanHang}`} />
+                            <img src={logo || null} alt={`logo-${productBrandResponse?.sTenNhanHang}`} />
                         </div>
                     </div>
                     {productBrandStatus === STATUS.LOADING ? (

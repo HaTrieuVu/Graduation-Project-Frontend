@@ -19,7 +19,6 @@ const Login = () => {
 
   const fetchUserInfo = async () => {
     let response = await axios.get("/api/v1/account");
-    console.log(response)
     if (response?.errorCode === 0) {
       dispatch(setInfoUser(response?.data?.user))
     }
@@ -51,7 +50,6 @@ const Login = () => {
     } else {
       toast.error(response?.errorMessage)
     }
-
   }
 
   return (

@@ -42,6 +42,8 @@ const ProductSinglePage = () => {
 
   const discountPercentage = product?.promotion?.fGiaTriKhuyenMai //giá trị khuyến mãi của sp
 
+  console.log(product)
+
   useEffect(() => {
     // Chỉ kiểm tra khi Redux đã tải xong user
     if (!isUserLoaded) return;
@@ -268,15 +270,15 @@ const ProductSinglePage = () => {
                       className="img-cover"
                       src={selectedImageProduct !== null  //dk1
                         ?
-                        selectedImageProduct?.image  //true
+                        (selectedImageProduct?.image || null)  //true
                         :
                         listImage?.length > 0 //false (dk2)
                           ?
                           (listImage[0]?.sUrl ? listImage[0]?.sUrl
                             :
-                            '')
+                            null)
                           :
-                          ''
+                          null
                       }
                       alt=""
                     />
@@ -285,7 +287,7 @@ const ProductSinglePage = () => {
                     <div className="product-img-thumbs flex align-center my-2">
                       {listImage?.map((item) => (
                         <div className="thumb-item" key={`thumb-image-${item?.PK_iHinhAnhID}`}>
-                          <img className="img-cover" src={item?.sUrl} alt={item?.sMoTa} />
+                          <img className="img-cover" src={item?.sUrl || null} alt={item?.sMoTa} />
                         </div>
                       ))}
                     </div>
@@ -384,7 +386,7 @@ const ProductSinglePage = () => {
                             className={`item-color ${selectedImageProduct?.imageId === item?.imageId ? "active" : ""}`}
                           >
                             <div className='box'>
-                              <img className='img' src={item?.image} alt={item?.moTa} />
+                              <img className='img' src={item?.image || null} alt={item?.moTa} />
                               <strong>{item?.moTa}</strong>
                             </div>
                           </li>

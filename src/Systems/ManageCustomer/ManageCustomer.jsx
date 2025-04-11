@@ -173,12 +173,12 @@ const ManageCustomer = () => {
             </div>
             {totalPage > 0 && <div className='user-footer'>
                 <ReactPaginate
-                    nextLabel="next >"
+                    nextLabel=">"
                     onPageChange={handlePageClick}
                     pageRangeDisplayed={3}
                     marginPagesDisplayed={2}
                     pageCount={totalPage}
-                    previousLabel="< previous"
+                    previousLabel="<"
                     pageClassName="page-item"
                     pageLinkClassName="page-link"
                     previousClassName="page-item"

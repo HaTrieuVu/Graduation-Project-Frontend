@@ -248,8 +248,8 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                             <label>Trạng thái (<span className='red'>*</span>)</label>
                             <select value={productVersionData.status || ""} onChange={(e) => handleChangeSelect(e, "status")} className='form-select'>
                                 <option value="">Chọn</option>
-                                <option value="true">Còn hàng</option>
-                                <option value="false">Hết hàng</option>
+                                <option value="1">Còn hàng</option>
+                                <option value="0">Hết hàng</option>
                             </select>
                         </div>
                     </div>

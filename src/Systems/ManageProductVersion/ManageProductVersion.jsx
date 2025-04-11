@@ -31,7 +31,6 @@ const ManageProductVersion = () => {
 
 
     useEffect(() => {
-
         fetchAllProductVersion()
     }, [currentPage, valueSearch])
 
@@ -175,7 +174,7 @@ const ManageProductVersion = () => {
                                         <td>{item?.sDungLuong}</td>
                                         <td>{item?.fGiaBan?.toLocaleString("vi-VN")} VNĐ</td>
                                         <td>{item?.iSoLuong}</td>
-                                        <td>{item?.bTrangThai}</td>
+                                        <td>{item?.bTrangThai === true ? "Còn hàng" : "Hết hàng"}</td>
                                         <td className='btn-action'>
                                             <button onClick={() => handleCreateOrUpdateUser("UPDATE", item)} title='Sửa'><FaRegEdit /></button>
                                             <button onClick={() => handleDeleteProduct(item)} title='Xóa'><FaRegTrashCan /></button>
@@ -189,12 +188,12 @@ const ManageProductVersion = () => {
             </div>
             {totalPage > 0 && <div className='product-footer'>
                 <ReactPaginate
-                    nextLabel="next >"
+                    nextLabel=">"
                     onPageChange={handlePageClick}
                     pageRangeDisplayed={3}
                     marginPagesDisplayed={2}
                     pageCount={totalPage}
-                    previousLabel="< previous"
+                    previousLabel="<"
                     pageClassName="page-item"
                     pageLinkClassName="page-link"
                     previousClassName="page-item"

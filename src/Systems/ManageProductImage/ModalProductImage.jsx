@@ -53,7 +53,6 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
     };
 
     const handleOnChangeImage = async (e) => {
-        console.log(e.target.files[0])
         let data = e.target.files;
         let file = data[0];
         if (file) {
@@ -127,7 +126,7 @@ const ModalProductImage = ({ action, show, handleCloseModal, dataModalProductIma
     };
 
     return (
-        <Modal size="xl" show={show} className="custom-modal" onHide={handleCloseModal}>
+        <Modal size="xl" show={show} className="custom-modal-product-image" onHide={handleCloseModal}>
             <Modal.Header closeButton className="custom-modal-header">
                 <Modal.Title id="contained-modal-title-vcenter">
                     {action === 'CREATE' ? <span>Thêm mới Sản phẩm - hình ảnh</span> : <span>Sửa Sản phẩm - hình ảnh</span>}

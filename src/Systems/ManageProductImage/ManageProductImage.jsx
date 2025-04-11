@@ -30,11 +30,11 @@ const ManageProductImage = () => {
 
     useEffect(() => {
         fetchGetProduct()
-    }, [currentPage])
+    }, [])
 
     useEffect(() => {
         fetchAllProductImage()
-    }, [valueSearch])
+    }, [currentPage, valueSearch])
 
     const fetchAllProductImage = async () => {
         let response = await axios.get(`/api/v1/manage-product-image/get-all?page=${currentPage}&limit=${currentLimit}&valueSearch=${valueSearch}`)
@@ -112,8 +112,6 @@ const ManageProductImage = () => {
         }
     }
 
-    console.log(valueSearch)
-
     return (
         <main className='manage-product-image-container'>
             <h2 className='title'>Quản lý Sản phẩm</h2>
@@ -186,12 +184,12 @@ const ManageProductImage = () => {
             </div>
             {totalPage > 0 && <div className='product-image-footer'>
                 <ReactPaginate
-                    nextLabel="next >"
+                    nextLabel=">"
                     onPageChange={handlePageClick}
                     pageRangeDisplayed={3}
                     marginPagesDisplayed={2}
                     pageCount={totalPage}
-                    previousLabel="< previous"
+                    previousLabel="<"
                     pageClassName="page-item"
                     pageLinkClassName="page-link"
                     previousClassName="page-item"

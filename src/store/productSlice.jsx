@@ -67,7 +67,6 @@ export const fetchAsyncProductSingle = createAsyncThunk('product-single/fetch', 
         } else {
             response?.errorMessage === "Người dùng chưa đăng nhập!" && toast.error("Bạn chưa đăng nhập. Hãy đăng nhập...")
         }
-        console.log(response)
         return [];
     } catch (error) {
         console.error("Error fetching products singer:", error);

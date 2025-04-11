@@ -213,8 +213,8 @@ const ModalProduct = ({ action, show, handleCloseModal, dataModalProduct, fetchA
                             <label>Tình trạng (<span className='red'>*</span>)</label>
                             <select value={productData.status || ""} onChange={(e) => handleChangeSelect(e, "status")} className='form-select'>
                                 <option value="">Chọn</option>
-                                <option value="Còn hàng">Còn hàng</option>
-                                <option value="Hết hàng">Hết hàng</option>
+                                <option value="Chờ bán">Chờ bán</option>
+                                <option value="Đang bán">Đang bán</option>
                                 <option value="Ngừng bán">Ngừng bán</option>
                             </select>
                         </div>

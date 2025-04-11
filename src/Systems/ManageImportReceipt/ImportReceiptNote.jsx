@@ -135,7 +135,7 @@ const ImportReceiptNote = ({ action, handleCloseImportNote, fetchAllImportReceip
 
     return (
         <div className="import-receipt-note">
-            <div closeButton className="import-receipt-note-header">
+            <div className="import-receipt-note-header">
                 <div className="title-import">
                     {action === 'CREATE' ? <span>Thêm mới Phiếu nhập Kho</span> : <span>Sửa Phiếu nhập Kho</span>}
                 </div>
