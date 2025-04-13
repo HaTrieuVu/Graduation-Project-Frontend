@@ -1,0 +1,104 @@
+@import '../../App.scss';
+.container-profile {
+    background-color: white;
+    padding: 0 130px;
+
+    .profile-header {
+        padding: 18px 0;
+        border-bottom: 1px solid #efefef;
+
+        span {
+            color: #555;
+        }
+    }
+
+    .profile-body {
+        padding-top: 30px;
+        display: flex;
+
+        .box-profile {
+            flex: 1;
+            padding-right: 50px;
+            .main-profile {
+                .form-group {
+                    input,
+                    select,
+                    textarea {
+                        font-size: 18px;
+                    }
+                }
+
+                .label-title {
+                    color: #555c;
+                }
+
+                .btn-change {
+                    display: flex;
+                    justify-content: flex-end;
+                    margin-top: 10px;
+
+                    button {
+                        font-size: 14px;
+                        color: $clr-orange;
+                        text-decoration: underline;
+                        text-transform: capitalize;
+                    }
+                }
+            }
+
+            .btn-save {
+                display: flex;
+                justify-content: center;
+
+                button {
+                    padding: 10px 15px;
+                    background-color: $clr-light-orange;
+                    color: white;
+                    border-radius: 10px;
+                    font-size: 14px;
+                }
+            }
+        }
+        .box-image {
+            border-left: 1px solid #efefef;
+            overflow: hidden;
+            width: 280px;
+
+            .image-main {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+
+                .avatar {
+                    width: 150px;
+                    height: 150px;
+                    margin: 20px 0;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    border: 1px dotted red;
+                }
+
+                .label-img {
+                    background: #fff;
+                    border: 1px solid rgba(0, 0, 0, 0.09);
+                    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.03);
+                    color: #555;
+                    outline: 0;
+                    overflow: visible;
+                    position: relative;
+                    padding: 5px 15px;
+                    cursor: pointer;
+                }
+
+                .input-img {
+                    display: none;
+                }
+
+                .info-img {
+                    margin-top: 16px;
+                    color: #999;
+                }
+            }
+        }
+    }
+}

@@ -21,8 +21,8 @@ const UserModal = () => {
     return (
         <div className='user-modal'>
             <ul>
-                <Link className='item'>Hồ sơ cá nhân</Link>
-                <Link className='item'>Đơn hàng</Link>
+                <Link to={"/user/profile"} className='item'>Hồ sơ cá nhân</Link>
+                <Link to={"/user/purchase?type=all"} className='item'>Đơn hàng</Link>
                 {(user?.roleId === 1 || user?.roleId === 2) && <Link to={"/admin"} className='item'>Quản lý Website</Link>}
                 <Link onClick={() => handleLogOut()} className='item'>Đăng xuất</Link>
             </ul>

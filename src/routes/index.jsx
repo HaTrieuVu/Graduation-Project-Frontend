@@ -24,6 +24,9 @@ import ManageImportReceipt from "../Systems/ManageImportReceipt/ManageImportRece
 import ManageWarranty from "../Systems/ManageWarranty/ManageWarranty";
 import ManageEmployee from "../Systems/ManageEmployee/ManageEmployee";
 import ManagePromotion from "../Systems/ManagePromotion/ManagePromotion";
+import UserPage from "../pages/UserPage/UserPage";
+import PurchaseOrder from "../components/PurchaseOrder/PurchaseOrder";
+import UserProfile from "../components/UserProfile/UserProfile";
 
 
 const router = createBrowserRouter([
@@ -58,6 +61,20 @@ const router = createBrowserRouter([
             {
                 path: "/search/:keywordSearch",
                 element: <SearchPage />
+            },
+            {
+                path: "/user",
+                element: <UserPage />,
+                children: [
+                    {
+                        path: "/user/profile",
+                        element: <UserProfile />,
+                    },
+                    {
+                        path: "/user/purchase",
+                        element: <PurchaseOrder />,
+                    }
+                ]
             },
             {
                 path: "*",

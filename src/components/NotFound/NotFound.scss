@@ -1,0 +1,14 @@
+@import '../../App.scss';
+
+.container-404 {
+    display: flex;
+    min-height: 70vh;
+    text-align: center;
+
+    div {
+        margin: auto;
+        font-size: 30px;
+        font-weight: 600;
+        color: $clr-orange-light;
+    }
+}

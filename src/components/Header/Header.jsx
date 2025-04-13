@@ -18,6 +18,7 @@ const Header = () => {
     const user = useSelector(state => state.userInfo.user);
 
     const [userInfo, setUserInfo] = useState({})
+    const [avatar, setAvatar] = useState(null)
     const [notifications, setNotifications] = useState(null)
     const [quantityNofification, setQuantityNofification] = useState(0)
 
@@ -34,13 +35,21 @@ const Header = () => {
         }
     }
 
+    const fetchUserInfo = async (userId) => {
+        const res = await axios.get(`/api/v1/user/get-info?id=${userId}`)
+        if (res?.errorCode === 0 && !_.isEmpty(res?.data)) {
+            setAvatar(res?.data?.sAvatar,);
+        }
+    }
+
     useEffect(() => {
         let id = user?.userId
         setUserInfo(user)
         fetchAllNotification(id)
+        fetchUserInfo(id)
     }, [user])
 
-
+    console.log(avatar)
 
     return (
         <div className="header text-white">
@@ -84,7 +93,7 @@ const Header = () => {
                                 <li className="vert-line"></li>
                                 {userInfo && !_.isEmpty(userInfo) ? <div className='box-user'>
                                     <div className='icon'>
-                                        <img alt='avatar' src={userIcon} />
+                                        <img alt='avatar' src={avatar !== null ? avatar : userIcon} />
                                     </div>
                                     <span>{userInfo?.userName}</span>
                                     <UserModal />

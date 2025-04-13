@@ -160,7 +160,6 @@ const ModalProduct = ({ action, show, handleCloseModal, dataModalProduct, fetchA
             <Modal.Body className="custom-modal-body">
                 <div className="content-body">
                     <div className="row">
-
                         <div className="col-12 mb-3 form-group">
                             <label>
                                 Tên Sản phẩm (<span className="red">*</span>)
