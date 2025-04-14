@@ -23,10 +23,7 @@ const ModalManageOrder = ({ show, handleCloseModal, action, dataModalOrder, fetc
                 orderId: dataModalOrder?.PK_iDonMuaHangID,
                 orderStatus,
                 paymentStatus,
-                orderDetails: dataModalOrder?.orderDetails
             }
-
-            console.log(data)
 
             let res = await axios.put('/api/v1/manage-order/update', data)
 
@@ -35,7 +32,6 @@ const ModalManageOrder = ({ show, handleCloseModal, action, dataModalOrder, fetc
                 toast.success("Cập nhật trạng thái đơn hàng thành công!")
                 await fetchAllOrders()
             }
-
         } else {
             toast.info("Hãy chọn trạng thái cập nhật!")
         }

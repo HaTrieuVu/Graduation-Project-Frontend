@@ -27,6 +27,7 @@ import ManagePromotion from "../Systems/ManagePromotion/ManagePromotion";
 import UserPage from "../pages/UserPage/UserPage";
 import PurchaseOrder from "../components/PurchaseOrder/PurchaseOrder";
 import UserProfile from "../components/UserProfile/UserProfile";
+import ChangePassword from "../components/ChangePassword/ChangePassword";
 
 
 const router = createBrowserRouter([
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
                     {
                         path: "/user/purchase",
                         element: <PurchaseOrder />,
+                    },
+                    {
+                        path: "/user/change-password",
+                        element: <ChangePassword />,
                     }
                 ]
             },

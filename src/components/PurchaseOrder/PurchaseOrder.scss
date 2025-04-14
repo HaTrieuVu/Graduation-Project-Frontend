@@ -65,6 +65,9 @@
                     justify-content: space-between;
                     border-bottom: 1px solid rgba(0, 0, 0, 0.09);
                     padding: 10px 0;
+                    span {
+                        color: rgb(80, 80, 80);
+                    }
                     .more-info {
                         align-items: center;
                         display: flex;
@@ -164,9 +167,25 @@
                 }
             }
 
-            .purchase-item-price {
+            .purchase-item-footer {
                 padding: 24px 24px 12px;
                 border-top: 1px dotted rgba(0, 0, 0, 0.09);
+                .box-cancel {
+                    .btn-cancel {
+                        font-size: 14px;
+                        padding: 6px 8px;
+                        border-radius: 10px;
+                        background-color: gray;
+                        color: white;
+                        opacity: 0.5;
+
+                        &:hover {
+                            background-color: $clr-red-light;
+                            opacity: 1;
+                            transition: $transition-ease;
+                        }
+                    }
+                }
                 .box-price {
                     align-items: center;
                     display: flex;
@@ -180,7 +199,7 @@
                     }
 
                     span {
-                        color: #ee4d2d;
+                        color: $clr-red-light;
                         font-size: 24px;
                         line-height: 30px;
                     }

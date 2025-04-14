@@ -395,7 +395,7 @@ const ProductSinglePage = () => {
                     </div>
                   </div>
 
-                  <div className="qty flex align-center my-4">
+                  {product?.versions?.length > 0 ? <div className="qty flex align-center my-4">
                     <div className="qty-text">Số lượng: </div>
                     <div className="qty-change flex align-center mx-3">
                       <button
@@ -423,7 +423,8 @@ const ProductSinglePage = () => {
                     ) : (
                       ''
                     )}
-                  </div>
+                  </div> : <div className='text-center fs-22 fw-6 text-orange'>Sản phẩm đang hết hàng</div>}
+
                   <div className="btns">
                     <button className="add-to-cart-btn btn" onClick={() => handleAddToCart()} type="button">
                       <FaCartPlus size={24} className='icon' />

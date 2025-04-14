@@ -10,6 +10,8 @@ import axios from '../../config/axios';
 import _ from "lodash"
 import Loader from '../Loader/Loader';
 import { Buffer } from 'buffer';
+import ModalCancelOrder from './ModalCancelOrder';
+import { toast } from 'react-toastify';
 
 const PurchaseOrder = () => {
     const location = useLocation();
@@ -20,6 +22,8 @@ const PurchaseOrder = () => {
 
     const [orderList, setOrderList] = useState([])
     const [isLoadingOrderList, setIsLoadingOrderList] = useState(false)
+    const [dataCancelOrder, setDataCancelOrder] = useState({})
+    const [isShowModalCancel, setIsShowModalCancel] = useState(false)
 
     // convert lại data trả về (chuyển ảnh từ buffer sang base64)
     const convertOrdersImageToBase64 = (orders) => {
@@ -70,6 +74,38 @@ const PurchaseOrder = () => {
         fetchAllOrderList(userId, type)
     }, [user, type])
 
+    const handleShowModalCancel = async (data) => {
+        setDataCancelOrder(data)
+        setIsShowModalCancel(true)
+    };
+
+    // hàm đóng modal hủy 
+    const handleCloseModalCancel = () => {
+        setIsShowModalCancel(false);
+        setDataCancelOrder({})
+    }
+
+    const confirmCancelOrder = async () => {
+        let data = {
+            userId: dataCancelOrder?.FK_iKhachHangID,
+            orderId: dataCancelOrder?.PK_iDonMuaHangID,
+            orderStatus: "Đã hủy",
+        }
+        try {
+            let response = await axios.put('/api/v1/order/cancel-order', data)
+            if (response?.errorCode === 0) {
+                toast.success("Đơn hàng của bạn đã được hủy!")
+                await fetchAllOrderList(data?.userId, "all")
+                setIsShowModalCancel(false);
+            } else {
+                toast.error("Đã xảy ra lỗi!")
+            }
+        } catch (error) {
+            console.error("Lỗi khi hủy đơn hàng!", error);
+            toast.error("Đã xảy ra lỗi!")
+        }
+    }
+
     return (
         <div className='container container-purchase'>
             <section className='purchase-header'>
@@ -87,7 +123,7 @@ const PurchaseOrder = () => {
                             <div key={`purchase-item-${i}-key`} className='purchase-item'>
                                 <div className='purchase-item-info'>
                                     <div className='info-header'>
-                                        <span>Mã đơn hàng: #1111{item?.PK_iDonMuaHangID}</span>
+                                        <span>{`Mã đơn hàng: #1111${item?.PK_iDonMuaHangID} (${item?.sPhuongThucThanhToan === "COD" ? "Thanh toán khi nhận hàng" : "Thanh toán Online"})`}</span>
                                         <div className='more-info'>
                                             {(item?.sTrangThaiDonHang === "Giao hàng thành công" || item?.sTrangThaiDonHang === "Đang giao hàng") && <span className='info-1'><FaTruckFast />{item?.sTrangThaiDonHang}</span>}
                                             <span className='info-2'>{item?.sTrangThaiDonHang === "Giao hàng thành công" ? "Hoàn thành" : item?.sTrangThaiDonHang}</span>
@@ -116,7 +152,10 @@ const PurchaseOrder = () => {
                                         ))}
                                     </div>
                                 </div>
-                                <div className='purchase-item-price'>
+                                <div className={`purchase-item-footer ${item?.sPhuongThucThanhToan === "COD" && item?.sTrangThaiDonHang === "Chờ xác nhận" ? "flex align-center justify-between" : ""} `}>
+                                    {item?.sPhuongThucThanhToan === "COD" && item?.sTrangThaiDonHang === "Chờ xác nhận" && <div className='box-cancel'>
+                                        <button onClick={() => handleShowModalCancel(item)} className='btn-cancel'>Hủy đơn hàng</button>
+                                    </div>}
                                     <div className='box-price'>
                                         <label>Thành tiền: </label>
                                         <span>{item?.fTongTien?.toLocaleString("vi-VN")} đ</span>
@@ -131,6 +170,12 @@ const PurchaseOrder = () => {
                     )
                 }
             </main>
+            <ModalCancelOrder
+                show={isShowModalCancel}
+                orderId={dataCancelOrder?.PK_iDonMuaHangID}
+                handleCloseModalCancel={handleCloseModalCancel}
+                confirmCancelOrder={confirmCancelOrder}
+            />
         </div>
     )
 }

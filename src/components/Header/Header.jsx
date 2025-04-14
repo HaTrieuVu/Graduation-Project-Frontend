@@ -49,8 +49,6 @@ const Header = () => {
         fetchUserInfo(id)
     }, [user])
 
-    console.log(avatar)
-
     return (
         <div className="header text-white">
             <div className="container">

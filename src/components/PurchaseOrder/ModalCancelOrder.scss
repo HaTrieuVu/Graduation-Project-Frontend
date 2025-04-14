@@ -1,0 +1,27 @@
+.custom-modal-cancel-order {
+    .modal-dialog {
+        max-width: 500px; /* Định kích thước modal */
+        height: 250px;
+        margin-top: 100px;
+        .modal-content {
+            height: 100%;
+            .custom-modal-cancel-order-header {
+                .modal-title {
+                    font-size: 25px;
+                }
+            }
+            .custom-modal-cancel-order-body {
+                font-size: 20px;
+                .red {
+                    color: red;
+                }
+            }
+            .custom-modal-cancel-order-footer {
+                button {
+                    font-size: 20px;
+                    width: 120px;
+                }
+            }
+        }
+    }
+}
