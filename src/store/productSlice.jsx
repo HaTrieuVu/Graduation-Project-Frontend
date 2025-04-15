@@ -10,12 +10,17 @@ const initialState = {
     productsStatus: STATUS.IDLE,
     productSingle: [],
     productSingleStatus: STATUS.IDLE,
+    valueFilterProduct: "all"
 };
 
 const productSlice = createSlice({
     name: 'product',
     initialState,
-    reducers: {},
+    reducers: {
+        setValueFilterProduct: (state, action) => {
+            state.valueFilterProduct = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchAsyncProducts.pending, (state) => {
@@ -80,4 +85,5 @@ export const getAllProductsStatus = (state) => state.product.productsStatus;
 
 export const getProductSingle = (state) => state.product.productSingle;
 export const getSingleProductStatus = (state) => state.product.productSingleStatus;
+export const { setValueFilterProduct } = productSlice.actions;
 export default productSlice.reducer;

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import HeaderSlider from '../../components/HeaderSlider/HeaderSlider'
 import "./HomePage.scss"
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProducts, getAllProductsStatus, fetchAsyncProducts } from '../../store/productSlice';
+import { getAllProducts, getAllProductsStatus, fetchAsyncProducts, setValueFilterProduct } from '../../store/productSlice';
 import { STATUS } from '../../utils/status';
 import ReactPaginate from 'react-paginate';
 import ProductList from '../../components/ProductList/ProductList';
@@ -42,7 +42,7 @@ const HomePage = () => {
 
   const handleClickFilter = (value) => {
     setValueFilter(value)
-    console.log(value)
+    dispatch(setValueFilterProduct(value))
   }
 
   return (

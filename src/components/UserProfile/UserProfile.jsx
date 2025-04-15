@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 
 import "./UserProfile.scss"
-import avatar from "../../assets/user.png"
+import avatarIcon from "../../assets/user.png"
 import axios from '../../config/axios';
 import _ from "lodash";
 import Loader from '../Loader/Loader';
@@ -225,7 +225,13 @@ const UserProfile = () => {
                 </div>
                 <div className='box-image'>
                     <div className='image-main'>
-                        <img src={(dataAvatar?.previewAvatar !== "" || dataAvatar?.avatar !== "") ? (dataAvatar?.previewAvatar || dataAvatar?.avatar) : avatar} className='avatar' alt="" />
+                        <img
+                            src={
+                                dataAvatar?.previewAvatar || dataAvatar?.avatar || avatarIcon
+                            }
+                            className="avatar"
+                            alt="Avatar"
+                        />
                         <label className='label-img' htmlFor="srcAvatar">Chọn ảnh</label>
                         <input onChange={(e) => handleOnChangeAvatar(e)} className='input-img' type="file" name="" id="srcAvatar" />
                         <span className='info-img'>Dung lượng file tối đa</span>

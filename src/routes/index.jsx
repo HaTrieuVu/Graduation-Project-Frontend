@@ -28,6 +28,7 @@ import UserPage from "../pages/UserPage/UserPage";
 import PurchaseOrder from "../components/PurchaseOrder/PurchaseOrder";
 import UserProfile from "../components/UserProfile/UserProfile";
 import ChangePassword from "../components/ChangePassword/ChangePassword";
+import FeedbackPage from "../pages/FeedbackPage/FeedbackPage";
 
 
 const router = createBrowserRouter([
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
             {
                 path: "/cart",
                 element: <CartPage />
+            },
+            {
+                path: "/user/feedback",
+                element: <FeedbackPage />
             },
             {
                 path: "/search/:keywordSearch",

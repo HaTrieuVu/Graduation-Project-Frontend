@@ -59,14 +59,14 @@ const Header = () => {
                         <div className="header-cnt-top-l">
                             <ul className="flex fs-20 top-links align-center">
                                 <li className="box-follow">
-                                    <a href="www.facebook.com" className="fs-15">
-                                        <span className="">Follow Us</span>
+                                    <a href="www.facebook.com" className="fs-20">
+                                        <span className="">Theo dõi</span>
                                         <FaFacebook size={20} />
                                     </a>
                                 </li>
                                 <li className="vert-line"></li>
                                 <li className='box-support'>
-                                    <Link to="/" className="top-link-itm">
+                                    <Link to="/user/feedback" className="top-link-itm">
                                         <span className="top-link-itm-ico mx-2 fs-24">
                                             <MdOutlineSupportAgent />
                                         </span>

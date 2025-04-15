@@ -48,12 +48,12 @@ const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
                     </button>
                     {isOpenUser && (
                         <ul className="dropdown-content">
-                            <li >
+                            <li>
                                 <Link to={"/admin/manage-customer"}>
                                     <BsPeopleFill className='icon' /> QL Khách hàng
                                 </Link>
                             </li>
-                            <li >
+                            <li>
                                 <Link to={"/admin/manage-employee"}>
                                     <BsPeopleFill className='icon' /> QL Nhân viên
                                 </Link>

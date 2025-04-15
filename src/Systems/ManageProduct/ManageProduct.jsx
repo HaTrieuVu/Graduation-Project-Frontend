@@ -17,7 +17,7 @@ const ManageProduct = () => {
     const [keywordSearch, setKeywordSearch] = useState("")
 
     const [currentPage, setCurrentPage] = useState(1);
-    const currentLimit = 5
+    const currentLimit = 10
     const [totalPage, setTotalPage] = useState(0)
 
     const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa sản phẩm
