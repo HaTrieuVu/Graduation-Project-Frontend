@@ -1,0 +1,61 @@
+@import '../../App.scss';
+
+.custom-modal-search {
+    .modal-content {
+        height: 25%;
+        width: 90%;
+        margin: auto;
+    }
+    .custom-modal-search-body {
+        display: flex;
+        .navbar-collapse-body {
+            margin: auto;
+            width: 100%;
+            .navbar-search {
+                background-color: white;
+                padding: 4px;
+                overflow: hidden;
+                border-radius: 20px;
+                border: 1px solid $clr-gray;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+                .form-control {
+                    width: 100%;
+                    border: none;
+                    font-size: 16px;
+                    padding: 8px 16px;
+                    color: rgba(0, 0, 0, 0.8);
+                    caret-color: $clr-orange;
+                    &::placeholder {
+                        font-size: 16px;
+                        font-family: $font-family-manrope;
+                        letter-spacing: 0.5px;
+                    }
+                    &:focus {
+                        box-shadow: none;
+                    }
+                }
+                .search-btn {
+                    background-color: $clr-orange-light;
+                    width: 85px;
+                    height: 40px;
+                    margin-right: 18px;
+                    border-radius: 5px;
+                }
+            }
+            .navbar-nav {
+                margin-left: 32px;
+                margin-top: 8px;
+                .nav-item {
+                    margin-right: 16px;
+                    .nav-link {
+                        transition: $transition-ease;
+                        &:hover {
+                            opacity: 0.7;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

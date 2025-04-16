@@ -13,8 +13,8 @@ import { FiSearch } from "react-icons/fi";
 
 import logo from "../../assets/logo.png"
 
-
 import './Navbar.scss';
+import ModalSearchMobile from './ModalSearchMobile';
 
 
 const Navbar = () => {
@@ -22,6 +22,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const [searchTerm, setSearchTerm] = useState('');
+    const [isShowModalSearch, setIsShowModalSearch] = useState(false)
 
     const user = useSelector(state => state.userInfo.user);
 
@@ -36,7 +37,6 @@ const Navbar = () => {
                 cartId: user?.cartId,
             }));
         }
-
     }, [user])
 
     useEffect(() => {
@@ -53,6 +53,10 @@ const Navbar = () => {
             navigate(`search/${searchTerm}`);
         }
     };
+
+    const handShowSearch = () => {
+        setIsShowModalSearch(true)
+    }
 
     return (
         <nav className="navbar-container">
@@ -90,11 +94,17 @@ const Navbar = () => {
                             </Link>
                         </div>
                     </div>
-
-
                 </div>
 
                 <div className="navbar-cart flex align-center">
+                    <div className='navbar-search-icon' onClick={() => handShowSearch()}>
+                        <div
+                            to={`search/${searchTerm}`}
+                            className="search-btn text-white flex align-center justify-center"
+                        >
+                            <FiSearch size={24} />
+                        </div>
+                    </div>
                     <div className="cart-btn">
                         <Link to="/cart">
                             <FaCartPlus />
@@ -103,8 +113,12 @@ const Navbar = () => {
                         <CartModal carts={carts?.cartDetails} />
                     </div>
                 </div>
+
+
             </div>
+            <ModalSearchMobile show={isShowModalSearch} setIsShowModalSearch={setIsShowModalSearch} />
         </nav>
+
     );
 };
 

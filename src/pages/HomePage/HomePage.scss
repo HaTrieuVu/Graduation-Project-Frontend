@@ -52,9 +52,10 @@
 
     .product-footer {
         margin: auto;
-        width: 33%;
+        width: 90vw;
         margin-bottom: 50px;
         .pagination {
+            justify-content: center;
             .page-item {
                 &.active {
                     .page-link {
@@ -66,27 +67,6 @@
                     padding: 10px 20px;
                 }
             }
-        }
-    }
-
-    @media screen and (max-width: 992px) {
-        // từ 768 -> 992
-        .product-footer {
-            width: 42%;
-        }
-    }
-
-    @media screen and (max-width: 768px) {
-        // từ 576 -> 768
-        .product-footer {
-            width: 60%;
-        }
-    }
-
-    @media screen and (max-width: 576px) {
-        // nhỏ hơn 576
-        .product-footer {
-            width: 92%;
         }
     }
 }
