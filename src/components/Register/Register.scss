@@ -1,18 +1,55 @@
 @import '../../App.scss';
 
-.account-pages {
-    height: 800px;
+.account-pages-register {
+    height: 610px;
     margin-bottom: 20px;
 
-    .title {
-        color: $clr-orange-light;
-        font-size: 35px;
-        font-weight: 600;
+    @media screen and (max-width: 576px) {
+        margin: 20px 0 0 0;
+        height: 700px;
     }
 
-    .btn-register {
-        background-color: $clr-orange-light;
-        color: white;
-        font-size: 20px;
+    @media screen and (max-width: 992px) {
+        height: 750px;
+    }
+
+    @media screen and (max-width: 768px) {
+        // từ 576 -> 768
+        height: 750px;
+    }
+
+    .title-box {
+        .title {
+            color: $clr-orange-light;
+            font-size: 35px;
+            font-weight: 600;
+        }
+
+        @media screen and (max-width: 576px) {
+            margin: 0 !important;
+        }
+    }
+
+    .box-btn {
+        .btn-register {
+            background-color: $clr-orange-light;
+            color: white;
+            font-size: 20px;
+        }
+
+        @media screen and (max-width: 576px) {
+            margin: 10px auto !important;
+        }
+    }
+
+    .input-group {
+        @media screen and (max-width: 576px) {
+            span {
+                font-size: 18px;
+            }
+            input {
+                font-size: 18px;
+            }
+        }
     }
 }

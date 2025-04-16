@@ -85,11 +85,11 @@ const Register = () => {
 
 
   return (
-    <div className="account-pages pt-sm-5">
+    <div className="account-pages-register pt-sm-5">
       <div className="container">
         <div className="row col-12 justify-content-center">
           <div className="col-md-8 col-lg-10 col-xl-12">
-            <div className="text-center mb-5">
+            <div className="text-center mb-5 title-box">
               <h4 className="title">Đăng ký</h4>
             </div>
 
@@ -192,7 +192,7 @@ const Register = () => {
                       </div>
                     </div>
 
-                    <div className="row col-6 mx-auto mt-5">
+                    <div className="row col-6 mx-auto mt-5 box-btn">
                       <button className="btn btn-register" onClick={() => handleRegister()}>
                         Đăng ký!
                       </button>

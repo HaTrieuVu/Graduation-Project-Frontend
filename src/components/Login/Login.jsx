@@ -94,7 +94,7 @@ const Login = () => {
                         />
                       </div>
 
-                      <div className="float-end">
+                      <div className="float-end box-forget-password">
                         <Link to={"/"} className="text-muted font-size-13">
                           Quên mật khẩu?
                         </Link>
@@ -104,7 +104,7 @@ const Login = () => {
                     <div className="form-check mb-5">
                       <input type="checkbox" className="form-check-input" id="remember-check" />
                       <label className="form-check-label" >
-                        Remember me
+                        Nhớ mật khẩu
                       </label>
                     </div>
 

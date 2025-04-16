@@ -41,49 +41,55 @@
             }
 
             .header-cnt-top-r {
-                .box-notify {
-                    display: flex;
-                    position: relative;
-                    a {
-                        &:hover {
-                            color: white;
-                        }
+                .top-links {
+                    @media screen and (max-width: 576px) {
+                        font-size: 15px;
+                        padding: 0;
                     }
-
-                    .icon-notify {
+                    .box-notify {
+                        display: flex;
                         position: relative;
-
-                        .icon-notify-value {
-                            position: absolute;
-                            top: -2px;
-                            right: -4px;
-                            border: 0.5px solid rgb(214, 214, 214);
-                            background-color: $clr-white;
-                            font-size: 12px;
-                            font-weight: 500;
-                            color: $clr-orange;
-                            padding: 0 0.5rem;
-                            width: 20px;
-                            border-radius: 50%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
+                        a {
+                            &:hover {
+                                color: white;
+                            }
                         }
-                    }
 
-                    &::before {
-                        content: '';
-                        position: absolute;
-                        width: 150px;
-                        height: 30px;
-                        background-color: transparent;
-                        top: 20px;
-                    }
+                        .icon-notify {
+                            position: relative;
 
-                    &:hover {
-                        .notification-modal {
-                            opacity: 1;
-                            visibility: visible;
+                            .icon-notify-value {
+                                position: absolute;
+                                top: -2px;
+                                right: -4px;
+                                border: 0.5px solid rgb(214, 214, 214);
+                                background-color: $clr-white;
+                                font-size: 12px;
+                                font-weight: 500;
+                                color: $clr-orange;
+                                padding: 0 0.5rem;
+                                width: 20px;
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                        }
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            width: 150px;
+                            height: 30px;
+                            background-color: transparent;
+                            top: 20px;
+                        }
+
+                        &:hover {
+                            .notification-modal {
+                                opacity: 1;
+                                visibility: visible;
+                            }
                         }
                     }
                 }
