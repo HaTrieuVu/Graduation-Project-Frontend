@@ -106,6 +106,13 @@ const CartPage = () => {
           cartId: user?.cartId,
         }));
       }
+    } else {
+      if (user && user?.userId && user?.cartId) {
+        dispatch(fetchAsyncCarts({
+          userId: user?.userId,
+          cartId: user?.cartId,
+        }));
+      }
     }
   }
 
@@ -118,7 +125,6 @@ const CartPage = () => {
     }
 
     const response = await axios.post("/api/v1/cart/remove-produt-from-cart", dataRemoveCart)
-
     if (response?.errorCode === 0) {
       if (user && user?.userId && user?.cartId) {
         dispatch(fetchAsyncCarts({
@@ -142,7 +148,7 @@ const CartPage = () => {
   };
 
   // hàm mua hàng
-  const handleBuyProduct = () => {
+  const handleBuyProduct = async () => {
     if (selectedProducts?.length > 0) {
       let dataProduct = selectedProducts?.map((item) => {
         return {
@@ -165,8 +171,15 @@ const CartPage = () => {
         orderDetails: dataProduct
       }
 
-      setDataOrder(dataBuyProduct)
-      setIsShowModalOrder(true)
+      const resCheckStock = await axios.post("/api/v1/order/check-stock", { orderDetails: dataBuyProduct.orderDetails })
+
+      if (resCheckStock?.errorCode !== 0) {
+        toast.error(resCheckStock?.errorMessage)
+      } else {
+        setDataOrder(dataBuyProduct)
+        setIsShowModalOrder(true)
+      }
+
     } else {
       toast.info("Hãy chọn sản phẩm cần mua!")
     }
