@@ -219,9 +219,6 @@ const UserProfile = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='btn-save'>
-                        <button onClick={() => handleSaveChangeProfile()}>Lưu thay đổi</button>
-                    </div>
                 </div>
                 <div className='box-image'>
                     <div className='image-main'>
@@ -238,7 +235,9 @@ const UserProfile = () => {
                     </div>
                 </div>
             </div>}
-
+            <div className='btn-save'>
+                <button onClick={() => handleSaveChangeProfile()}>Lưu thay đổi</button>
+            </div>
 
         </div>
     )

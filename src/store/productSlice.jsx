@@ -10,7 +10,8 @@ const initialState = {
     productsStatus: STATUS.IDLE,
     productSingle: [],
     productSingleStatus: STATUS.IDLE,
-    valueFilterProduct: "all"
+    valueFilterProduct: "all",
+
 };
 
 const productSlice = createSlice({

@@ -1,11 +1,28 @@
 @import '../../App.scss';
 .container-profile {
     background-color: white;
-    padding: 0 130px;
+    padding: 10px 130px;
+
+    @media screen and (max-width: 576px) {
+        padding: 1px;
+    }
+
+    @media screen and (max-width: 992px) {
+        padding: 10px 20px;
+    }
+
+    @media screen and (max-width: 768px) {
+        // từ 576 -> 768
+        padding: 10px;
+    }
 
     .profile-header {
         padding: 18px 0;
         border-bottom: 1px solid #efefef;
+
+        @media screen and (max-width: 576px) {
+            text-align: center;
+        }
 
         span {
             color: #555;
@@ -19,6 +36,7 @@
         .box-profile {
             flex: 1;
             padding-right: 50px;
+
             .main-profile {
                 .form-group {
                     input,
@@ -45,25 +63,11 @@
                     }
                 }
             }
-
-            .btn-save {
-                display: flex;
-                justify-content: center;
-
-                button {
-                    padding: 10px 15px;
-                    background-color: $clr-light-orange;
-                    color: white;
-                    border-radius: 10px;
-                    font-size: 14px;
-                }
-            }
         }
         .box-image {
             border-left: 1px solid #efefef;
             overflow: hidden;
             width: 280px;
-
             .image-main {
                 display: flex;
                 align-items: center;
@@ -100,5 +104,39 @@
                 }
             }
         }
+    }
+
+    .btn-save {
+        display: flex;
+        justify-content: center;
+        margin: 15px 0;
+        button {
+            padding: 10px 15px;
+            background-color: $clr-light-orange;
+            color: white;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .profile-body {
+        display: block; /* hoặc giữ flex và thay đổi direction */
+        display: flex;
+        flex-direction: column; /* đổi hướng xếp từ trên xuống */
+    }
+
+    .box-image {
+        width: 100% !important;
+        order: -1; /* đưa lên trước */
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgb(88, 88, 88);
+    }
+
+    .box-profile {
+        padding: 15px !important;
+        order: 0;
     }
 }
