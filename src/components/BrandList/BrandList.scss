@@ -6,7 +6,8 @@
     @media screen and (max-width: 576px) {
         // nhỏ hơn 576
         padding: 0;
-        gap: 10px;
+        display: flex;
+        justify-content: space-around;
     }
 
     .list-brand_item {
@@ -22,7 +23,7 @@
 
         @media screen and (max-width: 576px) {
             // nhỏ hơn 576
-            margin: 0 15px 10px 0;
+            margin: 15px 0 0 0 !important;
         }
 
         &:hover {

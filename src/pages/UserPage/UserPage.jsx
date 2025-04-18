@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 const UserPage = () => {
     return (
         <div className='bg-whitesmoke'>
-            <div className='container py-4'>
+            <div className='container container-user py-4'>
                 <Outlet />
             </div>
         </div>

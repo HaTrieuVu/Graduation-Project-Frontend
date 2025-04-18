@@ -16,6 +16,10 @@
         width: 100%;
         z-index: 10;
 
+        @media screen and (max-width: 576px) {
+            padding: 10px 0;
+        }
+
         .item-header {
             align-items: center;
             background: #fff;
@@ -59,12 +63,21 @@
             .purchase-item-info {
                 padding: 12px 24px;
 
+                @media screen and (max-width: 576px) {
+                    padding: 5px 15px !important;
+                }
+
                 .info-header {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
                     border-bottom: 1px solid rgba(0, 0, 0, 0.09);
                     padding: 10px 0;
+
+                    @media screen and (max-width: 768px) {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
                     span {
                         color: rgb(80, 80, 80);
                     }
@@ -72,6 +85,11 @@
                         align-items: center;
                         display: flex;
                         justify-content: flex-end;
+
+                        @media screen and (max-width: 768px) {
+                            justify-content: flex-start !important;
+                            margin-top: 10px;
+                        }
                         .info-1 {
                             align-items: center;
                             border-right: 1px solid rgba(0, 0, 0, 0.12);
@@ -80,8 +98,12 @@
                             padding: 0 5px 0 0;
                             text-align: right;
                             color: #26aa99;
-                            font-size: 14px;
+                            font-size: 16px;
                             gap: 5px;
+
+                            @media screen and (max-width: 768px) {
+                                font-size: 14px;
+                            }
                         }
 
                         .info-2 {
@@ -102,6 +124,12 @@
                         display: flex;
                         padding: 12px 0;
                         border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+
+                        @media screen and (max-width: 576px) {
+                            flex-direction: column;
+                            align-items: flex-start;
+                        }
+
                         .item-left {
                             display: flex;
                             margin-right: 10px;
@@ -142,9 +170,10 @@
                             }
                         }
                         .item-right {
-                            // display: flex;
-                            // flex-direction: column;
                             min-width: 100px;
+                            @media screen and (max-width: 576px) {
+                                margin-left: 90px;
+                            }
                             .price-old {
                                 color: #000;
                                 margin: 0 4px 0 0;
@@ -153,14 +182,21 @@
                                 -webkit-text-decoration-line: line-through;
                                 text-decoration-line: line-through;
                                 text-overflow: ellipsis;
-                                font-size: 12px;
+                                font-size: 14px;
+
+                                @media screen and (max-width: 576px) {
+                                    font-size: 13px;
+                                }
                             }
                             .price-new {
-                                font-size: 14px;
+                                font-size: 18px;
                                 font-weight: 600;
                                 line-height: 16px;
                                 vertical-align: middle;
                                 color: #ee4d2d;
+                                @media screen and (max-width: 576px) {
+                                    font-size: 15px;
+                                }
                             }
                         }
                     }

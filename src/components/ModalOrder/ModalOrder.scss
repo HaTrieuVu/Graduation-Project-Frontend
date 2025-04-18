@@ -7,6 +7,15 @@
         // height: 750px;
         .modal-content {
             height: 80%;
+            margin-top: 50px;
+
+            @media screen and (max-width: 992px) {
+                height: 55%;
+            }
+
+            @media screen and (max-width: 576px) {
+                height: 80%;
+            }
             .custom-modal-order-header {
                 .modal-title {
                     font-size: 25px;
@@ -38,6 +47,8 @@
                         align-items: center !important;
                         font-size: 16px;
                         margin-bottom: 10px;
+                        min-width: 600px;
+                        overflow-y: scroll;
 
                         .order-cth,
                         .order-ctd {
@@ -70,11 +81,16 @@
                 .payment {
                     margin-top: 30px;
                     padding: 0 20px;
+
                     select {
                         margin-left: 50px;
                         border: 1px solid #0000008a;
-                        font-size: 14px;
+                        font-size: 16px;
                         padding: 5px 5px;
+
+                        @media screen and (max-width: 576px) {
+                            margin: 5px 0 5px 0 !important;
+                        }
                     }
                 }
 
@@ -95,13 +111,23 @@
                     padding: 0 150px;
                     margin-top: 20px;
 
+                    @media screen and (max-width: 576px) {
+                        padding: 0 40px;
+                        margin-top: 25px;
+                    }
+
                     .box-img {
                         display: flex;
                         justify-content: space-between;
+                        width: 100%;
+                        @media screen and (max-width: 576px) {
+                            gap: 15px;
+                        }
                         .box-img-payment {
                             width: 100px;
                             height: 100px;
-
+                            min-width: 40px;
+                            min-height: 40px;
                             &.active {
                                 border: 1px solid $clr-orange;
                             }

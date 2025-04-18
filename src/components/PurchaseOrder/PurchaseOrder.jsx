@@ -107,7 +107,7 @@ const PurchaseOrder = () => {
     }
 
     return (
-        <div className='container container-purchase'>
+        <div className='container-purchase'>
             <section className='purchase-header'>
                 <Link className={`item-header ${type === "all" ? "selected" : ""}`} to="/user/purchase?type=all">Tất cả</Link>
                 <Link className={`item-header ${type === "1" ? "selected" : ""}`} to="/user/purchase?type=1">Chờ xác nhận</Link>

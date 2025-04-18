@@ -152,7 +152,7 @@ const ChangePassword = () => {
                                                     value={dataPassword.confirmPasswordNew}
                                                     onChange={(e) => handleChangeInputPassword("confirmPasswordNew", e.target.value)}
                                                     className="form-control fs-22"
-                                                    placeholder="Xác nhận mật khẩu mới"
+                                                    placeholder="Xác nhận mật khẩu "
                                                 />
                                                 {!isShowPassword?.isShowConfirmPasswordNew ?
                                                     <FaEye className='btn-eye' onClick={() => handleSetShowPassword("isShowConfirmPasswordNew")} size={20} /> :
@@ -178,9 +178,9 @@ const ChangePassword = () => {
 
                         <div className="mt-5 text-center">
                             <p>
-                                Bạn chưa có tài khoản?
-                                <Link className="mx-2 text-primary" to={'/register'}>
-                                    Đăng ký ngay!
+                                Đã có tài khoản,
+                                <Link className="mx-2 text-primary" to={'/'}>
+                                    Quên mật khẩu!
                                 </Link>{' '}
                             </p>
                         </div>

@@ -699,6 +699,9 @@
 @media screen and (max-width: 576px) {
     // nhỏ hơn = 576
     .product-single {
+        .container {
+            padding: 10px 10px !important;
+        }
         .product-single-content {
             .product-single-l {
                 .product-img {
