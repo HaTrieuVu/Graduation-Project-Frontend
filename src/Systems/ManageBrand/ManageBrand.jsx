@@ -47,7 +47,7 @@ const ManageBrand = () => {
     };
 
     // hàm xác nhận xóa brand
-    const confirmDeleteUser = async () => {
+    const confirmDelete = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-brand/delete", { data: { id: dataModal?.PK_iNhanHangID } });
             if (response?.errorCode === 0) {
@@ -175,7 +175,7 @@ const ManageBrand = () => {
                 title={"nhãn hàng"}
                 name={dataModal.sTenNhanHang}
                 handleCloseModalDelete={handleCloseModalDelete}
-                confirmDeleteUser={confirmDeleteUser}
+                confirmDelete={confirmDelete}
             />
             <ModalBrand
                 show={isShowModel}

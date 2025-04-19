@@ -51,7 +51,7 @@ const ManageCustomer = () => {
     };
 
     // hàm xác nhận xóa user
-    const confirmDeleteUser = async () => {
+    const confirmDelete = async () => {
         try {
             let response = await axios.delete("/api/v1/user/delete", { data: { id: dataModal?.PK_iKhachHangID } });
             if (response?.errorCode === 0) {
@@ -197,7 +197,7 @@ const ManageCustomer = () => {
                 title={"nguời dùng"}
                 name={dataModal.sHoTen}
                 handleCloseModalDelete={handleCloseModalDelete}
-                confirmDeleteUser={confirmDeleteUser}
+                confirmDelete={confirmDelete}
             />
             <ModalUser
                 show={isShowModel}

@@ -84,9 +84,12 @@
     }
 
     .promotion-footer {
-        margin: auto;
-        width: 42%;
+        margin: 30px auto auto auto;
+        @media screen and (max-width: 1545px) {
+            width: 90vw;
+        }
         .pagination {
+            justify-content: center;
             .page-item {
                 &.active {
                     .page-link {

@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 
 import "./ModalDelete.scss"
 
-const ModalDelete = ({ show, title, name, handleCloseModalDelete, confirmDeleteUser }) => {
+const ModalDelete = ({ show, title, name, handleCloseModalDelete, confirmDelete }) => {
   return (
     <div className='modal-delete'>
       <Modal show={show} fullscreen="xl-down" centered={true} onHide={handleCloseModalDelete} className="custom-modal-delete">
@@ -15,7 +15,7 @@ const ModalDelete = ({ show, title, name, handleCloseModalDelete, confirmDeleteU
           <Button variant="secondary" onClick={handleCloseModalDelete}>
             Hủy!
           </Button>
-          <Button variant="primary" onClick={confirmDeleteUser}>
+          <Button variant="primary" onClick={confirmDelete}>
             Xác nhận!
           </Button>
         </Modal.Footer>

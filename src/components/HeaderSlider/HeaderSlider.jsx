@@ -9,6 +9,7 @@ import bannerMain1 from "../../assets/banner-main-1.webp"
 import bannerMain2 from "../../assets/banner-main-2.webp"
 import bannerMain3 from "../../assets/banner-main-3.webp"
 import bannerMain4 from "../../assets/banner-main-4.webp"
+import bannerMain5 from "../../assets/banner_main_6.png"
 import banner1 from "../../assets/banner-1.webp"
 import banner2 from "../../assets/banner-2.webp"
 
@@ -40,6 +41,9 @@ const HeaderSlider = () => {
                         </div>
                         <div className="slider-item">
                             <img src={bannerMain4} alt="slider-img" />
+                        </div>
+                        <div className="slider-item">
+                            <img src={bannerMain5} alt="slider-img" />
                         </div>
                     </Slider>
                 </div>

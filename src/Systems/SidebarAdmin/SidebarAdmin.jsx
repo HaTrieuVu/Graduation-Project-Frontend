@@ -8,7 +8,7 @@ import {
     from 'react-icons/bs'
 import { AiOutlineProduct } from "react-icons/ai";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { MdWarehouse, MdDiscount } from "react-icons/md";
+import { MdWarehouse, MdDiscount, MdSettingsInputComponent } from "react-icons/md";
 import { TbBrand4Chan } from "react-icons/tb";
 import { RiImageAiFill, RiBillFill } from "react-icons/ri";
 import { FcOvertime } from "react-icons/fc";
@@ -85,6 +85,11 @@ const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
                             <li>
                                 <Link to="/admin/manage-product-image">
                                     <RiImageAiFill className='icon' />QL Hình ảnh
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/manage-product-parameters">
+                                    <MdSettingsInputComponent className='icon' />QL Thông số
                                 </Link>
                             </li>
                         </ul>

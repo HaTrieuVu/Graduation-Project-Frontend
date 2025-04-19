@@ -49,7 +49,7 @@ const ManageProduct = () => {
     };
 
     // hàm xác nhận xóa sản phẩm
-    const confirmDeleteUser = async () => {
+    const confirmDelete = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-product/delete", { data: { id: dataModal?.PK_iSanPhamID } });
             if (response?.errorCode === 0) {
@@ -197,7 +197,7 @@ const ManageProduct = () => {
                 title={"sản phẩm"}
                 name={dataModal.sTenSanPham}
                 handleCloseModalDelete={handleCloseModalDelete}
-                confirmDeleteUser={confirmDeleteUser}
+                confirmDelete={confirmDelete}
             />
             <ModalProduct
                 show={isShowModel}

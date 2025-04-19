@@ -47,7 +47,7 @@ const ManageCategory = () => {
     };
 
     // hàm xác nhận xóa category
-    const confirmDeleteUser = async () => {
+    const confirmDelete = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-category/delete", { data: { id: dataModal?.PK_iDanhMucID } });
             if (response?.errorCode === 0) {
@@ -168,7 +168,7 @@ const ManageCategory = () => {
                 title={"danh mục sản phẩm"}
                 name={dataModal.sTenDanhMuc}
                 handleCloseModalDelete={handleCloseModalDelete}
-                confirmDeleteUser={confirmDeleteUser}
+                confirmDelete={confirmDelete}
             />
             <ModalSupplier
                 show={isShowModel}

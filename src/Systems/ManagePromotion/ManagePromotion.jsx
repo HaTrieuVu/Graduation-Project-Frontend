@@ -75,7 +75,7 @@ const ManagePromotion = () => {
     console.log(dataModal)
 
     // hàm xác nhận xóa khuyến mãi
-    const confirmDeleteUser = async () => {
+    const confirmDelete = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-promotion/delete", { data: { id: dataModal?.PK_iKhuyenMaiID } });
             if (response?.errorCode === 0) {
@@ -207,7 +207,7 @@ const ManagePromotion = () => {
                 title={"khuyến mãi"}
                 name={`${dataModal?.product?.sTenSanPham} - ${dataModal?.fGiaTriKhuyenMai} %`}
                 handleCloseModalDelete={handleCloseModalDelete}
-                confirmDeleteUser={confirmDeleteUser}
+                confirmDelete={confirmDelete}
             />
             <ModalPromotion
                 show={isShowModel}

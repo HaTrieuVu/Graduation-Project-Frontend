@@ -71,7 +71,7 @@ const ManageProductImage = () => {
     };
 
     // hàm xác nhận xóa sản phẩm - hình ảnh
-    const confirmDeleteUser = async () => {
+    const confirmDelete = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-product-image/delete", { data: { id: dataModal?.PK_iHinhAnhID } });
             if (response?.errorCode === 0) {
@@ -208,7 +208,7 @@ const ManageProductImage = () => {
                 title={"sản phẩm - hình ảnh"}
                 name={dataModal?.product?.sTenSanPham}
                 handleCloseModalDelete={handleCloseModalDelete}
-                confirmDeleteUser={confirmDeleteUser}
+                confirmDelete={confirmDelete}
             />
             <ModalProductImage
                 show={isShowModel}

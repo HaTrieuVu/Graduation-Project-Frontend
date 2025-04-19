@@ -47,7 +47,7 @@ const ManageSupplier = () => {
     };
 
     // hàm xác nhận xóa supplier
-    const confirmDeleteUser = async () => {
+    const confirmDelete = async () => {
         try {
             let response = await axios.delete("/api/v1/manage-supplier/delete", { data: { id: dataModal?.PK_iNhaCungCapID } });
             if (response?.errorCode === 0) {
@@ -172,7 +172,7 @@ const ManageSupplier = () => {
                 title={"nguời dùng"}
                 name={dataModal.sTenNhaCungCap}
                 handleCloseModalDelete={handleCloseModalDelete}
-                confirmDeleteUser={confirmDeleteUser}
+                confirmDelete={confirmDelete}
             />
             <ModalSupplier
                 show={isShowModel}

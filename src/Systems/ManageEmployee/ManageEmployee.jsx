@@ -49,7 +49,7 @@ const ManageEmployee = () => {
     };
 
     // hàm xác nhận xóa employee
-    const confirmDeleteUser = async () => {
+    const confirmDelete = async () => {
         try {
             let response = await axios.delete("/api/v1/employee/delete", { data: { id: dataModal?.PK_iNhanVienID } });
             if (response?.errorCode === 0) {
@@ -176,7 +176,7 @@ const ManageEmployee = () => {
                 title={"nhân viên"}
                 name={dataModal.sHoTen}
                 handleCloseModalDelete={handleCloseModalDelete}
-                confirmDeleteUser={confirmDeleteUser}
+                confirmDelete={confirmDelete}
             />
             <ModalEmployee
                 show={isShowModel}

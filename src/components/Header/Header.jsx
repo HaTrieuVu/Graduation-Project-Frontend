@@ -59,7 +59,8 @@ const Header = () => {
                         <div className="header-cnt-top-l">
                             <ul className="flex fs-20 top-links align-center">
                                 <li className="box-follow">
-                                    <a href="www.facebook.com" className="fs-20">
+                                    <a href="https://web.facebook.com/TranHuymobile/?_rdc=1&_rdr#" target="_blank"
+                                        rel="noopener noreferrer" className="fs-20">
                                         <span className="">Theo dõi</span>
                                         <FaFacebook size={20} />
                                     </a>

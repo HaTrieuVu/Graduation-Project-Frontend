@@ -29,6 +29,7 @@ import PurchaseOrder from "../components/PurchaseOrder/PurchaseOrder";
 import UserProfile from "../components/UserProfile/UserProfile";
 import ChangePassword from "../components/ChangePassword/ChangePassword";
 import FeedbackPage from "../pages/FeedbackPage/FeedbackPage";
+import ManageProductParameters from "../Systems/ManageProductParameters/ManageProductParameters";
 
 
 const router = createBrowserRouter([
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
             {
                 path: "/admin/manage-product-image",
                 element: <ManageProductImage />
+            },
+            {
+                path: "/admin/manage-product-parameters",
+                element: <ManageProductParameters />
             },
             {
                 path: "/admin/manage-order",
