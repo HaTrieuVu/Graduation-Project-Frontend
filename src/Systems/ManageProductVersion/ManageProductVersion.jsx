@@ -156,6 +156,7 @@ const ManageProductVersion = () => {
                             <th scope="col">Tên sản phẩm</th>
                             <th scope="col">Màu sắc</th>
                             <th scope="col">Dung lượng</th>
+                            <th scope="col">Dung lượng khả dụng</th>
                             <th scope="col">Giá bán</th>
                             <th scope="col">Số lượng</th>
                             <th scope="col">Trạng thái</th>
@@ -172,6 +173,7 @@ const ManageProductVersion = () => {
                                         <td>{item?.productData?.sTenSanPham}</td>
                                         <td>{item?.productImages?.sMoTa}</td>
                                         <td>{item?.sDungLuong}</td>
+                                        <td>{item?.sDungLuongKhaDung}</td>
                                         <td>{item?.fGiaBan?.toLocaleString("vi-VN")} VNĐ</td>
                                         <td>{item?.iSoLuong}</td>
                                         <td>{item?.bTrangThai === true ? "Còn hàng" : "Hết hàng"}</td>

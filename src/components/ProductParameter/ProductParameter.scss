@@ -1,0 +1,111 @@
+@import '../../App.scss';
+
+.product-parameter-main {
+    background: white;
+    margin-top: 20px;
+    width: 70%;
+    border-radius: 12px;
+    padding: 15px;
+
+    /* Từ 0 đến 768px */
+    @media screen and (max-width: 768px) {
+        width: 100% !important;
+    }
+
+    /* Từ 769px đến 992px */
+    @media screen and (min-width: 769px) and (max-width: 992px) {
+        width: 80% !important;
+    }
+
+    /* Từ 993px đến 1200px */
+    @media screen and (min-width: 993px) and (max-width: 1200px) {
+        width: 80% !important;
+    }
+
+    .title-parameter {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #2a83e9;
+        font-weight: 600;
+        font-size: 22px;
+    }
+
+    .specification-item {
+        .box-specifi {
+            display: block;
+            overflow: hidden;
+            margin: 0 0 10px;
+
+            .item-specifi {
+                display: block;
+                overflow: hidden;
+                margin: 0 0 10px;
+                .title-specifi {
+                    display: block;
+                    overflow: hidden;
+                    background: #f2f4f7;
+                    padding: 15px 10px;
+                    color: $clr-gray;
+                    line-height: 20px;
+                    font-weight: 500;
+                    font-size: 18px;
+                    position: relative;
+                    border-radius: 8px;
+
+                    &::after {
+                        content: '';
+                        width: 8px;
+                        height: 8px;
+                        border-right: 2px solid #101828;
+                        border-bottom: 2px solid #101828;
+                        transform: rotate(45deg);
+                        position: absolute;
+                        right: 14px;
+                        top: 38%;
+                    }
+
+                    &.active {
+                        &::after {
+                            transform: rotate(-135deg);
+                            top: 48%;
+                        }
+                    }
+                }
+
+                .text-specifi {
+                    display: none;
+                    overflow: hidden;
+                    padding: 0;
+
+                    &.active {
+                        display: block;
+                    }
+
+                    .text-specifi-item {
+                        display: block;
+                        overflow: hidden;
+                        padding: 12px;
+                        border-bottom: 1px solid #eaecf0;
+
+                        aside {
+                            &:first-child {
+                                float: left;
+                                width: 200px;
+                                max-width: 30%;
+                                margin-right: 30px;
+                            }
+                            &:last-child {
+                                display: block;
+                                overflow: hidden;
+                                border-left: 1px solid #eaecf0;
+                                padding-left: 20px;
+                                color: #2a83e9;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

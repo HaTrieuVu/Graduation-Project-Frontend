@@ -15,6 +15,7 @@ import { Buffer } from 'buffer';
 import axios from '../../config/axios';
 import { fetchAsyncCarts } from '../../store/cartSlice';
 import ModalOrder from '../../components/ModalOrder/ModalOrder';
+import ProductParameter from '../../components/ProductParameter/ProductParameter';
 
 const ProductSinglePage = () => {
   const { id } = useParams();
@@ -41,8 +42,6 @@ const ProductSinglePage = () => {
   const [isShowModalOrder, setIsShowModalOrder] = useState(false)
 
   const discountPercentage = product?.promotion?.fGiaTriKhuyenMai //giá trị khuyến mãi của sp
-
-  console.log(product)
 
   useEffect(() => {
     // Chỉ kiểm tra khi Redux đã tải xong user
@@ -439,6 +438,7 @@ const ProductSinglePage = () => {
                 </div>
               </div>
             </div>
+            <ProductParameter dataProductParameters={product?.parameters} dataselectedVersion={selectedVersion} />
           </div>
         </div>
       )}

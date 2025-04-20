@@ -253,16 +253,6 @@ const ModalProductParameters = ({ action, show, handleCloseModal, dataModalProdu
                                 value={productParametersData.ram}
                             />
                         </div>
-                        {/* <div className="col-12 col-sm-4 mb-3 form-group">
-                            <label>
-                                Dung lượng khả dụng (<span className="red">*</span>)
-                            </label>
-                            <input
-                                className="form-control"
-                                onChange={(e) => handleOnchangeInput(e.target.value, 'availableCapacity')}
-                                value={productParametersData.availableCapacity}
-                            />
-                        </div> */}
                         <div className="col-12 col-sm-4 mb-3 form-group">
                             <label>
                                 Camera trước (<span className="red">*</span>)

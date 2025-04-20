@@ -15,6 +15,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
         productId: "",
         productImageId: "",
         capacity: "",
+        availableCapacity: "",
         price: "",
         quantity: "",
         status: "",
@@ -40,6 +41,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                 productId: "",
                 productImageId: "",
                 capacity: "",
+                availableCapacity: "",
                 price: "",
                 quantity: "",
                 status: "",
@@ -54,6 +56,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                 productId: dataModalProductVersion?.FK_iSanPhamID,
                 productImageId: dataModalProductVersion?.FK_iHinhAnhID,
                 capacity: dataModalProductVersion?.sDungLuong,
+                availableCapacity: dataModalProductVersion?.sDungLuongKhaDung,
                 price: dataModalProductVersion?.fGiaBan,
                 quantity: dataModalProductVersion?.iSoLuong,
                 status: dataModalProductVersion?.bTrangThai,
@@ -111,6 +114,10 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                 valueErr: 'Dung lượng',
             },
             {
+                key: 'availableCapacity',
+                valueErr: 'Dung lượng khả dụng',
+            },
+            {
                 key: 'price',
                 valueErr: 'Giá bán',
             },
@@ -156,8 +163,8 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                     id: "",
                     productId: "",
                     productImageId: "",
-
                     capacity: "",
+                    availableCapacity: "",
                     price: "",
                     quantity: "",
                     status: "",
@@ -214,6 +221,17 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                                 <option value="512GB">512GB</option>
                                 <option value="1TB">1TB</option>
                             </select>
+                        </div>
+
+                        <div className="col-12 col-sm-6 mb-3 form-group">
+                            <label>
+                                Dung lượng khả dụng (<span className="red">*</span>)
+                            </label>
+                            <input
+                                className="form-control"
+                                onChange={(e) => handleOnchangeInput(e.target.value, 'availableCapacity')}
+                                value={productVersionData.availableCapacity}
+                            />
                         </div>
 
                         <div className="col-12 col-sm-6 mb-3 form-group">
