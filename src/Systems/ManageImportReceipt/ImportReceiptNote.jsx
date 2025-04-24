@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import axios from '../../config/axios';
 import { toast } from 'react-toastify';
+import { FaPlusCircle } from "react-icons/fa";
+import { Link } from 'react-router-dom'
 
 import './ImportReceiptNote.scss';
 import { useSelector } from 'react-redux';
@@ -146,18 +148,23 @@ const ImportReceiptNote = ({ action, handleCloseImportNote, fetchAllImportReceip
                         {/* Nhà cung cấp */}
                         <div className='col-12 col-sm-6 mb-4 form-group'>
                             <label>Nhà cung cấp (<span className='red'>*</span>)</label>
-                            <select
-                                value={importReceiptData.supplierId || ""}
-                                onChange={(e) => setImportReceiptData({ ...importReceiptData, supplierId: e.target.value })}
-                                className='form-select'
-                            >
-                                <option value="">Chọn</option>
-                                {
-                                    listSupplier?.length > 0 && listSupplier.map((item) => (
-                                        <option key={`item-supplier-receipt-${item?.PK_iNhaCungCapID}`} value={item?.PK_iNhaCungCapID}>{item?.sTenNhaCungCap}</option>
-                                    ))
-                                }
-                            </select>
+                            <div className='flex'>
+                                <select
+                                    value={importReceiptData.supplierId || ""}
+                                    onChange={(e) => setImportReceiptData({ ...importReceiptData, supplierId: e.target.value })}
+                                    className='form-select'
+                                >
+                                    <option value="">Chọn</option>
+                                    {
+                                        listSupplier?.length > 0 && listSupplier.map((item) => (
+                                            <option key={`item-supplier-receipt-${item?.PK_iNhaCungCapID}`} value={item?.PK_iNhaCungCapID}>{item?.sTenNhaCungCap}</option>
+                                        ))
+                                    }
+                                </select>
+                                <Link to={"/admin/manage-supplier"} className='btn-add-supplier'>
+                                    <FaPlusCircle size={25} title='Thêm mới nhà cung cấp' />
+                                </Link>
+                            </div>
                         </div>
 
                         {/* Danh sách sản phẩm */}

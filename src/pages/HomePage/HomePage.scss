@@ -8,34 +8,49 @@
 
     .box-filter {
         display: flex;
-        flex-direction: column;
+        // flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
 
-        .filter-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin: 15px 0 10px 0;
+        .filter-character {
+            display: flex;
+            flex-direction: column;
+            .filter-title {
+                font-size: 18px;
+                font-weight: 600;
+                margin: 15px 0 10px 0;
+            }
+
+            .filter-content {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                padding-left: 10px;
+                margin-bottom: 20px;
+
+                button {
+                    font-size: 16px;
+                    padding: 5px 10px;
+                    border: 1px solid $clr-gray;
+                    align-items: center;
+                    display: flex;
+                    border-radius: 10px;
+                    gap: 5px;
+
+                    &.active {
+                        border: 1px solid $clr-red;
+                        color: $clr-red;
+                    }
+                }
+            }
         }
 
-        .filter-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding-left: 10px;
+        .filter-price {
             margin-bottom: 20px;
-
-            button {
-                font-size: 16px;
+            select {
+                border: 1px solid gray;
                 padding: 5px 10px;
-                border: 1px solid $clr-gray;
-                align-items: center;
-                display: flex;
                 border-radius: 10px;
-                gap: 5px;
-
-                &.active {
-                    border: 1px solid $clr-red;
-                    color: $clr-red;
-                }
             }
         }
     }
@@ -46,6 +61,14 @@
 
             .title-md {
                 margin-bottom: 2.8rem;
+            }
+
+            .product-no {
+                align-content: center;
+                text-align: center;
+                height: 40vh;
+                font-size: 25px;
+                font-weight: 600;
             }
         }
     }

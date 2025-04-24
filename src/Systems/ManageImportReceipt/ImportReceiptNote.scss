@@ -1,3 +1,5 @@
+@import '../../App.scss';
+
 .import-receipt-note {
     width: 100%;
     padding: 10px 10px;
@@ -32,6 +34,18 @@
 
                 .btn-add {
                     font-size: 16px;
+                }
+            }
+
+            .btn-add-supplier {
+                margin-left: 10px;
+                color: gray;
+                cursor: pointer;
+
+                &:hover {
+                    color: $clr-danger;
+                    transition: $transition-ease;
+                    transform: scale(1.05);
                 }
             }
 

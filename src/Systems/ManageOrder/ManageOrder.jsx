@@ -150,6 +150,18 @@ const ManageOrder = () => {
                                                 <td rowSpan={item?.orderDetails?.length}>{item?.sTrangThaiDonHang}</td>
                                                 <td rowSpan={item?.orderDetails?.length}>
                                                     {item?.sPhuongThucThanhToan === "COD" ? "Thanh toán khi nhận hàng" : "Thanh toán Online"}
+                                                    {item?.sCongThanhToan !== null && item?.sCongThanhToan === "zalopay"
+                                                        ?
+                                                        " - (ZaoloPay)"
+                                                        :
+                                                        item?.sCongThanhToan === "momo"
+                                                            ? " - (MoMo)"
+                                                            :
+                                                            item?.sCongThanhToan === "vnpay"
+                                                                ?
+                                                                " - (VnPay)"
+                                                                : ''
+                                                    }
                                                 </td>
                                                 <td rowSpan={item?.orderDetails?.length}>{item?.sTrangThaiThanhToan}</td>
                                                 <td rowSpan={item?.orderDetails?.length} className="btn-action">

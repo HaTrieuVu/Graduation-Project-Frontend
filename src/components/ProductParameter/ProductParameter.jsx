@@ -48,12 +48,21 @@ const ProductParameter = ({ dataProductParameters, dataselectedVersion }) => {
         dataParameters = [
             {
                 title: "Cấu hình & Bộ nhớ",
+                items: [
+                    { value: "Chưa có thông số về sản phẩm!" },
+                ]
             },
             {
                 title: "Camera & Màn hình",
+                items: [
+                    { value: "Chưa có thông số về sản phẩm!" },
+                ]
             },
             {
                 title: "Pin & Sạc",
+                items: [
+                    { value: "Chưa có thông số về sản phẩm!" },
+                ]
             },
         ];
     }

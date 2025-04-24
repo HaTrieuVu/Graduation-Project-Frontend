@@ -19,6 +19,8 @@ const HomePage = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [productList, setProductList] = useState([]);
   const [valueFilter, setValueFilter] = useState("all")
+  const [priceFilterValue, setPriceFilterValue] = useState("all");
+
 
   const dispatch = useDispatch();
 
@@ -40,10 +42,17 @@ const HomePage = () => {
     setCurrentPage(+event.selected + 1)
   };
 
-  const handleClickFilter = (value) => {
-    setValueFilter(value)
-    dispatch(setValueFilterProduct(value))
-  }
+  const handleFilterProduct = (value) => {
+    console.log(value);
+    setValueFilter(value);
+    dispatch(setValueFilterProduct(value));
+
+    // Nếu là một trong các loại sắp xếp ASC/DESC/RERCENT → reset select
+    if (value === "ASC" || value === "DESC" || value === "RERCENT") {
+      setPriceFilterValue("all");
+    }
+  };
+
 
   return (
     <main>
@@ -55,11 +64,31 @@ const HomePage = () => {
           <BrandList />
 
           <div className='box-filter'>
-            <span className='filter-title'><FaFilter /> Sắp xếp theo</span>
-            <div className='filter-content'>
-              <button onClick={() => handleClickFilter("DESC")} className={valueFilter === "DESC" ? "active" : ''} ><BsSortDown size={20} /> Giá Cao - Thấp</button>
-              <button onClick={() => handleClickFilter("ASC")} className={valueFilter === "ASC" ? "active" : ''}><BsSortDownAlt size={20} /> Giá Thấp - Cao</button>
-              <button onClick={() => handleClickFilter("RERCENT")} className={valueFilter === "RERCENT" ? "active" : ''}><MdPercent size={20} /> Khuyến mãi hot</button>
+            <div className='filter-character'>
+              <span className='filter-title'><FaFilter /> Sắp xếp theo</span>
+              <div className='filter-content'>
+                <button onClick={() => handleFilterProduct("DESC")} className={valueFilter === "DESC" ? "active" : ''} ><BsSortDown size={20} /> Giá Cao - Thấp</button>
+                <button onClick={() => handleFilterProduct("ASC")} className={valueFilter === "ASC" ? "active" : ''}><BsSortDownAlt size={20} /> Giá Thấp - Cao</button>
+                <button onClick={() => handleFilterProduct("RERCENT")} className={valueFilter === "RERCENT" ? "active" : ''}><MdPercent size={20} /> Khuyến mãi hot</button>
+              </div>
+            </div>
+            <div className='filter-price'>
+              <select
+                value={priceFilterValue}
+                onChange={(e) => {
+                  const selectedValue = e.target.value;
+                  setPriceFilterValue(selectedValue);
+                  handleFilterProduct(selectedValue);
+                }}
+              >
+                <option value="all">Chọn khoảng giá</option>
+                <option value="typePrice1">{`Từ 1 -> 5 triệu`}</option>
+                <option value="typePrice2">{`Từ 5 -> 10 triệu`}</option>
+                <option value="typePrice3">{`Từ 10 -> 15 triệu`}</option>
+                <option value="typePrice4">{`Từ 15 -> 25 triệu`}</option>
+                <option value="typePrice5">{`Lớn hơn 25 triệu`}</option>
+              </select>
+
             </div>
           </div>
 
@@ -68,7 +97,7 @@ const HomePage = () => {
               <div className="title-md">
                 <h3>Sản phẩm </h3>
               </div>
-              {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={productList} />}
+              {productList?.length > 0 ? productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={productList} /> : <div className='product-no'>Không tìm thấy sản phẩm phù hợp</div>}
             </div>
           </div>
 

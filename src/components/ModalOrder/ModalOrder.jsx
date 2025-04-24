@@ -11,6 +11,8 @@ import zaloIcon from "../../assets/Logo-ZaloPay-Square.webp"
 import momoIcon from "../../assets/MoMo_Logo.png"
 import vnPayIcon from "../../assets/vnpay-logo-vinadesign-25-12-57-55.jpg"
 import Loader from '../Loader/Loader';
+import { FaRegEdit } from "react-icons/fa";
+
 
 
 const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
@@ -27,6 +29,8 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
     const [appOrderIdMoMo, setAppOrderIdMoMo] = useState(null)                      // id đơn giao dịch của momo
     const [dataOrderVnPay, setDataOrderVnPay] = useState(null)                     // id, createDate của đơn giao dịch của vnpay
     const [isPaymentSuccess, setIsPaymentSuccess] = useState(false)
+    const [deliveryAddress, setDeliveryAddress] = useState(null)
+    const [isShowEditAddrees, setIsShowEditAddrees] = useState(false)
 
     const fetchUserInfo = async () => {
         const res = await axios.get(`/api/v1/user/get-info?id=${id}`)
@@ -76,13 +80,12 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
                     resMomo?.data?.resultCode === 0 &&
                     resVnPay?.result_code === 0
                 ) {
-                    console.log(resVnPay)
                     setDataUrlPayment({
                         orderURLZaloPay: resZaloPay?.data?.order_url,
                         orderURLMoMo: resMomo?.data?.shortLink,
                         orderURLVnPay: resVnPay?.paymentUrl,
                     });
-                    setAppTransIdZaloPay(resZaloPay?.data?.app_trans_id);
+                    setAppTransIdZaloPay(resZaloPay?.app_trans_id);
                     setAppOrderIdMoMo(resMomo?.data?.orderId);
                     setDataOrderVnPay({ orderId: resVnPay?.orderId, transDate: resVnPay?.createDate });
                     setIsLoadingDataUrl(true);
@@ -98,6 +101,10 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
     const handleConfirmOrder = async () => {
         if (paymentMethod === "None") {
             toast.info("Bạn hãy chọn phương thức thanh toán!")
+            return
+        }
+        if (isShowEditAddrees && (deliveryAddress === null || deliveryAddress === "")) {
+            toast.info("Bạn nhập địa chỉ giao hàng mới!")
             return
         }
         if (paymentMethod !== null) {
@@ -122,9 +129,10 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
                 shipFee: 0,
                 paymentMethod: paymentMethod,
                 statusPayment: statusPayment,
-                orderDetails: data
+                paymentGateway: paymentSelected,
+                orderDetails: data,
+                deliveryAddress
             }
-
             const res = await axios.post(`/api/v1/order/order-product`, dataOrderConfirm)
 
             if (res.errorCode === 0) {
@@ -137,7 +145,6 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
                 setIsShowModalOrder(false)
                 toast.error("Số lượng mua của bạn không đủ tồn kho!")
             }
-
         } else {
             toast.info("Bạn hãy chọn phương thức thanh toán!")
         }
@@ -208,7 +215,6 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
         }
     }
 
-
     return (
         <Modal show={show} fullscreen="xl-down" onHide={() => setIsShowModalOrder(false)} className="custom-modal-order">
             <Modal.Header closeButton className="custom-modal-order-header">
@@ -221,8 +227,12 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
                         <span>Địa chỉ nhận hàng</span>
                     </div>
                     <div className='location-info'>
-                        <span>{userInfo?.sHoTen} - {userInfo?.sSoDienThoai}, {userInfo?.sDiaChi}</span>
+                        {!isShowEditAddrees ? <span>{userInfo?.sHoTen} - {userInfo?.sSoDienThoai} - {userInfo?.sDiaChi}</span> : <span>{userInfo?.sHoTen} - {userInfo?.sSoDienThoai} - {deliveryAddress}</span>}
+                        <button onClick={() => setIsShowEditAddrees(prev => !prev)} className='btn-edit-address' title="Sửa địa chỉ nhận hàng">
+                            <FaRegEdit />
+                        </button>
                     </div>
+                    {isShowEditAddrees && <input className='input-change-address' onChange={(e) => setDeliveryAddress(e.target.value.trim())} type="text" placeholder='Địa chỉ giao hàng...' />}
                 </div>
                 <div className='product-order'>
                     <div className='order-item order-header'>

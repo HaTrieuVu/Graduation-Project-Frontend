@@ -206,6 +206,7 @@ const ProductSinglePage = () => {
     }
   }
 
+  // hàm nhấn vào nút mua ngay
   const handleBuyProduct = () => {
     if (!selectedVersion || !selectedVersion?.groupedVersions) {
       toast.info("Hãy chọn phiên bản!")

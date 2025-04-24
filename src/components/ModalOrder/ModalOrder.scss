@@ -33,6 +33,29 @@
 
                     .location-info {
                         font-weight: 600;
+                        display: flex;
+                        align-items: center;
+
+                        .btn-edit-address {
+                            margin-left: 20px;
+                            padding: 0 5px;
+
+                            &:hover {
+                                transform: scale(1.05);
+                                transition: 0.3s all;
+                                background-color: $clr-orange;
+                                border-radius: 100%;
+                                color: white;
+                            }
+                        }
+                    }
+
+                    .input-change-address {
+                        margin-top: 10px;
+                        border: 1px solid gray;
+                        border-radius: 10px;
+                        padding: 5px 10px;
+                        width: 50%;
                     }
                 }
 

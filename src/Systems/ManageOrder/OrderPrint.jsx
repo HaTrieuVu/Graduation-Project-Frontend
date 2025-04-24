@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux";
 import "./OrderPrint.scss"
 
 const OrderPrint = ({ ref, data }) => {
+    const user = useSelector(state => state.userInfo.user);
+
     return (
         <div className="container-print">
             <div className="order-print" ref={ref}>
@@ -63,8 +66,9 @@ const OrderPrint = ({ ref, data }) => {
                 {/* <h4 className="order-info">Thời gian BH: {data?.sMota}</h4> */}
                 <div className="box-signature">
                     <div className="box">
-                        <span>Cửa hàng</span>
+                        <span>Người lập phiếu</span>
                         <span>(Ký, họ tên)</span>
+                        <span className="signature-name">{user?.userName}</span>
                     </div>
                     <div className="box">
                         <span>Khách hàng</span>
