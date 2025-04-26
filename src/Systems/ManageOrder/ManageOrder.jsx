@@ -66,6 +66,8 @@ const ManageOrder = () => {
 
     }
 
+    console.log(listOrders)
+
     const handleChangeSelect = (e) => {
         setStatusOrder(e.target.value)
     }
@@ -129,7 +131,7 @@ const ManageOrder = () => {
 
                                         {index === 0 && (
                                             <td rowSpan={item?.orderDetails?.length}>
-                                                {`${item?.customer?.sHoTen} - ${item?.customer?.sSoDienThoai} - ${item?.customer?.sDiaChi}`}
+                                                {`${item?.customer?.sHoTen} - ${item?.customer?.sSoDienThoai} - ${item?.sDiaChiGiaoHang}`}
                                             </td>
                                         )}
 

@@ -16,6 +16,10 @@ import axios from '../../config/axios';
 import { fetchAsyncCarts } from '../../store/cartSlice';
 import ModalOrder from '../../components/ModalOrder/ModalOrder';
 import ProductParameter from '../../components/ProductParameter/ProductParameter';
+import { fetchAsyncProductOfBrand, getAllProductsByBrand } from '../../store/brandSlice';
+import _ from "lodash";
+import ProductList from '../../components/ProductList/ProductList';
+
 
 const ProductSinglePage = () => {
   const { id } = useParams();
@@ -27,6 +31,7 @@ const ProductSinglePage = () => {
 
   const user = useSelector(state => state.userInfo.user);   //lấy thông tin người dùng từ redux
   const isUserLoaded = useSelector(state => state?.userInfo?.isUserLoaded);
+  const productBrandResponse = useSelector(getAllProductsByBrand);
 
   const [userInfo, setUserInfo] = useState({})    // mã người dùng
   const [quantity, setQuantity] = useState(1);
@@ -42,6 +47,8 @@ const ProductSinglePage = () => {
   const [isShowModalOrder, setIsShowModalOrder] = useState(false)
 
   const discountPercentage = product?.promotion?.fGiaTriKhuyenMai //giá trị khuyến mãi của sp
+  const [productList, setProductList] = useState([]);
+
 
   useEffect(() => {
     // Chỉ kiểm tra khi Redux đã tải xong user
@@ -59,6 +66,8 @@ const ProductSinglePage = () => {
       cardId: user?.cartId
     })
   }, [user])
+
+  console.log(productBrandResponse)
 
   // hàm tính giá sau khuyến mãi
   const calculateDiscountedPrice = (price, discountPercentage) => {
@@ -113,7 +122,21 @@ const ProductSinglePage = () => {
       setlistVersion(arrVersionGroup)
     }
 
+    dispatch(fetchAsyncProductOfBrand(product?.FK_iNhanHangID))
+
   }, [product])
+
+  useEffect(() => {
+    if (!_.isEmpty(productBrandResponse)) {
+      const filtered = productBrandResponse?.products?.filter(p => p.PK_iSanPhamID !== product?.PK_iSanPhamID);
+
+      // Cắt lấy 5 sản phẩm
+      const sliced = filtered.slice(0, 5);
+      setProductList(sliced || []);
+    }
+  }, [productBrandResponse]);  // Chạy lại khi productsResponse thay đổi
+
+  console.log(productList)
 
   useEffect(() => {
     if (selectedVersion?.groupedVersions?.length > 0) {
@@ -206,7 +229,6 @@ const ProductSinglePage = () => {
     }
   }
 
-  // hàm nhấn vào nút mua ngay
   const handleBuyProduct = () => {
     if (!selectedVersion || !selectedVersion?.groupedVersions) {
       toast.info("Hãy chọn phiên bản!")
@@ -440,6 +462,10 @@ const ProductSinglePage = () => {
               </div>
             </div>
             <ProductParameter dataProductParameters={product?.parameters} dataselectedVersion={selectedVersion} />
+            <div className="title-md">
+              <h3>Sản phẩm tương tự </h3>
+            </div>
+            <ProductList products={productList} />
           </div>
         </div>
       )}

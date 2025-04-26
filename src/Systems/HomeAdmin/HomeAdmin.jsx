@@ -10,6 +10,8 @@ import axios from '../../config/axios';
 
 const HomeAdmin = () => {
     const [dataRevenue, setDataRevenue] = useState([])
+    const [mode, setMode] = useState("month"); // "month" | "week"
+    const [monthSelected, setMonthSelected] = useState(1);
     const [dataImportReceipt, setDataImportReceipt] = useState("")
     const [dataTotal, setDataTotal] = useState({
         totalProduct: 0,
@@ -50,20 +52,35 @@ const HomeAdmin = () => {
         }
     };
 
+    const fetchData = async () => {
+        try {
+            const url =
+                mode === "month"
+                    ? "/api/v1/statistics/revenue-month"
+                    : `/api/v1/statistics/revenue-week?month=${monthSelected}&year=2025`;
+            const res = await axios.get(url);
+            if (res?.errorCode === 0) {
+                setDataRevenue(res?.data);
+            }
+        } catch (error) {
+            console.error("Lỗi khi lấy dữ liệu biểu đồ:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [mode, monthSelected]);
+
     // hàm fetch thống kê (bán hàng, nhập hàng)
     const fetchStatistic = async () => {
         try {
-            const [resRevenue, resImportReceipt, resGetAllProduct, resGetAllCategory, resGetAllUser] = await Promise.all([
-                axios.get("/api/v1/statistical/statistic-revenue"),
+            const [resImportReceipt, resGetAllProduct, resGetAllCategory, resGetAllUser] = await Promise.all([
                 axios.get("/api/v1/statistical/statistic-import-receipt"),
                 axios.get("/api/v1/manage-product/get-all"),
                 axios.get("/api/v1/manage-category/get-all"),
                 axios.get("/api/v1/user/get-all"),
             ]);
 
-            if (resRevenue?.errorCode === 0) {
-                setDataRevenue(resRevenue?.data)
-            }
             if (resImportReceipt?.errorCode === 0) {
                 setDataImportReceipt(resImportReceipt?.data)
             }
@@ -81,9 +98,10 @@ const HomeAdmin = () => {
         }
     }
 
+    console.log(dataRevenue)
+
     return (
         <main className='main-container'>
-
             <div className='main-cards'>
                 <div className='card'>
                     <div className='card-inner'>
@@ -115,48 +133,46 @@ const HomeAdmin = () => {
                 </div>
             </div>
 
-            <div className='charts'>
-                <span className='title-charts'>{`Bảng doanh thu bán hàng (2025)`}</span>
-                <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                        width={600}
-                        height={400}
-                        data={dataRevenue}
-                        margin={{
-                            top: 30,
-                            right: 30,
-                            left: 20,
-                            bottom: 5,
-                        }}
-                    >
+            <div className="charts">
+                <span className="title-charts">
+                    {mode === "month"
+                        ? "Bảng tổng tiền bán hàng theo tháng (2025)"
+                        : `Bảng tổng tiền bán hàng theo tuần (Tháng ${monthSelected} - 2025)`}
+                </span>
+
+                <div className='box-select-revenue'>
+                    <select className='select-mode' value={mode} onChange={(e) => setMode(e.target.value)}>
+                        <option value="month">Theo từng tháng trong năm</option>
+                        <option value="week">Theo tuần của tháng</option>
+                    </select>
+                    {mode === "week" && <select value={monthSelected} onChange={(e) => setMonthSelected(Number(e.target.value))}>
+                        {Array.from({ length: 12 }, (_, i) => (
+                            <option key={i + 1} value={i + 1}>
+                                Tháng {i + 1}
+                            </option>
+                        ))}
+                    </select>}
+                </div>
+
+                <ResponsiveContainer width="100%" height={400}>
+                    <BarChart data={dataRevenue} margin={{ top: 30, right: 30, left: 20, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
                         <YAxis />
                         <Tooltip
                             formatter={(value, name) => {
-                                if (name === "revenue") name = "Doanh thu";
+                                if (name === "revenue") name = "Tổng tiền";
                                 return [`${value} triệu đồng`, name];
                             }}
                         />
-                        <Legend
-                            formatter={(value) => {
-                                if (value === "revenue") return "Doanh thu bán hàng";
-                                return value;
-                            }}
-                        />
-                        <Bar
-                            dataKey="revenue"
-                            barSize={30}
-                            fill="#82ca9d"
-                            label={renderCustomBarLabel}
-                        />
+                        <Legend formatter={(value) => (value === "revenue" ? "Tổng tiền bán hàng" : value)} />
+                        <Bar dataKey="revenue" barSize={30} fill="#82ca9d" label={renderCustomBarLabel} />
                     </BarChart>
                 </ResponsiveContainer>
-
-
             </div>
+
             <div className='charts'>
-                <span className='title-charts'>{`Bảng doanh thu nhập hàng (2025)`}</span>
+                <span className='title-charts'>{`Bảng tổng tiền nhập hàng (2025)`}</span>
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart
                         width={500}
