@@ -15,7 +15,7 @@ const ManageBrand = () => {
     const [listBrand, setListBrand] = useState([])
 
     const [currentPage, setCurrentPage] = useState(1);
-    const currentLimit = 5
+    const currentLimit = 10
     const [totalPage, setTotalPage] = useState(0)
 
     const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa ncc

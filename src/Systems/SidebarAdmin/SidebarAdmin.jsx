@@ -34,7 +34,7 @@ const SidebarAdmin = ({ openSidebarToggle, OpenSidebar }) => {
             <ul className='sidebar-list'>
                 <li className='sidebar-list-item'>
                     <Link to={"/admin"}>
-                        <BsGrid1X2Fill className='icon' /> Dashboard
+                        <BsGrid1X2Fill className='icon' /> Tổng quản & Thống kê
                     </Link>
                 </li>
                 {/* Dropdown QL User */}

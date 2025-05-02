@@ -214,12 +214,12 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                             <label>Dung lượng (<span className='red'>*</span>)</label>
                             <select value={productVersionData.capacity || ""} onChange={(e) => handleChangeSelect(e, "capacity")} className='form-select'>
                                 <option value="">Chọn dung lượng</option>
-                                <option value="32GB">32GB</option>
-                                <option value="64GB">64GB</option>
-                                <option value="128GB">128GB</option>
-                                <option value="256GB">256GB</option>
-                                <option value="512GB">512GB</option>
-                                <option value="1TB">1TB</option>
+                                <option value="32 GB">32 GB</option>
+                                <option value="64 GB">64 GB</option>
+                                <option value="128 GB">128 GB</option>
+                                <option value="256 GB">256 GB</option>
+                                <option value="512 GB">512 GB</option>
+                                <option value="1 TB">1 TB</option>
                             </select>
                         </div>
 

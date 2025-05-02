@@ -3,10 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Buffer } from 'buffer';
 import './Product.scss';
-import { useSelector } from 'react-redux';
-
 const Product = ({ product }) => {
-    const valueFilter = useSelector(state => state.product.valueFilterProduct);
 
     const [listImage, setListImage] = useState([])
     const [listVersion, setListVersion] = useState([])
@@ -22,12 +19,6 @@ const Product = ({ product }) => {
     }
 
     let newPrice = listVersion[0]?.fGiaBan - listVersion[0]?.fGiaBan * (product?.promotion?.fGiaTriKhuyenMai / 100);
-    let length = listVersion?.length - 1
-    if (valueFilter === "DESC") {
-        newPrice = listVersion[length]?.fGiaBan - listVersion[length]?.fGiaBan * (product?.promotion?.fGiaTriKhuyenMai / 100)
-    } else if (valueFilter === "ASC") {
-        newPrice = listVersion[0]?.fGiaBan - listVersion[0]?.fGiaBan * (product?.promotion?.fGiaTriKhuyenMai / 100)
-    }
 
     return (
         <Link to={`/product/${product?.PK_iSanPhamID}`} key={`${product?.PK_iSanPhamID}-key-render-product`}>

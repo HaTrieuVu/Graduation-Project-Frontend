@@ -32,27 +32,70 @@ const HomePage = () => {
   }, [currentPage, valueFilter]);
 
   useEffect(() => {
-    if (productsResponse) {
+    if (productsResponse?.products) {
+      // Clone sâu từng product và versions
+      let sortedProducts = productsResponse.products.map(product => ({
+        ...product,
+        versions: product.versions ? [...product.versions] : [],
+      }));
+
+      const calculatePrice = (version, promotion = 0) => {
+        return version.fGiaBan - (version.fGiaBan * (promotion / 100));
+      };
+
+      if (valueFilter === "ASC") {
+        sortedProducts.forEach(product => {
+          const promotion = product?.promotion?.fGiaTriKhuyenMai || 0;
+
+          product.versions.sort((a, b) => {
+            const priceA = calculatePrice(a, promotion);
+            const priceB = calculatePrice(b, promotion);
+            return priceA - priceB;
+          });
+        });
+
+        sortedProducts.sort((a, b) => {
+          const priceA = calculatePrice(a.versions?.[0] || {}, a?.promotion?.fGiaTriKhuyenMai || 0);
+          const priceB = calculatePrice(b.versions?.[0] || {}, b?.promotion?.fGiaTriKhuyenMai || 0);
+          return priceA - priceB;
+        });
+      }
+
+      if (valueFilter === "DESC") {
+        sortedProducts.forEach(product => {
+          const promotion = product?.promotion?.fGiaTriKhuyenMai || 0;
+
+          product.versions.sort((a, b) => {
+            const priceA = calculatePrice(a, promotion);
+            const priceB = calculatePrice(b, promotion);
+            return priceB - priceA;
+          });
+        });
+
+        sortedProducts.sort((a, b) => {
+          const priceA = calculatePrice(a.versions?.[0] || {}, a?.promotion?.fGiaTriKhuyenMai || 0);
+          const priceB = calculatePrice(b.versions?.[0] || {}, b?.promotion?.fGiaTriKhuyenMai || 0);
+          return priceB - priceA;
+        });
+      }
+
+      setProductList(sortedProducts);
       setTotalPage(productsResponse.totalPage || 0);
-      setProductList(productsResponse.products || []);
     }
-  }, [productsResponse]);  // Chạy lại khi productsResponse thay đổi
+  }, [productsResponse, valueFilter]);
 
   const handlePageClick = async (event) => {
     setCurrentPage(+event.selected + 1)
   };
 
   const handleFilterProduct = (value) => {
-    console.log(value);
     setValueFilter(value);
     dispatch(setValueFilterProduct(value));
 
-    // Nếu là một trong các loại sắp xếp ASC/DESC/RERCENT → reset select
     if (value === "ASC" || value === "DESC" || value === "RERCENT") {
       setPriceFilterValue("all");
     }
   };
-
 
   return (
     <main>
@@ -82,6 +125,7 @@ const HomePage = () => {
                 }}
               >
                 <option value="all">Chọn khoảng giá</option>
+                <option value="typePrice0">{`Dưới 1 triệu`}</option>
                 <option value="typePrice1">{`Từ 1 -> 5 triệu`}</option>
                 <option value="typePrice2">{`Từ 5 -> 10 triệu`}</option>
                 <option value="typePrice3">{`Từ 10 -> 15 triệu`}</option>
