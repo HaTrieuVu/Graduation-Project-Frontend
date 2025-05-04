@@ -24,6 +24,8 @@ const convertArrayData = (cartsData) => {
         item?.productVersions?.fGiaBan - item?.productVersions?.fGiaBan *
         (item?.productVersions?.productData?.promotion?.fGiaTriKhuyenMai / 100)
 
+      priceNew = Math.floor(priceNew / 10000) * 10000;
+
       if (Array.isArray(item?.productVersions?.productImages?.sUrl?.data)) {
         image = new Buffer(item?.productVersions?.productImages?.sUrl?.data, "base64").toString("binary");
       }

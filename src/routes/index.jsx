@@ -30,6 +30,8 @@ import UserProfile from "../components/UserProfile/UserProfile";
 import ChangePassword from "../components/ChangePassword/ChangePassword";
 import FeedbackPage from "../pages/FeedbackPage/FeedbackPage";
 import ManageProductParameters from "../Systems/ManageProductParameters/ManageProductParameters";
+import CategoryProductPage from "../pages/CategoryProductPage/CategoryProductPage";
+import ForgotPassword from "../components/ForgotPassword/ForgotPassword";
 
 
 const router = createBrowserRouter([
@@ -70,6 +72,10 @@ const router = createBrowserRouter([
                 element: <SearchPage />
             },
             {
+                path: "/category/:category",
+                element: <CategoryProductPage />
+            },
+            {
                 path: "/user",
                 element: <UserPage />,
                 children: [
@@ -84,6 +90,10 @@ const router = createBrowserRouter([
                     {
                         path: "/user/change-password",
                         element: <ChangePassword />,
+                    },
+                    {
+                        path: "/user/forgot-password",
+                        element: <ForgotPassword />,
                     }
                 ]
             },

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from '../../config/axios';
 import './Register.scss';
-import { FaInfoCircle } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaInfoCircle } from 'react-icons/fa';
 import { MdOutlineEmail, MdOutlinePhoneIphone } from 'react-icons/md';
 import { FaHome } from 'react-icons/fa';
 import { RiLockPasswordLine } from 'react-icons/ri';
@@ -17,6 +17,11 @@ const Register = () => {
   const [address, setAdress] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [isShowPassword, setIsShowPassword] = useState({
+    isShowPasswordNew: false,
+    isShowConfirmPassword: false,
+  })
 
   const navigate = useNavigate();
 
@@ -83,6 +88,12 @@ const Register = () => {
     }
   };
 
+  const handleSetShowPassword = (name) => {
+    setIsShowPassword(prev => ({
+      ...prev,
+      [name]: !prev[name],
+    }))
+  }
 
   return (
     <div className="account-pages-register pt-sm-5">
@@ -167,11 +178,15 @@ const Register = () => {
                             <RiLockPasswordLine />
                           </span>
                           <input
-                            type="password"
+                            type={`${!isShowPassword.isShowPasswordNew ? "password" : "text"}`}
                             value={password} onChange={(e) => setPassword(e.target.value)}
                             className="form-control fs-22"
                             placeholder="Mật khẩu..."
                           />
+                          {!isShowPassword?.isShowPasswordNew ?
+                            <FaEye className='btn-eye' onClick={() => handleSetShowPassword("isShowPasswordNew")} size={20} /> :
+                            <FaEyeSlash className='btn-eye' onClick={() => handleSetShowPassword("isShowPasswordNew")} size={20} />
+                          }
                         </div>
                       </div>
 
@@ -183,11 +198,15 @@ const Register = () => {
                             <RiLockPasswordLine />
                           </span>
                           <input
-                            type="password"
+                            type={`${!isShowPassword.isShowConfirmPassword ? "password" : "text"}`}
                             value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
                             className="form-control fs-22"
                             placeholder="Xác nhận mật khẩu..."
                           />
+                          {!isShowPassword?.isShowConfirmPassword ?
+                            <FaEye className='btn-eye' onClick={() => handleSetShowPassword("isShowConfirmPassword")} size={20} /> :
+                            <FaEyeSlash className='btn-eye' onClick={() => handleSetShowPassword("isShowConfirmPassword")} size={20} />
+                          }
                         </div>
                       </div>
                     </div>

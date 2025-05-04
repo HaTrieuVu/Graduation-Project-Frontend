@@ -39,7 +39,6 @@ const SearchPage = () => {
     return (
       <div
         className="container error"
-
       >
         <div className="content-error fw-5 text-danger py-5">
           <h3>Không tìm thấy sản phẩm.</h3>
@@ -50,8 +49,6 @@ const SearchPage = () => {
       </div>
     );
   }
-
-  console.log(searchProducts)
 
   return (
     <main>

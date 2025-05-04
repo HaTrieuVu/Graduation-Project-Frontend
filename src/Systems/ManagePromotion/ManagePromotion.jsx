@@ -18,7 +18,7 @@ const ManagePromotion = () => {
 
 
     const [currentPage, setCurrentPage] = useState(1);
-    const currentLimit = 8
+    const currentLimit = 15
     const [totalPage, setTotalPage] = useState(0)
 
     const [isShowModel, setIsShowModel] = useState(false)   // state modal thêm, sửa khuyến mãi

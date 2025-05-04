@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import axios from '../config/axios';
 import { STATUS } from '../utils/status';
+import _ from "lodash";
 
 const initialState = {
     categories: [],
@@ -27,17 +28,17 @@ const categorySlice = createSlice({
                 state.categoriesStatus = STATUS.FAILED;
             });
 
-        // builder
-        //     .addCase(fetchAsyncProductsOfCategory.pending, (state) => {
-        //         state.categoryProductsStatus = STATUS.LOADING;
-        //     })
-        //     .addCase(fetchAsyncProductsOfCategory.fulfilled, (state, action) => {
-        //         state.categoryProducts = action.payload;
-        //         state.categoryProductsStatus = STATUS.SUCCEEDED;
-        //     })
-        //     .addCase(fetchAsyncProductsOfCategory.rejected, (state) => {
-        //         state.categoryProductsStatus = STATUS.FAILED;
-        //     });
+        builder
+            .addCase(fetchAsyncProductsOfCategory.pending, (state) => {
+                state.categoryProductsStatus = STATUS.LOADING;
+            })
+            .addCase(fetchAsyncProductsOfCategory.fulfilled, (state, action) => {
+                state.categoryProducts = action.payload;
+                state.categoryProductsStatus = STATUS.SUCCEEDED;
+            })
+            .addCase(fetchAsyncProductsOfCategory.rejected, (state) => {
+                state.categoryProductsStatus = STATUS.FAILED;
+            });
     },
 });
 
@@ -55,11 +56,18 @@ export const fetchAsyncCategories = createAsyncThunk('categories/fetch', async (
 
 });
 
-// export const fetchAsyncProductsOfCategory = createAsyncThunk('category-products/fetch', async () => {
-//     const response = await fetch(`${BASE_URL}products/category/${category}`);
-//     const data = await response.json();
-//     return data.products;
-// });
+export const fetchAsyncProductsOfCategory = createAsyncThunk('category-products/fetch', async ({ categoryId, currentPage, limitProduct }) => {
+    try {
+        let response = await axios.get(`/api/v1/category/product-of-category?categoryId=${categoryId}&page=${currentPage}&limit=${limitProduct}`)
+        if (response?.errorCode === 0 && !_.isEmpty(response?.data)) {
+            return response?.data;
+        }
+        return [];
+    } catch (error) {
+        console.error("Error fetching  of category", error);
+        return [];
+    }
+});
 
 export const getAllCategories = (state) => state.category.categories;
 export const getAllProductsByCategory = (state) => state.category.categoryProducts;

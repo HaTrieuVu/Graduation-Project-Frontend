@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import './Login.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaRegUserCircle } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from 'react-toastify';
 import axios from '../../config/axios';
@@ -14,6 +14,8 @@ const Login = () => {
 
   const [valueLogin, setValueLogin] = useState("")
   const [password, setPassword] = useState("")
+
+  const [isShowPassword, setIsShowPassword] = useState(false)
 
   const navigate = useNavigate()
 
@@ -85,17 +87,21 @@ const Login = () => {
                           <RiLockPasswordLine />
                         </span>
                         <input
-                          type="password"
+                          type={`${!isShowPassword ? "password" : "text"}`}
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           onKeyDown={(e) => handlePressEnter(e)}
                           className="form-control fs-22"
                           placeholder="Mật khẩu của bạn"
                         />
+                        {!isShowPassword ?
+                          <FaEye className='btn-eye' onClick={() => setIsShowPassword(prev => !prev)} size={20} /> :
+                          <FaEyeSlash className='btn-eye' onClick={() => setIsShowPassword(prev => !prev)} size={20} />
+                        }
                       </div>
 
                       <div className="float-end box-forget-password">
-                        <Link to={"/"} className="text-muted font-size-13">
+                        <Link to={"/user/forgot-password"} className="text-muted font-size-13">
                           Quên mật khẩu?
                         </Link>
                       </div>

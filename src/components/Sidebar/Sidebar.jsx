@@ -28,7 +28,7 @@ const Sidebar = () => {
                 <ul className="cat-list">
                     {categories.map((category, index) => (
                         <li key={`${index}-category-sidebar-key`} onClick={() => dispatch(setSidebarOff())}>
-                            <Link to={`category/${category?.slug}`} className="cat-list-link text-capitalize">
+                            <Link to={`category/${category?.PK_iDanhMucID}`} className="cat-list-link text-capitalize">
                                 {category?.sTenDanhMuc}
                             </Link>
                         </li>

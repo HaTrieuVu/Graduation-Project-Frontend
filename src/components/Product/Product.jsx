@@ -20,6 +20,8 @@ const Product = ({ product }) => {
 
     let newPrice = listVersion[0]?.fGiaBan - listVersion[0]?.fGiaBan * (product?.promotion?.fGiaTriKhuyenMai / 100);
 
+    newPrice = Math.floor(newPrice / 10000) * 10000;
+
     return (
         <Link to={`/product/${product?.PK_iSanPhamID}`} key={`${product?.PK_iSanPhamID}-key-render-product`}>
             <div className="product-item bg-white">

@@ -74,6 +74,7 @@ const ProductSinglePage = () => {
     if (!price || !discountPercentage) return price; // Nếu không có giảm giá, giữ nguyên giá
 
     let discountedPrice = price - price * (discountPercentage / 100)
+    discountedPrice = Math.floor(discountedPrice / 10000) * 10000;
     return discountedPrice.toLocaleString("vi-VN");
   };
 
@@ -122,7 +123,9 @@ const ProductSinglePage = () => {
       setlistVersion(arrVersionGroup)
     }
 
-    dispatch(fetchAsyncProductOfBrand(product?.FK_iNhanHangID))
+    if (product?.FK_iNhanHangID) {
+      dispatch(fetchAsyncProductOfBrand(product?.FK_iNhanHangID))
+    }
 
   }, [product])
 
@@ -135,8 +138,6 @@ const ProductSinglePage = () => {
       setProductList(sliced || []);
     }
   }, [productBrandResponse]);  // Chạy lại khi productsResponse thay đổi
-
-  console.log(productList)
 
   useEffect(() => {
     if (selectedVersion?.groupedVersions?.length > 0) {
@@ -250,6 +251,8 @@ const ProductSinglePage = () => {
     }
 
     let priceBuy = selectedVersion?.fGiaBan - selectedVersion?.fGiaBan * (discountPercentage / 100)
+    priceBuy = Math.floor(priceBuy / 10000) * 10000; // làm tròn tiền xuống
+
     let totalPrice = priceBuy * quantity
 
     let dataProduct = [

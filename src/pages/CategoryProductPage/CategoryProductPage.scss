@@ -1,0 +1,45 @@
+@import '../../App.scss';
+
+.cat-products {
+    // min-height: 100vh;
+
+    .title-md {
+        margin-bottom: 28px !important;
+        .text-capitalize {
+            color: red;
+        }
+    }
+
+    .no-product {
+        width: 100%;
+        height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 600;
+        color: $clr-red-light;
+    }
+}
+
+.category-product-footer {
+    margin: 50px auto auto auto;
+    // @media screen and (max-width: 1545px) {
+    //     width: 90vw;
+    // }
+    margin-bottom: 50px;
+    .pagination {
+        justify-content: center;
+        .page-item {
+            &.active {
+                .page-link {
+                    color: white;
+                }
+            }
+            .page-link {
+                color: black;
+                padding: 10px 20px;
+            }
+        }
+    }
+}
