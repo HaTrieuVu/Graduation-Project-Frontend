@@ -1,4 +1,5 @@
-@import '../../App.scss';
+@use 'sass:color';
+@use '../../App.scss' as *;
 
 .manage-user-container {
     grid-area: main;

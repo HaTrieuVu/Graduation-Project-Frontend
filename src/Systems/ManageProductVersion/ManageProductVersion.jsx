@@ -159,6 +159,7 @@ const ManageProductVersion = () => {
                             <th scope="col">Dung lượng khả dụng</th>
                             <th scope="col">Giá bán</th>
                             <th scope="col">Số lượng</th>
+                            <th scope="col">Thời gian bảo hành</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -176,6 +177,7 @@ const ManageProductVersion = () => {
                                         <td>{item?.sDungLuongKhaDung}</td>
                                         <td>{item?.fGiaBan?.toLocaleString("vi-VN")} VNĐ</td>
                                         <td>{item?.iSoLuong}</td>
+                                        <td>{`${item?.iThoiGianBaoHanh} (tháng)`}</td>
                                         <td>{item?.bTrangThai === true ? "Còn hàng" : "Hết hàng"}</td>
                                         <td className='btn-action'>
                                             <button onClick={() => handleCreateOrUpdateUser("UPDATE", item)} title='Sửa'><FaRegEdit /></button>

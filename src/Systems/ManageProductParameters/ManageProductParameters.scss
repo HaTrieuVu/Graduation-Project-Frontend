@@ -1,4 +1,5 @@
-@import '../../App.scss';
+@use 'sass:color';
+@use '../../App.scss' as *;
 
 .manage-product-container {
     grid-area: main;
@@ -89,7 +90,7 @@
             width: 90vw;
         }
 
-        margin-bottom: 50px;
+        // margin-bottom: 50px;
         .pagination {
             justify-content: center;
             .page-item {

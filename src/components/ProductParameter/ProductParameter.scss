@@ -1,4 +1,5 @@
-@import '../../App.scss';
+@use 'sass:color';
+@use '../../App.scss' as *;
 
 .product-parameter-main {
     background: white;

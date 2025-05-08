@@ -1,4 +1,5 @@
-@import '../../App.scss';
+@use 'sass:color';
+@use '../../App.scss' as *;
 
 .import-receipt-note {
     width: 100%;

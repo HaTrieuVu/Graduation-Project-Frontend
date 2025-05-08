@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import './ProductSinglePage.scss';
+
 import { fetchAsyncProductSingle, getProductSingle, getSingleProductStatus } from '../../store/productSlice';
 import { STATUS } from '../../utils/status';
 import Loader from '../../components/Loader/Loader';
@@ -49,25 +50,12 @@ const ProductSinglePage = () => {
   const discountPercentage = product?.promotion?.fGiaTriKhuyenMai //giá trị khuyến mãi của sp
   const [productList, setProductList] = useState([]);
 
-
-  useEffect(() => {
-    // Chỉ kiểm tra khi Redux đã tải xong user
-    if (!isUserLoaded) return;
-
-    if (!user?.userId) {
-      navigate("/login");
-      window.scrollTo(0, 0);
-    }
-  }, [user, isUserLoaded, navigate]);
-
   useEffect(() => {
     setUserInfo({
       userId: user?.userId,
       cardId: user?.cartId
     })
   }, [user])
-
-  console.log(productBrandResponse)
 
   // hàm tính giá sau khuyến mãi
   const calculateDiscountedPrice = (price, discountPercentage) => {
@@ -186,6 +174,12 @@ const ProductSinglePage = () => {
 
   // hàm thêm sp vào giỏ hàng
   const handleAddToCart = async () => {
+    if (!user?.userId) {
+      navigate("/login");
+      window.scrollTo(0, 0);
+      return
+    }
+
     if (!selectedVersion || !selectedVersion?.groupedVersions) {
       toast.info("Hãy chọn phiên bản!")
       return;
@@ -231,6 +225,12 @@ const ProductSinglePage = () => {
   }
 
   const handleBuyProduct = () => {
+    if (!user?.userId) {
+      navigate("/login");
+      window.scrollTo(0, 0);
+      return
+    }
+
     if (!selectedVersion || !selectedVersion?.groupedVersions) {
       toast.info("Hãy chọn phiên bản!")
       return;
@@ -356,7 +356,6 @@ const ProductSinglePage = () => {
                             "Chưa xác định giá")} VNĐ
                       </div>
                     </div>
-
                     <div className='box-new-price'>
                       <div className='box-price'>
                         <div className="flex align-center my-1">
@@ -374,12 +373,19 @@ const ProductSinglePage = () => {
                           Giảm {product?.promotion?.fGiaTriKhuyenMai}%
                         </div>
                       </div>
+                    </div>
+                  </div>
 
-                      <div className='box-stock'>
-                        Số lượng: <span> {stock > 0
-                          ? stock
-                          : "?"}</span>
-                      </div>
+                  <div className='box-more-info'>
+                    <div className='stock'>
+                      Số lượng: <span> {stock > 0
+                        ? stock
+                        : "?"}</span>
+                    </div>
+                    <div className='warranty'>
+                      Bảo hành: <span> {stock > 0
+                        ? stock
+                        : "?"}</span>
                     </div>
                   </div>
 

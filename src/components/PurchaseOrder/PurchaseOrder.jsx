@@ -106,6 +106,8 @@ const PurchaseOrder = () => {
         }
     }
 
+    console.log(orderList)
+
     return (
         <div className='container-purchase'>
             <section className='purchase-header'>
@@ -125,9 +127,25 @@ const PurchaseOrder = () => {
                                     <div className='info-header'>
                                         <span>{`Mã đơn hàng: #1111${item?.PK_iDonMuaHangID} (${item?.sPhuongThucThanhToan === "COD" ? "Thanh toán khi nhận hàng" : "Thanh toán Online"})`}</span>
                                         <div className='more-info'>
-                                            {(item?.sTrangThaiDonHang === "Giao hàng thành công" || item?.sTrangThaiDonHang === "Đang giao hàng") && <span className='info-1'><FaTruckFast />{item?.sTrangThaiDonHang}</span>}
-                                            <span className='info-2'>{item?.sTrangThaiDonHang === "Giao hàng thành công" ? "Hoàn thành" : item?.sTrangThaiDonHang}</span>
+                                            {(item?.sTrangThaiDonHang === "Giao hàng thành công" || item?.sTrangThaiDonHang === "Đang giao hàng") && (
+                                                <div className='time-info'>
+                                                    <span className='info-1'>
+                                                        <FaTruckFast />
+                                                        {item?.sTrangThaiDonHang}
+
+                                                    </span>
+                                                    <span className='time'>{item?.sTrangThaiDonHang === "Đang giao hàng" && item?.dNgayGiaoHang
+                                                        ? ` (Thời gian giao hàng dự kiến: ${new Date(item.dNgayGiaoHang).toLocaleDateString("vi-VN")})`
+                                                        : ""}</span>
+                                                </div>
+                                            )}
+                                            <span className='info-2'>
+                                                {item?.sTrangThaiDonHang === "Giao hàng thành công"
+                                                    ? "Hoàn thành"
+                                                    : item?.sTrangThaiDonHang}
+                                            </span>
                                         </div>
+
                                     </div>
                                     <div className='info-body'>
                                         {item?.orderDetails?.length > 0 && item?.orderDetails?.map((order, index) => (

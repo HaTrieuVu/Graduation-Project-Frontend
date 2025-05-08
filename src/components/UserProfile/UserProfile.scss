@@ -1,4 +1,6 @@
-@import '../../App.scss';
+@use 'sass:color';
+@use '../../App.scss' as *;
+
 .container-profile {
     background-color: white;
     padding: 10px 130px;

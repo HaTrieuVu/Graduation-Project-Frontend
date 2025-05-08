@@ -104,7 +104,7 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
             return
         }
         if (isShowEditAddrees && (deliveryAddress === null || deliveryAddress === "")) {
-            toast.info("Bạn nhập địa chỉ giao hàng mới!")
+            toast.info("Bạn hãy nhập địa chỉ giao hàng mới!")
             return
         }
         if (paymentMethod !== null) {
@@ -116,6 +116,7 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
                 }
                 if (!isPaymentSuccess) {
                     toast.warning("Đơn hàng của bạn chưa được thanh toán. Hãy cập nhật!")
+                    return
                 }
             }
 
@@ -201,8 +202,6 @@ const ModalOrder = ({ show, setIsShowModalOrder, dataOrder }) => {
 
         if (paymentSelected === "vnpay") {
             const resStatusOrderVnPay = await axios.post(`/api/v1/payment-vnpay/check-status`, dataOrderVnPay)
-
-            console.log(resStatusOrderVnPay)
 
             if (resStatusOrderVnPay?.success === true && resStatusOrderVnPay?.data?.vnp_TransactionStatus === "00") {
                 setStatusPayment("Đã thanh toán")

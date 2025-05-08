@@ -1,4 +1,6 @@
-@import '../../App.scss';
+@use 'sass:color';
+@use '../../App.scss' as *;
+
 .product-lists {
     row-gap: 2rem;
 

@@ -1,4 +1,6 @@
-@import '../../App.scss';
+@use 'sass:color';
+@use '../../App.scss' as *;
+
 .container-feedback {
     min-height: 70vh;
     .feedback-box {

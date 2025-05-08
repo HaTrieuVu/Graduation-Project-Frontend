@@ -19,6 +19,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
         price: "",
         quantity: "",
         status: "",
+        warranty: ""
     });
 
     const [selectedProductId, setSelectedProductId] = useState(null)
@@ -45,6 +46,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                 price: "",
                 quantity: "",
                 status: "",
+                warranty: ""
             });
         }
     }, [action]);
@@ -60,6 +62,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                 price: dataModalProductVersion?.fGiaBan,
                 quantity: dataModalProductVersion?.iSoLuong,
                 status: dataModalProductVersion?.bTrangThai,
+                warranty: dataModalProductVersion.iThoiGianBaoHanh
             });
         }
     }, [dataModalProductVersion]);
@@ -98,7 +101,6 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
         });
     };
 
-
     const checkValidateInput = () => {
         let arr = [
             {
@@ -128,6 +130,10 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
             {
                 key: 'status',
                 valueErr: 'Tình trạng',
+            },
+            {
+                key: 'warranty',
+                valueErr: 'Thời gian bảo hành',
             },
         ];
         let check = true;
@@ -168,6 +174,7 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                     price: "",
                     quantity: "",
                     status: "",
+                    warranty: ""
                 });
             } else {
                 toast.error(response?.errorMessage);
@@ -266,8 +273,21 @@ const ModalProductVersion = ({ action, show, handleCloseModal, dataModalProductV
                             <label>Trạng thái (<span className='red'>*</span>)</label>
                             <select value={productVersionData.status || ""} onChange={(e) => handleChangeSelect(e, "status")} className='form-select'>
                                 <option value="">Chọn</option>
-                                <option value="1">Còn hàng</option>
-                                <option value="0">Hết hàng</option>
+                                <option value="true">Còn hàng</option>
+                                <option value="false">Hết hàng</option>
+                            </select>
+                        </div>
+
+                        <div className="col-12 col-sm-6 mb-3 form-group">
+                            <label>
+                                Thời gian bảo hành (<span className="red">*</span>)
+                            </label>
+                            <select value={productVersionData.warranty || ""} onChange={(e) => handleChangeSelect(e, "warranty")} className='form-select'>
+                                <option value="">Chọn</option>
+                                <option value="6">6 tháng</option>
+                                <option value="12">12 tháng</option>
+                                <option value="18">18 tháng</option>
+                                <option value="24">24 tháng</option>
                             </select>
                         </div>
                     </div>
