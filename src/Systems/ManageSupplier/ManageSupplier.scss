@@ -74,9 +74,9 @@
 
     .supplier-footer {
         margin: 30px auto auto auto;
-        @media screen and (max-width: 1545px) {
-            width: 90vw;
-        }
+        // @media screen and (max-width: 1545px) {
+        //     width: 90vw;
+        // }
         .pagination {
             justify-content: center;
             .page-item {

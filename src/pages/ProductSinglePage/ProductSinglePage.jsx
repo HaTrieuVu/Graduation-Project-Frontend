@@ -383,8 +383,8 @@ const ProductSinglePage = () => {
                         : "?"}</span>
                     </div>
                     <div className='warranty'>
-                      Bảo hành: <span> {stock > 0
-                        ? stock
+                      Bảo hành: <span> {selectedVersion?.iThoiGianBaoHanh
+                        ? `${selectedVersion?.iThoiGianBaoHanh} tháng`
                         : "?"}</span>
                     </div>
                   </div>

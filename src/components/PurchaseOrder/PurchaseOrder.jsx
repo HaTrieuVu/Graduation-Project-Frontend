@@ -113,9 +113,10 @@ const PurchaseOrder = () => {
             <section className='purchase-header'>
                 <Link className={`item-header ${type === "all" ? "selected" : ""}`} to="/user/purchase?type=all">Tất cả</Link>
                 <Link className={`item-header ${type === "1" ? "selected" : ""}`} to="/user/purchase?type=1">Chờ xác nhận</Link>
-                <Link className={`item-header ${type === "2" ? "selected" : ""}`} to="/user/purchase?type=2">Đang giao hàng</Link>
-                <Link className={`item-header ${type === "3" ? "selected" : ""}`} to="/user/purchase?type=3">Hoàn thành</Link>
-                <Link className={`item-header ${type === "4" ? "selected" : ""}`} to="/user/purchase?type=4">Đã hủy</Link>
+                <Link className={`item-header ${type === "2" ? "selected" : ""}`} to="/user/purchase?type=2">Chờ giao hàng</Link>
+                <Link className={`item-header ${type === "3" ? "selected" : ""}`} to="/user/purchase?type=3">Đang giao hàng</Link>
+                <Link className={`item-header ${type === "4" ? "selected" : ""}`} to="/user/purchase?type=4">Hoàn thành</Link>
+                <Link className={`item-header ${type === "5" ? "selected" : ""}`} to="/user/purchase?type=5">Đã hủy</Link>
             </section>
             <main className='purchase-main'>
                 {isLoadingOrderList === false ? <Loader />
@@ -137,8 +138,10 @@ const PurchaseOrder = () => {
                                                     <span className='time'>{item?.sTrangThaiDonHang === "Đang giao hàng" && item?.dNgayGiaoHang
                                                         ? ` (Thời gian giao hàng dự kiến: ${new Date(item.dNgayGiaoHang).toLocaleDateString("vi-VN")})`
                                                         : ""}</span>
+
                                                 </div>
                                             )}
+                                            {item?.sTrangThaiDonHang === "Xác nhận" && <span className='confirm'>Đơn hàng của bạn đang được đóng gói và gửi đi</span>}
                                             <span className='info-2'>
                                                 {item?.sTrangThaiDonHang === "Giao hàng thành công"
                                                     ? "Hoàn thành"

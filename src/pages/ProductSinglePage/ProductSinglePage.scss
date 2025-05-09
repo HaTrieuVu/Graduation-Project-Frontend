@@ -107,7 +107,7 @@
 
                 .price {
                     background-color: rgba(0, 0, 0, 0.02);
-                    padding: 2rem;
+                    padding: 2rem 2rem 0 2rem;
                     .old-price {
                         text-decoration: line-through;
                     }
@@ -134,6 +134,24 @@
                                 font-weight: 700;
                             }
                         }
+                    }
+                }
+
+                .box-more-info {
+                    margin: 10px 10px 15px 10px;
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 18px;
+                    font-weight: 500;
+                    .box-stock {
+                        font-size: 18px;
+                        padding-left: 4px;
+                        margin-right: auto;
+                        span {
+                            font-weight: 700;
+                        }
+                    }
+                    .warranty {
                     }
                 }
 
@@ -357,7 +375,7 @@
 
                     .price {
                         background-color: rgba(0, 0, 0, 0.02);
-                        padding: 0;
+                        padding: 2rem 2rem 0 2rem;
                         .old-price {
                             text-decoration: line-through;
                         }
@@ -379,23 +397,6 @@
                                     margin-top: 2px;
                                 }
                             }
-                        }
-                    }
-
-                    .box-more-info {
-                        margin-top: 10px;
-                        display: flex;
-                        justify-content: space-between;
-                        font-size: 20px;
-                        .box-stock {
-                            font-size: 18px;
-                            padding-left: 4px;
-                            margin-right: auto;
-                            span {
-                                font-weight: 700;
-                            }
-                        }
-                        .warranty {
                         }
                     }
 
@@ -567,7 +568,7 @@
 
                     .price {
                         background-color: rgba(0, 0, 0, 0.02);
-                        padding: 2rem;
+                        padding: 2rem 2rem 0 2rem;
                         .old-price {
                             text-decoration: line-through;
                         }
@@ -768,7 +769,7 @@
 
                     .price {
                         background-color: rgba(0, 0, 0, 0.02);
-                        padding: 2rem;
+                        padding: 2rem 2rem 0 2rem;
                         .old-price {
                             text-decoration: line-through;
                         }
